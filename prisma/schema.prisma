@@ -1,29 +1,20 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
+generator zod {
+    provider = "zod-prisma-types"
+}
 
 generator client {
     provider = "prisma-client-js"
 }
 
 datasource db {
-    provider = "sqlite"
-    // NOTE: When using mysql or sqlserver, uncomment the @db.Text annotations in model Account below
-    // Further reading:
-    // https://next-auth.js.org/adapters/prisma#create-the-prisma-schema
-    // https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference#string
-    url      = env("DATABASE_URL")
+    provider     = "mysql"
+    url          = env("DATABASE_URL")
+    relationMode = "prisma"
 }
 
-model Example {
-    id        String   @id @default(cuid())
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-}
-
-// Necessary for Next auth
 model Account {
-    id                String  @id @default(cuid())
-    userId            String
+    id                Int     @id @default(autoincrement())
+    userId            Int
     type              String
     provider          String
     providerAccountId String
@@ -37,24 +28,31 @@ model Account {
     user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
     @@unique([provider, providerAccountId])
+    @@index([userId])
 }
 
 model Session {
-    id           String   @id @default(cuid())
+    id           Int      @id @default(autoincrement())
     sessionToken String   @unique
-    userId       String
+    userId       Int
     expires      DateTime
     user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    @@index([userId])
 }
 
 model User {
-    id            String    @id @default(cuid())
+    id            Int        @id @default(autoincrement())
     name          String?
-    email         String?   @unique
+    email         String?    @unique
     emailVerified DateTime?
     image         String?
     accounts      Account[]
     sessions      Session[]
+    locations     Location[]
+    role          Role       @default(Advertiser)
+    createdAt     DateTime   @default(now())
+    updatedAt     DateTime   @updatedAt
 }
 
 model VerificationToken {
@@ -63,4 +61,68 @@ model VerificationToken {
     expires    DateTime
 
     @@unique([identifier, token])
+}
+
+model Location {
+    id            Int             @id @default(autoincrement())
+    user          User            @relation(fields: [userId], references: [id])
+    userId        Int
+    category      Category?       @default(Undefined)
+    name          String
+    address       String
+    lat           Float
+    long          Float
+    phone         Int
+    website       String?
+    summary       String?
+    description   String?
+    thumbnail     String?
+    createdAt     DateTime        @default(now())
+    updatedAt     DateTime        @updatedAt
+    Advertisement Advertisement[]
+
+    @@index([userId])
+}
+
+model Advertisement {
+    id          Int      @id @default(autoincrement())
+    location    Location @relation(fields: [locationId], references: [id])
+    locationId  Int
+    title       String
+    description String?
+    media       String?
+    start       DateTime
+    end         DateTime
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+
+    @@index([locationId])
+}
+
+model PointOfInterest {
+    id          Int      @id @default(autoincrement())
+    category_id Category @default(Undefined)
+    title       String
+    address     String
+    lat         Float
+    long        Float
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+}
+
+enum Role {
+    Administrator
+    Advertiser
+}
+
+enum Category {
+    Undefined
+    Restaurant
+    Bar
+    Theater
+    Park
+    Church
+    Cinema
+    Museum
+    Cafe
 }
