@@ -37,8 +37,9 @@ export const advertisementRouter = createTRPCRouter({
         locationId: z.number(),
         title: z.string(),
         description: z.string().optional(),
+        media: z.string().optional(),
         start: z.date(),
-        end: z.date(),
+        end: z.date()
       })
     )
     .output(AdvertisementSchema)
@@ -56,6 +57,7 @@ export const advertisementRouter = createTRPCRouter({
         locationId: z.number(),
         title: z.string(),
         description: z.string().optional(),
+        media: z.string().optional(),
         start: z.date(),
         end: z.date(),
       })
