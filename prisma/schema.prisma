@@ -106,6 +106,7 @@ model PointOfInterest {
     address     String
     lat         Float
     long        Float
+    media       String?
     createdAt   DateTime @default(now())
     updatedAt   DateTime @updatedAt
 }
