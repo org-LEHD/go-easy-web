@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 import { z } from "zod";
 import { AdvertisementSchema } from "../../../../prisma/generated/zod";
 import { createTRPCRouter, publicProcedure, protectedProcedure } from "../trpc";
