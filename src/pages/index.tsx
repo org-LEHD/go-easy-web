@@ -1,11 +1,29 @@
+import { Category } from "@prisma/client";
 import { signIn, signOut, useSession } from "next-auth/react";
 import Head from "next/head";
 import Link from "next/link";
+import { useEffect } from "react";
 import { api } from "~/utils/api";
 
 export default function Home() {
   // const hello = api.example.hello.useQuery({ text: "from tRPC" });
-  const test = api.advertisement.getAll.useQuery();
+  const {mutate: locationMutation, error, data, isLoading} = api.location.create.useMutation();
+  useEffect(() => {
+    locationMutation({
+          address: "address",
+          lat: 2,
+          long: 2,
+          name: "Johntown",
+          phone: 24242424,
+          userId: 1,
+          category: Category.Bar,
+          description: "Yes",
+          summary: "Yes",
+          website: "Yes"
+        });
+
+  }, [])
+  if(isLoading && !data) return <div>I AM LOADING</div>
   return (
     <>
       <Head>
