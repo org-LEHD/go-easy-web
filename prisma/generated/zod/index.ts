@@ -24,7 +24,7 @@ export const LocationScalarFieldEnumSchema = z.enum(['id','userId','category','n
 
 export const AdvertisementScalarFieldEnumSchema = z.enum(['id','locationId','title','description','media','start','end','createdAt','updatedAt']);
 
-export const PointOfInterestScalarFieldEnumSchema = z.enum(['id','category_id','title','address','lat','long','createdAt','updatedAt']);
+export const PointOfInterestScalarFieldEnumSchema = z.enum(['id','category_id','title','address','lat','long','media','createdAt','updatedAt']);
 
 export const SortOrderSchema = z.enum(['asc','desc']);
 
@@ -157,6 +157,7 @@ export const PointOfInterestSchema = z.object({
   address: z.string(),
   lat: z.number(),
   long: z.number(),
+  media: z.string().nullable(),
   createdAt: z.coerce.date(),
   updatedAt: z.coerce.date(),
 })
@@ -341,6 +342,7 @@ export const PointOfInterestSelectSchema: z.ZodType<Prisma.PointOfInterestSelect
   address: z.boolean().optional(),
   lat: z.boolean().optional(),
   long: z.boolean().optional(),
+  media: z.boolean().optional(),
   createdAt: z.boolean().optional(),
   updatedAt: z.boolean().optional(),
 }).strict()
@@ -862,6 +864,7 @@ export const PointOfInterestWhereInputSchema: z.ZodType<Prisma.PointOfInterestWh
   address: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   lat: z.union([ z.lazy(() => FloatFilterSchema),z.number() ]).optional(),
   long: z.union([ z.lazy(() => FloatFilterSchema),z.number() ]).optional(),
+  media: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   createdAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
   updatedAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
 }).strict();
@@ -873,6 +876,7 @@ export const PointOfInterestOrderByWithRelationInputSchema: z.ZodType<Prisma.Poi
   address: z.lazy(() => SortOrderSchema).optional(),
   lat: z.lazy(() => SortOrderSchema).optional(),
   long: z.lazy(() => SortOrderSchema).optional(),
+  media: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   createdAt: z.lazy(() => SortOrderSchema).optional(),
   updatedAt: z.lazy(() => SortOrderSchema).optional()
 }).strict();
@@ -890,6 +894,7 @@ export const PointOfInterestWhereUniqueInputSchema: z.ZodType<Prisma.PointOfInte
   address: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   lat: z.union([ z.lazy(() => FloatFilterSchema),z.number() ]).optional(),
   long: z.union([ z.lazy(() => FloatFilterSchema),z.number() ]).optional(),
+  media: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   createdAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
   updatedAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
 }).strict());
@@ -901,6 +906,7 @@ export const PointOfInterestOrderByWithAggregationInputSchema: z.ZodType<Prisma.
   address: z.lazy(() => SortOrderSchema).optional(),
   lat: z.lazy(() => SortOrderSchema).optional(),
   long: z.lazy(() => SortOrderSchema).optional(),
+  media: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   createdAt: z.lazy(() => SortOrderSchema).optional(),
   updatedAt: z.lazy(() => SortOrderSchema).optional(),
   _count: z.lazy(() => PointOfInterestCountOrderByAggregateInputSchema).optional(),
@@ -920,6 +926,7 @@ export const PointOfInterestScalarWhereWithAggregatesInputSchema: z.ZodType<Pris
   address: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
   lat: z.union([ z.lazy(() => FloatWithAggregatesFilterSchema),z.number() ]).optional(),
   long: z.union([ z.lazy(() => FloatWithAggregatesFilterSchema),z.number() ]).optional(),
+  media: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
   createdAt: z.union([ z.lazy(() => DateTimeWithAggregatesFilterSchema),z.coerce.date() ]).optional(),
   updatedAt: z.union([ z.lazy(() => DateTimeWithAggregatesFilterSchema),z.coerce.date() ]).optional(),
 }).strict();
@@ -1403,6 +1410,7 @@ export const PointOfInterestCreateInputSchema: z.ZodType<Prisma.PointOfInterestC
   address: z.string(),
   lat: z.number(),
   long: z.number(),
+  media: z.string().optional().nullable(),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional()
 }).strict();
@@ -1414,6 +1422,7 @@ export const PointOfInterestUncheckedCreateInputSchema: z.ZodType<Prisma.PointOf
   address: z.string(),
   lat: z.number(),
   long: z.number(),
+  media: z.string().optional().nullable(),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional()
 }).strict();
@@ -1424,6 +1433,7 @@ export const PointOfInterestUpdateInputSchema: z.ZodType<Prisma.PointOfInterestU
   address: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   lat: z.union([ z.number(),z.lazy(() => FloatFieldUpdateOperationsInputSchema) ]).optional(),
   long: z.union([ z.number(),z.lazy(() => FloatFieldUpdateOperationsInputSchema) ]).optional(),
+  media: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
 }).strict();
@@ -1435,6 +1445,7 @@ export const PointOfInterestUncheckedUpdateInputSchema: z.ZodType<Prisma.PointOf
   address: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   lat: z.union([ z.number(),z.lazy(() => FloatFieldUpdateOperationsInputSchema) ]).optional(),
   long: z.union([ z.number(),z.lazy(() => FloatFieldUpdateOperationsInputSchema) ]).optional(),
+  media: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
 }).strict();
@@ -1446,6 +1457,7 @@ export const PointOfInterestCreateManyInputSchema: z.ZodType<Prisma.PointOfInter
   address: z.string(),
   lat: z.number(),
   long: z.number(),
+  media: z.string().optional().nullable(),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional()
 }).strict();
@@ -1456,6 +1468,7 @@ export const PointOfInterestUpdateManyMutationInputSchema: z.ZodType<Prisma.Poin
   address: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   lat: z.union([ z.number(),z.lazy(() => FloatFieldUpdateOperationsInputSchema) ]).optional(),
   long: z.union([ z.number(),z.lazy(() => FloatFieldUpdateOperationsInputSchema) ]).optional(),
+  media: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
 }).strict();
@@ -1467,6 +1480,7 @@ export const PointOfInterestUncheckedUpdateManyInputSchema: z.ZodType<Prisma.Poi
   address: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   lat: z.union([ z.number(),z.lazy(() => FloatFieldUpdateOperationsInputSchema) ]).optional(),
   long: z.union([ z.number(),z.lazy(() => FloatFieldUpdateOperationsInputSchema) ]).optional(),
+  media: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
 }).strict();
@@ -2037,6 +2051,7 @@ export const PointOfInterestCountOrderByAggregateInputSchema: z.ZodType<Prisma.P
   address: z.lazy(() => SortOrderSchema).optional(),
   lat: z.lazy(() => SortOrderSchema).optional(),
   long: z.lazy(() => SortOrderSchema).optional(),
+  media: z.lazy(() => SortOrderSchema).optional(),
   createdAt: z.lazy(() => SortOrderSchema).optional(),
   updatedAt: z.lazy(() => SortOrderSchema).optional()
 }).strict();
@@ -2054,6 +2069,7 @@ export const PointOfInterestMaxOrderByAggregateInputSchema: z.ZodType<Prisma.Poi
   address: z.lazy(() => SortOrderSchema).optional(),
   lat: z.lazy(() => SortOrderSchema).optional(),
   long: z.lazy(() => SortOrderSchema).optional(),
+  media: z.lazy(() => SortOrderSchema).optional(),
   createdAt: z.lazy(() => SortOrderSchema).optional(),
   updatedAt: z.lazy(() => SortOrderSchema).optional()
 }).strict();
@@ -2065,6 +2081,7 @@ export const PointOfInterestMinOrderByAggregateInputSchema: z.ZodType<Prisma.Poi
   address: z.lazy(() => SortOrderSchema).optional(),
   lat: z.lazy(() => SortOrderSchema).optional(),
   long: z.lazy(() => SortOrderSchema).optional(),
+  media: z.lazy(() => SortOrderSchema).optional(),
   createdAt: z.lazy(() => SortOrderSchema).optional(),
   updatedAt: z.lazy(() => SortOrderSchema).optional()
 }).strict();
