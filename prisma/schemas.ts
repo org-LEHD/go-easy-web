@@ -1,67 +1,82 @@
 import { z } from "zod";
-import * as PrismaClient from "@prisma/client";
 
-export const RoleSchema = z.nativeEnum(PrismaClient.Role);
+enum Role {
+  Administrator,
+  Advertiser,
+}
+export const RoleSchema = z.nativeEnum(Role);
 
-export const CategorySchema = z.nativeEnum(PrismaClient.Category);
+enum Category {
+  Undefined,
+  Restaurant,
+  Bar,
+  Theater,
+  Park,
+  Church,
+  Cinema,
+  Museum,
+  Cafe,
+}
+
+export const CategorySchema = z.nativeEnum(Category);
 
 // USER
 //------------------------------------------------------
 
 export const UserSchema = z.object({
-    role: RoleSchema,
-    id: z.number().int(),
-    name: z.string().nullish(),
-    email: z.string().nullish(),
-    emailVerified: z.date().nullish(),
-    image: z.string().nullish(),
-    createdAt: z.date(),
-    updatedAt: z.date(),
-  });
+  role: RoleSchema,
+  id: z.number().int(),
+  name: z.string().nullish(),
+  email: z.string().nullish(),
+  emailVerified: z.date().nullish(),
+  image: z.string().nullish(),
+  createdAt: z.date(),
+  updatedAt: z.date(),
+});
 
 // LOCATION
 //------------------------------------------------------
 
 export const LocationSchema = z.object({
-    category: CategorySchema.nullish(),
-    id: z.number().int(),
-    userId: z.number().int(),
-    name: z.string(),
-    address: z.string(),
-    lat: z.number(),
-    long: z.number(),
-    phone: z.number().int(),
-    website: z.string().nullish(),
-    summary: z.string().nullish(),
-    description: z.string().nullish(),
-    createdAt: z.date(),
-    updatedAt: z.date(),
-  });
-  
-  // ADVERTISEMENT
-  //------------------------------------------------------
-  
-  export const AdvertisementSchema = z.object({
-    id: z.number().int(),
-    locationId: z.number().int(),
-    title: z.string(),
-    description: z.string().nullish(),
-    start: z.date(),
-    end: z.date(),
-    createdAt: z.date(),
-    updatedAt: z.date(),
-  });
-  
-  // POINT OF INTEREST
-  //------------------------------------------------------
-  
-  export const PointOfInterestSchema = z.object({
-    category_id: CategorySchema,
-    id: z.number().int(),
-    title: z.string(),
-    address: z.string(),
-    lat: z.number(),
-    long: z.number(),
-    createdAt: z.date(),
-    updatedAt: z.date(),
-  });
+  category: CategorySchema.nullish(),
+  id: z.number().int(),
+  userId: z.number().int(),
+  name: z.string(),
+  address: z.string(),
+  lat: z.number(),
+  long: z.number(),
+  phone: z.number().int(),
+  website: z.string().nullish(),
+  summary: z.string().nullish(),
+  description: z.string().nullish(),
+  createdAt: z.date(),
+  updatedAt: z.date(),
+});
+
+// ADVERTISEMENT
+//------------------------------------------------------
+
+export const AdvertisementSchema = z.object({
+  id: z.number().int(),
+  locationId: z.number().int(),
+  title: z.string(),
+  description: z.string().nullish(),
+  start: z.date(),
+  end: z.date(),
+  createdAt: z.date(),
+  updatedAt: z.date(),
+});
+
+// POINT OF INTEREST
+//------------------------------------------------------
+
+export const PointOfInterestSchema = z.object({
+  category_id: CategorySchema,
+  id: z.number().int(),
+  title: z.string(),
+  address: z.string(),
+  lat: z.number(),
+  long: z.number(),
+  createdAt: z.date(),
+  updatedAt: z.date(),
+});
