@@ -1,6 +1,5 @@
 import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "../trpc";
-import { PointOfInterestSchema } from "../../../../prisma/generated/zod";
 import { Category } from "@prisma/client";
 
 export const pointOfInterestRouter = createTRPCRouter({
@@ -18,7 +17,6 @@ export const pointOfInterestRouter = createTRPCRouter({
         media: z.string().optional(),
       })
     )
-    .output(PointOfInterestSchema)
     .mutation(async ({ input, ctx }) => {
       return await ctx.prisma.pointOfInterest.create({
         data: { ...input },
@@ -36,26 +34,25 @@ export const pointOfInterestRouter = createTRPCRouter({
   /**
    * GET ALL
    */
-  getAll: publicProcedure
-    .output(z.array(PointOfInterestSchema))
-    .query(({ ctx }) => {
-      return ctx.prisma.pointOfInterest.findMany({});
-    }),
+  getAll: publicProcedure.query(({ ctx }) => {
+    return ctx.prisma.pointOfInterest.findMany({});
+  }),
 
   /**
    * UPDATE
    */
   update: publicProcedure
-    .input(z.object({
-      id: z.number(),
-      category_id: z.nativeEnum(Category),
-      title: z.string(),
-      address: z.string(),
-      lat: z.number(),
-      long: z.number(),
-      media: z.string().optional(),
-    }))
-    .output(PointOfInterestSchema)
+    .input(
+      z.object({
+        id: z.number(),
+        category_id: z.nativeEnum(Category),
+        title: z.string(),
+        address: z.string(),
+        lat: z.number(),
+        long: z.number(),
+        media: z.string().optional(),
+      })
+    )
     .mutation(async ({ input, ctx }) => {
       return await ctx.prisma.pointOfInterest.update({
         where: { id: input.id },
@@ -65,10 +62,7 @@ export const pointOfInterestRouter = createTRPCRouter({
   /**
    * DELETE
    */
-  delete: publicProcedure
-    .output(PointOfInterestSchema)
-    .input(z.number())
-    .query(async ({ ctx, input }) => {
-      return await ctx.prisma.pointOfInterest.delete({ where: { id: input } });
-    }),
+  delete: publicProcedure.input(z.number()).query(async ({ ctx, input }) => {
+    return await ctx.prisma.pointOfInterest.delete({ where: { id: input } });
+  }),
 });

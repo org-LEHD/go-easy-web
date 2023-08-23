@@ -1,11 +1,7 @@
 import { z } from "zod";
-
 import { createTRPCRouter, publicProcedure, protectedProcedure } from "../trpc";
-import {
-  AdvertisementSchema,
-  LocationSchema,
-} from "../../../../prisma/generated/zod";
 import { Category } from "@prisma/client";
+import { AdvertisementSchema } from "prisma/schemas";
 
 export const locationRouter = createTRPCRouter({
   /**
@@ -27,7 +23,6 @@ export const locationRouter = createTRPCRouter({
         description: z.string().optional(),
       })
     )
-    .output(LocationSchema)
     .mutation(async ({ input, ctx }) => {
       return await ctx.prisma.location.create({
         data: { ...input },
@@ -58,7 +53,7 @@ export const locationRouter = createTRPCRouter({
   /**
    * GET ALL
    */
-  getAll: publicProcedure.output(z.array(LocationSchema)).query(({ ctx }) => {
+  getAll: publicProcedure.query(({ ctx }) => {
     return ctx.prisma.location.findMany({});
   }),
 
@@ -81,7 +76,6 @@ export const locationRouter = createTRPCRouter({
         advertisement: z.array(AdvertisementSchema),
       })
     )
-    .output(LocationSchema)
     .mutation(async ({ input, ctx }) => {
       return await ctx.prisma.location.update({
         where: { id: input.id },
@@ -91,10 +85,7 @@ export const locationRouter = createTRPCRouter({
   /**
    * DELETE
    */
-  delete: publicProcedure
-    .output(LocationSchema)
-    .input(z.number())
-    .query(async ({ ctx, input }) => {
-      return await ctx.prisma.location.delete({ where: { id: input } });
-    }),
+  delete: publicProcedure.input(z.number()).query(async ({ ctx, input }) => {
+    return await ctx.prisma.location.delete({ where: { id: input } });
+  }),
 });

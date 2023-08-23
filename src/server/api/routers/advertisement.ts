@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 import { z } from "zod";
-import { AdvertisementSchema } from "../../../../prisma/generated/zod";
 import { createTRPCRouter, publicProcedure, protectedProcedure } from "../trpc";
 
 export const advertisementRouter = createTRPCRouter({
@@ -24,11 +23,9 @@ export const advertisementRouter = createTRPCRouter({
     }),
 
   // GET ALL
-  getAll: publicProcedure
-    .output(z.array(AdvertisementSchema))
-    .query(({ ctx }) => {
-      return ctx.prisma.advertisement.findMany({});
-    }),
+  getAll: publicProcedure.query(({ ctx }) => {
+    return ctx.prisma.advertisement.findMany({});
+  }),
 
   // CREATE
   create: publicProcedure
@@ -39,10 +36,9 @@ export const advertisementRouter = createTRPCRouter({
         description: z.string().optional(),
         media: z.string().optional(),
         start: z.date(),
-        end: z.date()
+        end: z.date(),
       })
     )
-    .output(AdvertisementSchema)
     .mutation(async ({ input, ctx }) => {
       return await ctx.prisma.advertisement.create({
         data: { ...input },
@@ -62,7 +58,6 @@ export const advertisementRouter = createTRPCRouter({
         end: z.date(),
       })
     )
-    .output(AdvertisementSchema)
     .mutation(async ({ input, ctx }) => {
       return await ctx.prisma.advertisement.update({
         where: { id: input.id },
@@ -71,10 +66,7 @@ export const advertisementRouter = createTRPCRouter({
     }),
 
   // DELETE
-  delete: publicProcedure
-    .output(AdvertisementSchema)
-    .input(z.number())
-    .query(async ({ ctx, input }) => {
-      return await ctx.prisma.advertisement.delete({ where: { id: input } });
-    }),
+  delete: publicProcedure.input(z.number()).query(async ({ ctx, input }) => {
+    return await ctx.prisma.advertisement.delete({ where: { id: input } });
+  }),
 });
