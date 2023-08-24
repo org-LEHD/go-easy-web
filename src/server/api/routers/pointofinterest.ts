@@ -18,7 +18,6 @@ export const pointOfInterestRouter = createTRPCRouter({
         media: z.string(),
       })
     )
-    .output(PointOfInterestSchema)
     .mutation(async ({ input, ctx }) => {
       return await ctx.prisma.pointOfInterest.create({
         data: { ...input },
@@ -37,7 +36,6 @@ export const pointOfInterestRouter = createTRPCRouter({
    * GET ALL
    */
   getAll: publicProcedure
-    .output(z.array(PointOfInterestSchema))
     .query(({ ctx }) => {
       return ctx.prisma.pointOfInterest.findMany({});
     }),
@@ -55,7 +53,6 @@ export const pointOfInterestRouter = createTRPCRouter({
       long: z.number(),
       media: z.string().optional(),
     }))
-    .output(PointOfInterestSchema)
     .mutation(async ({ input, ctx }) => {
       return await ctx.prisma.pointOfInterest.update({
         where: { id: input.id },
@@ -66,7 +63,6 @@ export const pointOfInterestRouter = createTRPCRouter({
    * DELETE
    */
   delete: publicProcedure
-    .output(PointOfInterestSchema)
     .input(z.number())
     .query(async ({ ctx, input }) => {
       return await ctx.prisma.pointOfInterest.delete({ where: { id: input } });

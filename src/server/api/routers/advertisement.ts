@@ -25,7 +25,6 @@ export const advertisementRouter = createTRPCRouter({
 
   // GET ALL
   getAll: publicProcedure
-    .output(z.array(AdvertisementSchema))
     .query(({ ctx }) => {
       return ctx.prisma.advertisement.findMany({});
     }),
@@ -42,7 +41,6 @@ export const advertisementRouter = createTRPCRouter({
         end: z.date()
       })
     )
-    .output(AdvertisementSchema)
     .mutation(async ({ input, ctx }) => {
       return await ctx.prisma.advertisement.create({
         data: { ...input },
@@ -62,7 +60,6 @@ export const advertisementRouter = createTRPCRouter({
         end: z.date(),
       })
     )
-    .output(AdvertisementSchema)
     .mutation(async ({ input, ctx }) => {
       return await ctx.prisma.advertisement.update({
         where: { id: input.id },
@@ -72,7 +69,6 @@ export const advertisementRouter = createTRPCRouter({
 
   // DELETE
   delete: publicProcedure
-    .output(AdvertisementSchema)
     .input(z.number())
     .query(async ({ ctx, input }) => {
       return await ctx.prisma.advertisement.delete({ where: { id: input } });

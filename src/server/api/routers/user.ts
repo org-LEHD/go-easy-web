@@ -20,7 +20,7 @@ export const userRouter = createTRPCRouter({
   }),
 
   // GET ALL
-  getAll: publicProcedure.output(z.array(UserSchema)).query(({ ctx }) => {
+  getAll: publicProcedure.query(({ ctx }) => {
     return ctx.prisma.user.findMany({
       include: { accounts: true, sessions: true, locations: true },
     });
@@ -31,7 +31,6 @@ export const userRouter = createTRPCRouter({
    */
   update: publicProcedure
     .input(UserSchema)
-    .output(UserSchema)
     .mutation(async ({ input, ctx }) => {
       return await ctx.prisma.user.update({
         where: { id: input.id },
@@ -42,7 +41,6 @@ export const userRouter = createTRPCRouter({
    * DELETE
    */
   delete: publicProcedure
-    .output(UserSchema)
     .input(z.number())
     .query(async ({ ctx, input }) => {
       return await ctx.prisma.user.delete({ where: { id: input } });
