@@ -3,6 +3,7 @@ import Login from "./login";
 import { Box, Button, Container, Flex, Grid, NavLink, Table } from "@mantine/core";
 import { api } from "~/utils/api";
 import { IconArrowRight } from "@tabler/icons";
+import { DynamicTable } from "~/common/components/Table";
 
 const Requests: React.FC = () => {
   const { data: sessionData } = useSession();
@@ -12,40 +13,11 @@ const Requests: React.FC = () => {
   const { data } = api.user.getAll.useQuery();
   return (
     <Container>
-      <Flex>
+      <Flex direction={"column"} gap={"md"}>
         <h1>Anmodninger</h1>
-        <Table>
-          <thead>
-            <tr>
-              <th>Navn</th>
-              <th>Email</th>
-              <th>Email Verified</th>
-              <th>Role</th>
-              <th>Access</th>
-              <th>Oprettet</th>
-              <th> </th>
-            </tr>
-          </thead>
-          <tbody>
-            {data?.map((_, key) => (
-              <tr key={key}>
-                <td>{_.name}</td>
-                <td>{_.email}</td>
-                <td>{_.emailVerified?.getDate()}</td>
-                <td>{_.role}</td>
-                <td>{_.access}</td>
-                <td>{_.createdAt.getDate()}</td>
-                <td>
-                  <NavLink
-                    // href={`/location/${_.id}`}
-                    // component="a"
-                    icon={<IconArrowRight color="blue" />}
-                  />
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </Table>
+        <DynamicTable headers={["Navn","Email", "Role", "Access", "Oprettet", " "]} rows={data?.map((row, index) => {
+          
+        })}/>
         {/* <Button>Ny Annonce</Button> */}
       </Flex>
     </Container>
