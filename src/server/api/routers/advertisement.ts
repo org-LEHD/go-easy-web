@@ -36,8 +36,8 @@ export const advertisementRouter = createTRPCRouter({
       z.object({
         locationId: z.number(),
         title: z.string(),
-        description: z.string().optional(),
-        media: z.string().optional(),
+        description: z.string(),
+        media: z.string(),
         start: z.date(),
         end: z.date()
       })

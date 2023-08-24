@@ -8,21 +8,21 @@ import { api } from "~/utils/api";
 export default function Home() {
   // const hello = api.example.hello.useQuery({ text: "from tRPC" });
   const {mutate: locationMutation, error, data, isLoading} = api.location.create.useMutation();
-  useEffect(() => {
-    locationMutation({
-          address: "address",
-          lat: 2,
-          long: 2,
-          name: "Johntown",
-          phone: 24242424,
-          userId: 1,
-          category: Category.Bar,
-          description: "Yes",
-          summary: "Yes",
-          website: "Yes"
-        });
+  // useEffect(() => {
+  //   locationMutation({
+  //         address: "address",
+  //         lat: 2,
+  //         long: 2,
+  //         name: "Johntown",
+  //         phone: 24242424,
+  //         userId: 1,
+  //         category: Category.Bar,
+  //         description: "Yes",
+  //         summary: "Yes",
+  //         website: "Yes"
+  //       });
 
-  }, [])
+  // }, [])
   if(isLoading && !data) return <div>I AM LOADING</div>
   return (
     <>

@@ -15,7 +15,7 @@ export const pointOfInterestRouter = createTRPCRouter({
         address: z.string(),
         lat: z.number(),
         long: z.number(),
-        media: z.string().optional(),
+        media: z.string(),
       })
     )
     .output(PointOfInterestSchema)

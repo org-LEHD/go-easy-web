@@ -68,16 +68,16 @@ model Location {
     id            Int             @id @default(autoincrement())
     user          User            @relation(fields: [userId], references: [id])
     userId        Int
-    category      Category?       @default(Undefined)
+    category      Category        @default(Undefined)
     name          String
     address       String
     lat           Float
     long          Float
     phone         Int
-    website       String?
-    summary       String?
-    description   String?
-    thumbnail     String?
+    website       String
+    summary       String
+    description   String
+    thumbnail     String
     access        Access          @default(Pending)
     createdAt     DateTime        @default(now())
     updatedAt     DateTime        @updatedAt
@@ -91,8 +91,8 @@ model Advertisement {
     location    Location @relation(fields: [locationId], references: [id])
     locationId  Int
     title       String
-    description String?
-    media       String?
+    description String
+    media       String
     start       DateTime
     end         DateTime
     createdAt   DateTime @default(now())
@@ -108,7 +108,7 @@ model PointOfInterest {
     address     String
     lat         Float
     long        Float
-    media       String?
+    media       String
     createdAt   DateTime @default(now())
     updatedAt   DateTime @updatedAt
 }
