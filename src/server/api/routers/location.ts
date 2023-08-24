@@ -21,10 +21,10 @@ export const locationRouter = createTRPCRouter({
         lat: z.number(),
         long: z.number(),
         phone: z.number(),
-        thumbnail: z.string().optional(),
-        website: z.string().optional(),
-        summary: z.string().optional(),
-        description: z.string().optional(),
+        thumbnail: z.string(),
+        website: z.string(),
+        summary: z.string(),
+        description: z.string(),
       })
     )
     .output(LocationSchema)
