@@ -1,52 +1,37 @@
 import { useSession } from "next-auth/react";
 import Login from "./login";
-import { Box, Button, Container, Flex, Grid, NavLink, Table } from "@mantine/core";
+import { Container, Flex } from "@mantine/core";
 import { api } from "~/utils/api";
-import { IconArrowRight } from "@tabler/icons";
+import { Access } from "@prisma/client";
+import { UserTable } from "~/common/components/UserTable";
 
 const Requests: React.FC = () => {
   const { data: sessionData } = useSession();
-  if (sessionData === null) {
-    return <Login />;
+
+  const { data: users, isLoading } = api.user.getAll.useQuery();
+
+  if (sessionData === null) return <Login />;
+  if (isLoading) {
+    return <div>Im loading</div>;
   }
-  const { data } = api.user.getAll.useQuery();
   return (
     <Container>
-      <Flex>
+      <Flex direction={"column"} gap={"md"}>
         <h1>Anmodninger</h1>
-        <Table>
-          <thead>
-            <tr>
-              <th>Navn</th>
-              <th>Email</th>
-              <th>Email Verified</th>
-              <th>Role</th>
-              <th>Access</th>
-              <th>Oprettet</th>
-              <th> </th>
-            </tr>
-          </thead>
-          <tbody>
-            {data?.map((_, key) => (
-              <tr key={key}>
-                <td>{_.name}</td>
-                <td>{_.email}</td>
-                <td>{_.emailVerified?.getDate()}</td>
-                <td>{_.role}</td>
-                <td>{_.access}</td>
-                <td>{_.createdAt.getDate()}</td>
-                <td>
-                  <NavLink
-                    // href={`/location/${_.id}`}
-                    // component="a"
-                    icon={<IconArrowRight color="blue" />}
-                  />
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </Table>
-        {/* <Button>Ny Annonce</Button> */}
+        <UserTable
+          users={
+            users?.filter(
+              (user) => user.access === Access.Pending.toString()
+            ) ?? []
+          }
+        />
+        <h1>Benægtede</h1>
+        <UserTable
+          users={
+            users?.filter((user) => user.access === Access.Denied.toString()) ??
+            []
+          }
+        />
       </Flex>
     </Container>
   );
