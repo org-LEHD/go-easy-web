@@ -32,16 +32,21 @@ const Layout: React.FC<Props> = ({ children }) => {
   const [opened, { toggle, close }] = useDisclosure(false);
   const label = opened ? "Close navigation" : "Open navigation";
 
-  const navItems: NavItemProps[] = useMemo(() =>
-    sessionData?.user?.role == Role.Administrator ?
-      [{ text: "Annoncører", href: "/advertisers" },
-      { text: "Seværdigheder", href: "/attractions" },]
-      :
-      [{ text: "Konto", href: "/account" },
-      { text: "Lokationer", href: "/locations" },
-      { text: "Annoncer", href: "/advertisements" },
-      { text: "Beskeder", href: "/messages" },]
-    , [sessionData?.user?.role])
+  const navItems: NavItemProps[] = useMemo(
+    () =>
+      sessionData?.user?.role == Role.Administrator
+        ? [
+          { text: "Anmodninger", href: "/requests" },
+            { text: "Annoncører", href: "/advertisers" },
+            { text: "Seværdigheder", href: "/attractions" },
+          ]
+        : [
+            { text: "Konto", href: "/account" },
+            { text: "Lokationer", href: "/locations" },
+            { text: "Annoncer", href: "/advertisements" },
+          ],
+    [sessionData?.user?.role]
+  );
 
   return (
     <>
@@ -62,7 +67,7 @@ const Layout: React.FC<Props> = ({ children }) => {
                             text={item.text}
                             href={item.href}
                           />
-                        )
+                        );
                       })}
                     </Container>
                     <PersonaItem sessionData={sessionData} />
@@ -74,7 +79,7 @@ const Layout: React.FC<Props> = ({ children }) => {
                   position="right"
                   opened={opened}
                   onClose={close}
-                //   transitionDuration={400}
+                  //   transitionDuration={400}
                   id={"layout-drawer"}
                   styles={{
                     root: {},
