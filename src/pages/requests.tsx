@@ -1,24 +1,37 @@
 import { useSession } from "next-auth/react";
 import Login from "./login";
-import { Box, Button, Container, Flex, Grid, NavLink, Table } from "@mantine/core";
+import { Container, Flex } from "@mantine/core";
 import { api } from "~/utils/api";
-import { IconArrowRight } from "@tabler/icons";
-import { DynamicTable } from "~/common/components/Table";
+import { Access } from "@prisma/client";
+import { UserTable } from "~/common/components/UserTable";
 
 const Requests: React.FC = () => {
   const { data: sessionData } = useSession();
-  if (sessionData === null) {
-    return <Login />;
+
+  const { data: users, isLoading } = api.user.getAll.useQuery();
+
+  if (sessionData === null) return <Login />;
+  if (isLoading) {
+    return <div>Im loading</div>;
   }
-  const { data } = api.user.getAll.useQuery();
   return (
     <Container>
       <Flex direction={"column"} gap={"md"}>
         <h1>Anmodninger</h1>
-        <DynamicTable headers={["Navn","Email", "Role", "Access", "Oprettet", " "]} rows={data?.map((row, index) => {
-          
-        })}/>
-        {/* <Button>Ny Annonce</Button> */}
+        <UserTable
+          users={
+            users?.filter(
+              (user) => user.access === Access.Pending.toString()
+            ) ?? []
+          }
+        />
+        <h1>Benægtede</h1>
+        <UserTable
+          users={
+            users?.filter((user) => user.access === Access.Denied.toString()) ??
+            []
+          }
+        />
       </Flex>
     </Container>
   );
