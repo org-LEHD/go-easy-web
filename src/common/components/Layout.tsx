@@ -1,4 +1,4 @@
-import { ReactElement, useMemo } from "react";
+import { type ReactElement, useMemo } from "react";
 import {
   AppShell,
   Header,
@@ -7,7 +7,6 @@ import {
   Burger,
   Drawer,
   Divider,
-  Text,
   Space,
   Stack,
 } from "@mantine/core";

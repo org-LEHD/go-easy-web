@@ -51,6 +51,7 @@ model User {
     sessions      Session[]
     locations     Location[]
     role          Role       @default(Advertiser)
+    access        Access     @default(Pending)
     createdAt     DateTime   @default(now())
     updatedAt     DateTime   @updatedAt
 }
@@ -77,6 +78,7 @@ model Location {
     summary       String?
     description   String?
     thumbnail     String?
+    access        Access          @default(Pending)
     createdAt     DateTime        @default(now())
     updatedAt     DateTime        @updatedAt
     Advertisement Advertisement[]
@@ -126,4 +128,10 @@ enum Category {
     Cinema
     Museum
     Cafe
+}
+
+enum Access {
+    Pending
+    Granted
+    Denied
 }
