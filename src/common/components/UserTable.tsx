@@ -1,4 +1,3 @@
-/* eslint-disable prefer-const */
 import { NavLink, Table } from "@mantine/core";
 import { IconArrowRight } from "@tabler/icons";
 
