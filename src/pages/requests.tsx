@@ -11,9 +11,7 @@ const Requests: React.FC = () => {
   const { data: users, isLoading } = api.user.getAll.useQuery();
 
   if (sessionData === null) return <Login />;
-  if (isLoading) {
-    return <div>Im loading</div>;
-  }
+  if (isLoading) return <div>Im loading</div>;
   return (
     <Container>
       <Flex direction={"column"} gap={"md"}>
