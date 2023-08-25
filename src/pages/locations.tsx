@@ -1,16 +1,6 @@
 import { useSession } from "next-auth/react";
 import Login from "./login";
-import {
-  ActionIcon,
-  Box,
-  Button,
-  Container,
-  Flex,
-  Grid,
-  Table,
-  NavLink,
-} from "@mantine/core";
-import { IconArrowLeft, IconArrowRight } from "@tabler/icons";
+import { Button, Container, Flex } from "@mantine/core";
 import { api } from "~/utils/api";
 import { LocationTable } from "~/common/components/LocationTable";
 
