@@ -10,7 +10,7 @@ const Advertisements: React.FC = () => {
 
   return (
     <Container>
-      <Flex>
+      <Flex direction={"column"} gap={"md"}>
         <h1>Annoncer</h1>
         <Table>
           <thead>
