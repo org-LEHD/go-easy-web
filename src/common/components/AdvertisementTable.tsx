@@ -1,4 +1,3 @@
-/* eslint-disable prefer-const */
 import { NavLink, Table } from "@mantine/core";
 import { IconArrowRight } from "@tabler/icons";
 
@@ -9,7 +8,8 @@ interface AdvertisementTableProps {
 export const AdvertisementTable: React.FC<AdvertisementTableProps> = ({
   advertisements,
 }) => {
-  if (!advertisements.length) return <div>Du har ikke oprettet nogen annoncer endnu</div>;
+  if (!advertisements.length)
+    return <div>Du har ikke oprettet nogen annoncer endnu</div>;
   return (
     <Table>
       <thead>

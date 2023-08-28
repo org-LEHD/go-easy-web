@@ -1,4 +1,3 @@
-/* eslint-disable prefer-const */
 import { NavLink, Table } from "@mantine/core";
 import { IconArrowRight } from "@tabler/icons";
 
@@ -7,7 +6,7 @@ interface LocationTableProps {
 }
 
 export const LocationTable: React.FC<LocationTableProps> = ({ locations }) => {
-    if (!locations.length) return <div>Der findes ingen lokationer her</div>;
+  if (!locations.length) return <div>Der findes ingen lokationer her</div>;
   return (
     <Table>
       <thead>
