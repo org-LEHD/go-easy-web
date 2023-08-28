@@ -14,52 +14,21 @@ import { Category } from "@prisma/client";
 import { z } from "zod";
 import { useEffect } from "react";
 import { api } from "~/utils/api";
-import { mapCategoryEnumToObjects } from "~/utils/mapCategoryEnumToObject";
 import LocationForm from "~/common/components/LocationForm";
+import { useRouter } from "next/router";
 
 export type LocationProps = {
   locationId?: number;
 };
 
-const locationValidationSchema = z.object({
-  userId: z.number().int(),
-  name: z.string(),
-  address: z.string(),
-  phone: z.number().int(),
-  category: CategorySchema,
-  summary: z.string(),
-  description: z.string(),
-  thumbnail: z.string(),
-  website: z.string(),
-  lat: z.number(),
-  long: z.number(),
-});
-
-const Location: React.FC<LocationProps> = ({ locationId }) => {
+const Location: React.FC<LocationProps> = () => {
   const { data: sessionData } = useSession();
 
-  const { data } = api.location.getById.useQuery(locationId ?? 1);
+  const routerInfo = useRouter();
+  const { id } = routerInfo.query;
+  const routerParam = id?.[0] !== undefined ? Number(id[0]) : 0;
 
-  useEffect(() => {
-    if (!data) return;
-    form.setValues({ ...data });
-  }, [data]);
-
-  const form = useForm({
-    validate: zodResolver(locationValidationSchema),
-    initialValues: {
-      name: data?.name ?? "",
-      address: data?.address ?? "",
-      category: data?.category ?? Category.Undefined,
-      phone: data?.phone ?? null,
-      website: data?.website ?? "",
-      summary: data?.summary ?? "",
-      description: data?.description ?? "",
-      thumbnail: data?.thumbnail ?? "",
-      lat: data?.lat ?? null,
-      long: data?.long ?? null,
-    },
-  });
+  const { data } = api.location.getById.useQuery(routerParam ?? 0);
 
   if (!data) return <></>;
 
@@ -68,7 +37,7 @@ const Location: React.FC<LocationProps> = ({ locationId }) => {
   }
   return (
     <Box sx={{ maxWidth: 340 }} mx="auto">
-     <LocationForm data={data}/>
+      <LocationForm data={data} />
     </Box>
   );
 };
