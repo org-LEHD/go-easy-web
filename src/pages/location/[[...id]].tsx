@@ -15,6 +15,7 @@ import { z } from "zod";
 import { useEffect } from "react";
 import { api } from "~/utils/api";
 import { mapCategoryEnumToObjects } from "~/utils/mapCategoryEnumToObject";
+import LocationForm from "~/common/components/LocationForm";
 
 export type LocationProps = {
   locationId?: number;
@@ -67,73 +68,7 @@ const Location: React.FC<LocationProps> = ({ locationId }) => {
   }
   return (
     <Box sx={{ maxWidth: 340 }} mx="auto">
-      <form onSubmit={form.onSubmit((values) => console.log(values))}>
-        <TextInput
-          withAsterisk
-          label="Navn"
-          placeholder="example@mail.com"
-          {...form.getInputProps("name")}
-        />
-        <TextInput
-          withAsterisk
-          label="Adresse"
-          placeholder="John Doe"
-          mt="sm"
-          {...form.getInputProps("address")}
-        />
-        <Select
-          label="Kategori"
-          placeholder="Vælg en kategori"
-          mt="sm"
-          data={mapCategoryEnumToObjects()}
-          {...form.getInputProps("age")}
-        />
-        <NumberInput
-          withAsterisk
-          label="Telefon nummer"
-          placeholder="12345678"
-          mt="sm"
-          {...form.getInputProps("phone")}
-        />
-        <TextInput
-          withAsterisk
-          label="Hjemmeside"
-          placeholder="https://google.com/"
-          mt="sm"
-          {...form.getInputProps("website")}
-        />
-        <TextInput
-          withAsterisk
-          label="Resume"
-          placeholder="Resume"
-          mt="sm"
-          {...form.getInputProps("summary")}
-        />
-        <TextInput
-          withAsterisk
-          label="Beskrivelse"
-          placeholder="Beskrivelse"
-          mt="sm"
-          {...form.getInputProps("description")}
-        />
-        <NumberInput
-          withAsterisk
-          label="Latitude"
-          placeholder="Latitude"
-          mt="sm"
-          {...form.getInputProps("lat")}
-        />
-        <NumberInput
-          withAsterisk
-          label="Longitude"
-          placeholder="Longitude"
-          mt="sm"
-          {...form.getInputProps("lon")}
-        />
-        <Group position="right" mt="xl">
-          <Button type="submit">Submit</Button>
-        </Group>
-      </form>
+     <LocationForm data={data}/>
     </Box>
   );
 };
