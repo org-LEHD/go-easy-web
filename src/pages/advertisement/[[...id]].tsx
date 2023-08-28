@@ -24,7 +24,7 @@ const Advertisement: React.FC = ({}) => {
 
   const routerInfo = useRouter();
   const {id} = routerInfo.query;  
-  const routerParam = id && id[0] !== undefined ? Number(id[0]) : 0;
+  const routerParam = id?.[0] !== undefined ? Number(id[0]) : 0;
 
   const { data } = api.advertisement.getById.useQuery(routerParam);
 
