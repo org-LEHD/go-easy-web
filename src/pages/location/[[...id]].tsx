@@ -14,7 +14,6 @@ import { Category } from "@prisma/client";
 import { z } from "zod";
 import { useEffect } from "react";
 import { api } from "~/utils/api";
-import { mapCategoryEnumToObjects } from "~/utils/mapCategoryEnumToObject";
 import LocationForm from "~/common/components/LocationForm";
 import { useSearchParams } from 'next/navigation'
 import { useRouter } from "next/router";
@@ -24,7 +23,7 @@ const Location: React.FC = ({}) => {
 
   const routerInfo = useRouter();
   const {id} = routerInfo.query;  
-  const routerParam = id && id[0] !== undefined ? Number(id[0]) : 0;
+  const routerParam = id?.[0] !== undefined ? Number(id[0]) : 0;
 
   const { data } = api.location.getById.useQuery(routerParam);
 

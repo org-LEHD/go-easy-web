@@ -1,9 +1,9 @@
 import { useSession } from "next-auth/react";
 import Login from "./login";
-import { Button, Container, Flex } from "@mantine/core";
+import { Container, Flex, NavLink } from "@mantine/core";
 import { api } from "~/utils/api";
 import { LocationTable } from "~/common/components/LocationTable";
-
+import { IconArrowRight } from "@tabler/icons";
 const Locations: React.FC = () => {
   const { data: sessionData } = useSession();
 
@@ -19,7 +19,11 @@ const Locations: React.FC = () => {
       <Flex direction={"column"} gap={"md"}>
         <h1>Lokationer</h1>
         <LocationTable locations={locations as any} />
-        <Button>Ny Lokation</Button>
+        <NavLink
+          href={`/location/new`}
+          component="a"
+          icon={<IconArrowRight color="blue" />}
+        />
       </Flex>
     </Container>
   );

@@ -73,7 +73,6 @@ export const locationRouter = createTRPCRouter({
         thumbnail: z.string().optional(),
         summary: z.string().optional(),
         description: z.string().optional(),
-        advertisement: z.array(AdvertisementSchema),
       })
     )
     .mutation(async ({ input, ctx }) => {
