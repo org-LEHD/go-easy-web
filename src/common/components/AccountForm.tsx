@@ -1,31 +1,20 @@
-import {
-  ActionIcon,
-  Box,
-  Button,
-  Container,
-  Flex,
-  Grid,
-  Table,
-  TextInput,
-  Select,
-  NumberInput,
-  Group,
-} from "@mantine/core";
+import { Box, Button, TextInput, Group } from "@mantine/core";
 import { useForm, zodResolver } from "@mantine/form";
-import { UserUpdateInputSchema } from "prisma/generated/zod";
+import { z } from "zod";
 
-// const userValidadationSchema = z.object({
-//   id: z.number().int(),
-//   name: z.string(),
-//   email: z.string(),
-// });
-interface AccountFormProps {
+export const userValidadationSchema = z.object({
+  id: z.number().int(),
+  name: z.string(),
+  email: z.string(),
+});
+
+export interface AccountFormProps {
   data: any;
 }
 
 export const AccountForm: React.FC<AccountFormProps> = ({ data }) => {
   const form = useForm({
-    validate: zodResolver(UserUpdateInputSchema),
+    validate: zodResolver(userValidadationSchema),
     initialValues: {
       id: data?.id,
       name: data?.name,

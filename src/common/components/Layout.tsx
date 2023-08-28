@@ -35,7 +35,7 @@ const Layout: React.FC<Props> = ({ children }) => {
     () =>
       sessionData?.user?.role == Role.Administrator
         ? [
-          { text: "Anmodninger", href: "/requests" },
+            { text: "Anmodninger", href: "/requests" },
             { text: "Annoncører", href: "/advertisers" },
             { text: "Seværdigheder", href: "/attractions" },
           ]

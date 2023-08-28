@@ -1,7 +1,6 @@
 import { z } from "zod";
-import { LocationSchema, UserSchema } from "../../../../prisma/generated/zod";
+import { UserSchema } from "../../../../prisma/generated/zod";
 import { createTRPCRouter, publicProcedure, protectedProcedure } from "../trpc";
-import { Role } from "@prisma/client";
 
 export const userRouter = createTRPCRouter({
   /**
@@ -29,22 +28,18 @@ export const userRouter = createTRPCRouter({
   /**
    * UPDATE
    */
-  update: publicProcedure
-    .input(UserSchema)
-    .mutation(async ({ input, ctx }) => {
-      return await ctx.prisma.user.update({
-        where: { id: input.id },
-        data: { ...input },
-      });
-    }),
+  update: publicProcedure.input(UserSchema).mutation(async ({ input, ctx }) => {
+    return await ctx.prisma.user.update({
+      where: { id: input.id },
+      data: { ...input },
+    });
+  }),
   /**
    * DELETE
    */
-  delete: publicProcedure
-    .input(z.number())
-    .query(async ({ ctx, input }) => {
-      return await ctx.prisma.user.delete({ where: { id: input } });
-    }),
+  delete: publicProcedure.input(z.number()).query(async ({ ctx, input }) => {
+    return await ctx.prisma.user.delete({ where: { id: input } });
+  }),
   getSecretMessage: protectedProcedure.query(() => {
     return "you can now see this secret message!";
   }),

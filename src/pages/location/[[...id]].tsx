@@ -1,29 +1,17 @@
 import { useSession } from "next-auth/react";
 import Login from "../login";
 import {
-  ActionIcon,
   Box,
   Button,
-  Container,
-  Flex,
-  Grid,
-  Table,
   TextInput,
   Select,
   NumberInput,
   Group,
 } from "@mantine/core";
-// import { api } from "../../common/utils/api";
-import { IconArrowLeft, IconArrowRight } from "@tabler/icons";
 import { useForm, zodResolver } from "@mantine/form";
-import {
-  AccessSchema,
-  CategorySchema,
-  LocationSchema,
-} from "../../../prisma/generated/zod";
-import { Access, Category } from "@prisma/client";
+import { CategorySchema } from "../../../prisma/generated/zod";
+import { Category } from "@prisma/client";
 import { z } from "zod";
-// import { mapCategoryEnumToObjects } from "../../common/utils/mapCategoryEnumToObject";
 import { useEffect } from "react";
 import { api } from "~/utils/api";
 import { mapCategoryEnumToObjects } from "~/utils/mapCategoryEnumToObject";
@@ -50,7 +38,6 @@ const Location: React.FC<LocationProps> = ({ locationId }) => {
   const { data: sessionData } = useSession();
 
   const { data } = api.location.getById.useQuery(locationId ?? 1);
-  console.log("🚀 ~ file: locations.tsx:13 ~ data:", data);
 
   useEffect(() => {
     if (!data) return;
@@ -72,7 +59,7 @@ const Location: React.FC<LocationProps> = ({ locationId }) => {
       long: data?.long ?? null,
     },
   });
-  
+
   if (!data) return <></>;
 
   if (sessionData?.user === undefined) {
