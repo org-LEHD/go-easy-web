@@ -16,17 +16,17 @@ import { useEffect } from "react";
 import { api } from "~/utils/api";
 import { mapCategoryEnumToObjects } from "~/utils/mapCategoryEnumToObject";
 import LocationForm from "~/common/components/LocationForm";
-import { useSearchParams } from 'next/navigation'
+import AdvertisementForm from "~/common/components/AdvertisementForm";
 import { useRouter } from "next/router";
 
-const Location: React.FC = ({}) => {
+const Advertisement: React.FC = ({}) => {
   const { data: sessionData } = useSession();
 
   const routerInfo = useRouter();
   const {id} = routerInfo.query;  
   const routerParam = id && id[0] !== undefined ? Number(id[0]) : 0;
 
-  const { data } = api.location.getById.useQuery(routerParam);
+  const { data } = api.advertisement.getById.useQuery(routerParam);
 
   if (!data) return <></>;
 
@@ -35,9 +35,9 @@ const Location: React.FC = ({}) => {
   }
   return (
     <Box sx={{ maxWidth: 340 }} mx="auto">
-      <LocationForm data={data} />
+      <AdvertisementForm data={data} />
     </Box>
   );
 };
 
-export default Location;
+export default Advertisement;
