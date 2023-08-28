@@ -23,26 +23,24 @@ export const AccountForm: React.FC<AccountFormProps> = ({ data }) => {
   });
 
   return (
-    <Box sx={{ maxWidth: 340 }} mx="auto">
-      <form onSubmit={form.onSubmit((values) => console.log(values))}>
-        <TextInput
-          withAsterisk
-          label="Navn"
-          placeholder="john doe"
-          {...form.getInputProps("name")}
-        />
-        <TextInput
-          withAsterisk
-          label="Email"
-          placeholder="email@mail.com"
-          mt="sm"
-          {...form.getInputProps("email")}
-        />
-        <Group position="right" mt="xl">
-          <Button type="submit">Submit</Button>
-        </Group>
-      </form>
-    </Box>
+    <form onSubmit={form.onSubmit((values) => console.log(values))}>
+      <TextInput
+        withAsterisk
+        label="Navn"
+        placeholder="john doe"
+        {...form.getInputProps("name")}
+      />
+      <TextInput
+        withAsterisk
+        label="Email"
+        placeholder="email@mail.com"
+        mt="sm"
+        {...form.getInputProps("email")}
+      />
+      <Group position="right" mt="xl">
+        <Button type="submit">Submit</Button>
+      </Group>
+    </form>
   );
 };
 export default AccountForm;
