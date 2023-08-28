@@ -1,4 +1,4 @@
-import { Box, Button, TextInput, Group } from "@mantine/core";
+import { Button, TextInput, Group } from "@mantine/core";
 import { useForm, zodResolver } from "@mantine/form";
 import { z } from "zod";
 

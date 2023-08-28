@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",
+    "@formkit/auto-animate": "^0.7.0",
     "@mantine/core": "^6.0.19",
     "@mantine/dates": "^6.0.19",
     "@mantine/dropzone": "^6.0.19",
