@@ -7,6 +7,7 @@ export const advertisementRouter = createTRPCRouter({
   getById: publicProcedure.input(z.number()).query(async ({ input, ctx }) => {
     return await ctx.prisma.advertisement.findFirst({
       where: { id: input },
+      include: { location: true },
     });
   }),
 

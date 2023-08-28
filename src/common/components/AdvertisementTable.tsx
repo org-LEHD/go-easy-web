@@ -27,14 +27,14 @@ export const AdvertisementTable: React.FC<AdvertisementTableProps> = ({
         {advertisements?.map((advertisement, key) => (
           <tr key={key}>
             <td>{advertisement.id}</td>
-            <td>{advertisement.name}</td>
-            <td>{`${advertisement.start.getDate()}/${advertisement.start.getMonth()}}`}</td>
-            <td>{`${advertisement.slut.getDate()}/${advertisement.slut.getMonth()}}`}</td>
+            <td>{advertisement.title}</td>
+            <td>{`${advertisement.start.getUTCDate()}/${advertisement.start.getUTCMonth()+1} ${advertisement.start.getHours()}:${advertisement.start.getMinutes()}`}</td>
+            <td>{`${advertisement.end.getUTCDate()}/${advertisement.end.getUTCMonth()+1} ${advertisement.start.getHours()}:${advertisement.start.getMinutes()}`}</td>
             <td>{advertisement.location.name}</td>
-            <td>{`${advertisement.slut.getDate()}/${advertisement.createdAt.getMonth()}/${advertisement.createdAt.getMonth()}}`}</td>
+            <td>{`${advertisement.createdAt.getUTCDate()}/${advertisement.createdAt.getUTCMonth()+1}/${advertisement.createdAt.getFullYear()}`}</td>
             <td>
               <NavLink
-                href={`/location/${advertisement.location.id}`}
+                href={`/advertisement/${advertisement.id}`}
                 component="a"
                 icon={<IconArrowRight color="blue" />}
               />
