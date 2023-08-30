@@ -1,14 +1,15 @@
 import { useSession } from "next-auth/react";
 import Login from "./login";
-import { Button, Container, Flex } from "@mantine/core";
+import { Button, Container, Flex, NavLink } from "@mantine/core";
 import { api } from "~/utils/api";
 import { AdvertisementTable } from "~/common/components/AdvertisementTable";
+import { IconArrowRight } from "@tabler/icons";
 
 const Advertisements: React.FC = () => {
   const { data: sessionData } = useSession();
 
   const { data: advertisements, isLoading } =
-    api.advertisement.getAllById.useQuery(sessionData?.user?.id ?? 0, {
+    api.advertisement.getAllByUserId.useQuery(sessionData?.user?.id ?? 0, {
       enabled: sessionData?.user.id !== undefined,
     });
 
@@ -19,7 +20,11 @@ const Advertisements: React.FC = () => {
       <Flex direction={"column"} gap={"md"}>
         <h1>Annoncer</h1>
         <AdvertisementTable advertisements={advertisements as any} />
-        <Button>Ny Annonce</Button>
+        <NavLink
+          href={`/advertisement/new`}
+          component="a"
+          icon={<IconArrowRight color="blue" />}
+          />
       </Flex>
     </Container>
   );

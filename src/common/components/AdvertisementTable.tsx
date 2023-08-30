@@ -1,5 +1,7 @@
 import { NavLink, Table } from "@mantine/core";
 import { IconArrowRight } from "@tabler/icons";
+import { start } from "repl";
+import { formatDate, formatDateTime } from "~/utils/dateFormatter";
 
 interface AdvertisementTableProps {
   advertisements: any[];
@@ -16,10 +18,12 @@ export const AdvertisementTable: React.FC<AdvertisementTableProps> = ({
         <tr>
           <th>AnnonceID</th>
           <th>Navn</th>
+          <th>Forretning</th>
           <th>Start</th>
           <th>Slut</th>
-          <th>Forretning</th>
           <th>Oprettet</th>
+          <th>Sidst ændret</th>
+
           <th> </th>
         </tr>
       </thead>
@@ -28,10 +32,11 @@ export const AdvertisementTable: React.FC<AdvertisementTableProps> = ({
           <tr key={key}>
             <td>{advertisement.id}</td>
             <td>{advertisement.title}</td>
-            <td>{`${advertisement.start.getUTCDate()}/${advertisement.start.getUTCMonth()+1} ${advertisement.start.getHours()}:${advertisement.start.getMinutes()}`}</td>
-            <td>{`${advertisement.end.getUTCDate()}/${advertisement.end.getUTCMonth()+1} ${advertisement.start.getHours()}:${advertisement.start.getMinutes()}`}</td>
             <td>{advertisement.location.name}</td>
-            <td>{`${advertisement.createdAt.getUTCDate()}/${advertisement.createdAt.getUTCMonth()+1}/${advertisement.createdAt.getFullYear()}`}</td>
+            <td>{`${formatDateTime(advertisement.start)}`}</td>
+            <td>{`${formatDateTime(advertisement.end)}`}</td>
+            <td>{`${formatDate(advertisement.createdAt)}`}</td>
+            <td>{`${formatDate(advertisement.updatedAt)}`}</td>
             <td>
               <NavLink
                 href={`/advertisement/${advertisement.id}`}
