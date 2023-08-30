@@ -14,7 +14,7 @@ import { Category } from "@prisma/client";
 import { z } from "zod";
 import { useEffect } from "react";
 import { api } from "~/utils/api";
-import { mapCategoryEnumToObjects } from "~/utils/mapCategoryEnumToObject";
+import { mapCategoryEnumToObject } from "~/utils/mapCategoryEnumToObject";
 import LocationForm from "~/common/components/LocationForm";
 import AdvertisementForm from "~/common/components/AdvertisementForm";
 import { useRouter } from "next/router";

@@ -13,7 +13,7 @@ import { CategorySchema } from "../../../prisma/generated/zod";
 import { type $Enums, Category } from "@prisma/client";
 import { z } from "zod";
 import { useState } from "react";
-import { mapCategoryEnumToObjects } from "~/utils/mapCategoryEnumToObject";
+import { mapCategoryEnumToObject } from "~/utils/mapCategoryEnumToObject";
 import { useQuery } from "@tanstack/react-query";
 import { useDebouncedValue } from "@mantine/hooks";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
@@ -200,7 +200,7 @@ export const LocationForm: React.FC<LocationFormProps> = ({ data }) => {
         label="Kategori"
         placeholder="Vælg en kategori"
         mt="sm"
-        data={mapCategoryEnumToObjects()}
+        data={mapCategoryEnumToObject()}
         {...form.getInputProps("category")}
       />
       <NumberInput

@@ -1,6 +1,6 @@
 import { Category } from "@prisma/client";
 
-export function mapCategoryEnumToObjects() {
+export function mapCategoryEnumToObject() {
   const categoryValues = Object.values(Category);
   const categoryMap = categoryValues.map((value) => ({
     value: Category[value],

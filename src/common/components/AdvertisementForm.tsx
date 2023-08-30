@@ -13,7 +13,7 @@ import { Category } from "@prisma/client";
 import { z } from "zod";
 import { useEffect } from "react";
 import { api } from "~/utils/api";
-import { mapCategoryEnumToObjects } from "~/utils/mapCategoryEnumToObject";
+import { mapCategoryEnumToObject } from "~/utils/mapCategoryEnumToObject";
 import { DateTimePicker } from "@mantine/dates";
 
 const advertisementValidationSchema = z.object({
