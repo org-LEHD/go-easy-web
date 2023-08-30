@@ -2,10 +2,10 @@ import { useSession } from "next-auth/react";
 import Login from "../login";
 import { Box } from "@mantine/core";
 
-import LocationForm from "~/common/components/LocationForm";
+import AdvertisementForm from "~/common/components/AdvertisementForm";
 
 
-const Location: React.FC = () => {
+const Advertisement: React.FC = () => {
   const { data: sessionData } = useSession();
 
   if (sessionData?.user === undefined) {
@@ -13,9 +13,9 @@ const Location: React.FC = () => {
   }
   return (
     <Box sx={{ maxWidth: 340 }} mx="auto">
-      <LocationForm data={undefined} />
+      <AdvertisementForm data={undefined} />
     </Box>
   );
 };
 
-export default Location;
+export default Advertisement;

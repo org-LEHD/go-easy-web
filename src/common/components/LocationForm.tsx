@@ -239,7 +239,7 @@ export const LocationForm: React.FC<LocationFormProps> = ({ data }) => {
         {...form.getInputProps("thumbnail")}
       />
       <Group position="right" mt="xl">
-        <Button type="submit">Submit</Button>
+        <Button type="submit" variant="outline">Submit</Button>
       </Group>
     </form>
   );
