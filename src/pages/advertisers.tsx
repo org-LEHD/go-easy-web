@@ -23,6 +23,14 @@ const Advertisers: React.FC = () => {
             ) ?? []
           }
         />
+        <h1>Deaktiverede annoncøre</h1>
+        <UserTable
+          users={
+            users?.filter(
+              (user) => user.access === Access.Disabled.toString()
+            ) ?? []
+          }
+        />
       </Flex>
     </Container>
   );

@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { UserSchema } from "../../../../prisma/generated/zod";
 import { createTRPCRouter, publicProcedure, protectedProcedure } from "../trpc";
+import { Access, Role } from "@prisma/client";
 
 export const userRouter = createTRPCRouter({
   /**
@@ -30,6 +30,28 @@ export const userRouter = createTRPCRouter({
    */
   update: publicProcedure
     .input(z.object({ id: z.number(), name: z.string(), email: z.string() }))
+    .mutation(async ({ input, ctx }) => {
+      return await ctx.prisma.user.update({
+        where: { id: input.id },
+        data: { ...input },
+      });
+    }),
+  /**
+   * UPDATE ACCESS
+   */
+  updateAccess: publicProcedure
+    .input(z.object({ id: z.number(), access: z.nativeEnum(Access), }))
+    .mutation(async ({ input, ctx }) => {
+      return await ctx.prisma.user.update({
+        where: { id: input.id },
+        data: { ...input },
+      });
+    }),
+  /**
+   * UPDATE ROLE
+   */
+  updateRole: publicProcedure
+    .input(z.object({ id: z.number(), role: z.nativeEnum(Role), }))
     .mutation(async ({ input, ctx }) => {
       return await ctx.prisma.user.update({
         where: { id: input.id },

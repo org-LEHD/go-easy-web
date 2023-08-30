@@ -38,7 +38,7 @@ export const CategorySchema = z.enum(['Undefined','Restaurant','Bar','Theater','
 
 export type CategoryType = `${z.infer<typeof CategorySchema>}`
 
-export const AccessSchema = z.enum(['Pending','Granted','Denied']);
+export const AccessSchema = z.enum(['Pending','Granted','Denied','Disabled']);
 
 export type AccessType = `${z.infer<typeof AccessSchema>}`
 
