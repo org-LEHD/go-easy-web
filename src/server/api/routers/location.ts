@@ -1,6 +1,5 @@
 import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "../trpc";
-import { AdvertisementSchema } from "../../../../prisma/generated/zod";
 import { Category } from "@prisma/client";
 
 export const locationRouter = createTRPCRouter({

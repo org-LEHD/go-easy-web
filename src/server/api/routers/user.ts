@@ -28,12 +28,14 @@ export const userRouter = createTRPCRouter({
   /**
    * UPDATE
    */
-  update: publicProcedure.input(UserSchema).mutation(async ({ input, ctx }) => {
-    return await ctx.prisma.user.update({
-      where: { id: input.id },
-      data: { ...input },
-    });
-  }),
+  update: publicProcedure
+    .input(z.object({ id: z.number(), name: z.string(), email: z.string() }))
+    .mutation(async ({ input, ctx }) => {
+      return await ctx.prisma.user.update({
+        where: { id: input.id },
+        data: { ...input },
+      });
+    }),
   /**
    * DELETE
    */

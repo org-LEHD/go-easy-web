@@ -1,6 +1,9 @@
 import { Button, TextInput, Group } from "@mantine/core";
 import { useForm, zodResolver } from "@mantine/form";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 import { z } from "zod";
+import { api } from "~/utils/api";
 
 export const userValidadationSchema = z.object({
   id: z.number().int(),
@@ -8,11 +11,21 @@ export const userValidadationSchema = z.object({
   email: z.string(),
 });
 
+interface UserObject {
+  id: number;
+  name: string;
+  email: string;
+}
+
 export interface AccountFormProps {
   data: any;
 }
 
 export const AccountForm: React.FC<AccountFormProps> = ({ data }) => {
+  const session = useSession();
+  const router = useRouter();
+  const { mutate: updateMutation } = api.user.update.useMutation({onSuccess: () => router.reload()});
+
   const form = useForm({
     validate: zodResolver(userValidadationSchema),
     initialValues: {
@@ -22,8 +35,16 @@ export const AccountForm: React.FC<AccountFormProps> = ({ data }) => {
     },
   });
 
+  const onSubmitUpdate = (values: UserObject) => {
+    if (!session.data?.user.id) return;
+    updateMutation({
+      ...values,
+      id: session.data.user.id,
+    });
+  };
+
   return (
-    <form onSubmit={form.onSubmit((values) => console.log(values))}>
+    <form onSubmit={form.onSubmit((values) => onSubmitUpdate(values))}>
       <TextInput
         withAsterisk
         label="Navn"

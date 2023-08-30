@@ -89,21 +89,22 @@ export const LocationForm: React.FC<LocationFormProps> = ({ data }) => {
   const routerInfo = useRouter();
   const { id } = routerInfo.query;
   const routerParam = id?.[0] !== undefined ? Number(id[0]) : 0;
+  
+  const router = useRouter();
 
-  const { mutate: updateMutation } = api.location.update.useMutation();
-  const { mutate: createMutation } = api.location.create.useMutation();
+  const { mutate: updateMutation } = api.location.update.useMutation({onSuccess: () => router.push('/locations')});
+  const { mutate: createMutation } = api.location.create.useMutation({onSuccess: () => router.push('/locations')});
+
 
   const onSubmitUpdate = (values: LocationObject) => {
     if (!session.data?.user.id) return;
     if (routerParam !== 0) {
-      console.log("got to update");
       updateMutation({
         userId: session.data?.user.id,
         ...values,
         id: routerParam,
-      } as any);
+      });
     } else {
-      console.log("got to create");
       const payload = {
         userId: session.data?.user.id,
         ...values,
