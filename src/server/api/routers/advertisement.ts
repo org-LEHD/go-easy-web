@@ -12,9 +12,20 @@ export const advertisementRouter = createTRPCRouter({
   }),
 
   /**
-   * GET ALL BY ID
+   * GET ALL BY USER ID
    */
-  getAllById: publicProcedure
+  getAllByUserId: publicProcedure
+    .input(z.number())
+    .query(async ({ input, ctx }) => {
+      return await ctx.prisma.advertisement.findMany({
+        where: { location: {userId: input} },
+        include: { location: true, },
+      });
+    }),
+  /**
+   * GET ALL BY LOCATION ID
+   */
+    getAllByLocationId: publicProcedure
     .input(z.number())
     .query(async ({ input, ctx }) => {
       return await ctx.prisma.advertisement.findMany({
@@ -22,7 +33,6 @@ export const advertisementRouter = createTRPCRouter({
         include: { location: true },
       });
     }),
-
   // GET ALL
   getAll: publicProcedure.query(({ ctx }) => {
     return ctx.prisma.advertisement.findMany({});

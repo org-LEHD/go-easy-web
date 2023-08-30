@@ -15,26 +15,58 @@ import { useEffect } from "react";
 import { api } from "~/utils/api";
 import { mapCategoryEnumToObjects } from "~/utils/mapCategoryEnumToObject";
 import { DateTimePicker } from "@mantine/dates";
+import { useRouter } from "next/router";
 
 const advertisementValidationSchema = z.object({
-  id: z.number().int(),
-  locationId: z.string(),
+  locationId: z.number().int(),
   title: z.string(),
   description: z.string(),
   media: z.string(),
-  start: z.string(),
-  end: z.string(),
-  createdAt: z.date(),
-  updatedAt: z.date(),
+  start: z.date(),
+  end: z.date(),
 });
 
 export interface AdvertisementFormProps {
-  data: any;
+  data: AdvertisementObject | null | undefined;
+}
+
+interface AdvertisementObject {
+  locationId: number;
+  title: string;
+  description?: string;
+  media?: string;
+  start?: Date;
+  end?: Date;
 }
 
 export const AdvertisementForm: React.FC<AdvertisementFormProps> = ({
   data,
 }) => {
+  const router = useRouter();
+  const { id } = router.query;
+  const routerParam = id?.[0] !== undefined ? Number(id[0]) : 0;
+
+  const { mutate: updateMutation } = api.advertisement.update.useMutation({onSuccess: () => router.push("/advertisements")});
+  const { mutate: createMutation } = api.advertisement.create.useMutation({onSuccess: () => router.push("/advertisements")});
+
+  const onSubmitUpdate = (values: AdvertisementObject) => {
+    console.log("Entry of onSubmitUpdate");
+    if (routerParam !== 0) {
+      console.log("got to update");
+      updateMutation({
+        ...values,
+        id: routerParam,
+      } as any);
+    } else {
+      console.log("got to create");
+      const payload = {
+        ...values,
+      } as any;
+      delete payload.id;
+      createMutation(payload);
+    }
+  };
+
   const form = useForm({
     validate: zodResolver(advertisementValidationSchema),
     initialValues: {
@@ -42,20 +74,15 @@ export const AdvertisementForm: React.FC<AdvertisementFormProps> = ({
       title: data?.title ?? "",
       description: data?.description ?? "",
       media: data?.media ?? "",
-      start: data?.start ?? null,
-      end: data?.end ?? null,
+      start: data?.start ?? new Date(),
+      end: data?.end ?? new Date(),
       createdAt: z.date() ?? null,
       updatedAt: z.date() ?? null,
     },
   });
 
-  useEffect(() => {
-    if (!data) return;
-    form.setValues({ ...data });
-  }, [data]);
-  
   return (
-    <form onSubmit={form.onSubmit((values) => console.log(values))}>
+    <form onSubmit={form.onSubmit((values) => onSubmitUpdate(values))}>
       <NumberInput
         withAsterisk
         label="Lokation id"
@@ -78,7 +105,7 @@ export const AdvertisementForm: React.FC<AdvertisementFormProps> = ({
       />
       <TextInput
         withAsterisk
-        label="Media "
+        label="Media"
         placeholder="https://i.imgur.com/uvFEcJN.jpeg"
         mt="sm"
         {...form.getInputProps("media")}
@@ -98,7 +125,7 @@ export const AdvertisementForm: React.FC<AdvertisementFormProps> = ({
         {...form.getInputProps("end")}
       />
       <Group position="right" mt="xl">
-        <Button type="submit">Submit</Button>
+        <Button type="submit" variant="outline">Submit</Button>
       </Group>
     </form>
   );
