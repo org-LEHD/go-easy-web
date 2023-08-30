@@ -1,6 +1,6 @@
 import { Role } from "@prisma/client";
 
-type RoleEnumKeys = keyof typeof Role;
+export type RoleEnumKeys = keyof typeof Role;
 
 export function mapRoleEnumToObject(
   exclude: RoleEnumKeys[] = []

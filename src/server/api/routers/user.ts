@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { createTRPCRouter, publicProcedure, protectedProcedure } from "../trpc";
-import { Access } from "@prisma/client";
+import { Access, Role } from "@prisma/client";
 
 export const userRouter = createTRPCRouter({
   /**
@@ -41,6 +41,17 @@ export const userRouter = createTRPCRouter({
    */
   updateAccess: publicProcedure
     .input(z.object({ id: z.number(), access: z.nativeEnum(Access), }))
+    .mutation(async ({ input, ctx }) => {
+      return await ctx.prisma.user.update({
+        where: { id: input.id },
+        data: { ...input },
+      });
+    }),
+  /**
+   * UPDATE ROLE
+   */
+  updateRole: publicProcedure
+    .input(z.object({ id: z.number(), role: z.nativeEnum(Role), }))
     .mutation(async ({ input, ctx }) => {
       return await ctx.prisma.user.update({
         where: { id: input.id },

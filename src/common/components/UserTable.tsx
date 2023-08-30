@@ -1,8 +1,6 @@
 import { NavLink, Table, Select } from "@mantine/core";
-import { Role } from "@prisma/client";
 import { IconArrowRight } from "@tabler/icons";
 import { useSession } from "next-auth/react";
-import { useState } from "react";
 import Login from "~/pages/login";
 import { api } from "~/utils/api";
 import {
@@ -10,6 +8,8 @@ import {
   mapAccessEnumToObject,
 } from "~/utils/mapAccessEnumToObject";
 import { useRouter } from "next/router";
+import { usePathname } from "next/navigation";
+import { RoleEnumKeys, mapRoleEnumToObject } from "~/utils/mapRoleEnumToObject";
 
 interface UserTableProps {
   users: any[];
@@ -18,22 +18,34 @@ interface UserTableProps {
 export const UserTable: React.FC<UserTableProps> = ({ users }) => {
   const { data: sessionData } = useSession();
   const router = useRouter();
-  const [value, setValue] = useState<string | null>(null);
-  const { mutate: updateMutation } = api.user.updateAccess.useMutation({
+  const pathName = usePathname();
+  const isRequestPage = pathName === "/requests";
+
+  const { mutate: updateAccessMutation } = api.user.updateAccess.useMutation({
     onSuccess: () => router.reload(),
   });
-
-  if (!users.length) return <div>Der findes ingen brugere her</div>;
-  if (sessionData?.user === undefined) return <Login />;
+  const { mutate: updateRoleMutation } = api.user.updateRole.useMutation();
 
   const setAccessValue = (item: AccessEnumKeys, userId: number) => {
     if (!item) return;
-    updateMutation({
+    updateAccessMutation({
       id: userId,
       access: item,
     });
-    setValue(item);
   };
+  const setRoleValue = (item: RoleEnumKeys, userId: number) => {
+    if (!item) return;
+    updateRoleMutation({
+      id: userId,
+      role: item,
+    });
+    updateAccessMutation({
+      id: userId,
+      access: "Granted",
+    });
+  };
+
+  if (sessionData?.user === undefined) return <Login />;
   return (
     <Table>
       <thead>
@@ -43,41 +55,60 @@ export const UserTable: React.FC<UserTableProps> = ({ users }) => {
           <th>Role</th>
           <th>Access</th>
           <th>Oprettet</th>
-          <th> </th>
+          {!isRequestPage && <th> Lokationer </th>}
         </tr>
       </thead>
       <tbody>
-        {users?.map((user, key) => (
-          <tr key={key}>
-            <td>{user.name}</td>
-            <td>{user.email}</td>
-            <td>{user.role}</td>
-            <td>
-              <Select
-                placeholder="Giv adgang"
-                mt="sm"
-                value={value}
-                onChange={(item: AccessEnumKeys) =>
-                  setAccessValue(item, user.id)
-                }
-                data={mapAccessEnumToObject(["Pending"])}
-              />
-            </td>
-            <td>
-              {sessionData.user.role === Role.Administrator
-                ? "You are an admin tho"
-                : user.access}
-            </td>
-            <td>{`${user.createdAt.getDate()}/${user.createdAt.getMonth()}/${user.createdAt.getFullYear()}`}</td>
-            <td>
-              <NavLink
-                href={`/request/${user.id}`}
-                component="a"
-                icon={<IconArrowRight color="blue" />}
-              />
+        {users.length > 0 ? (
+          users?.map((user, key) => (
+            <tr key={key}>
+              <td>{user.name}</td>
+              <td>{user.email}</td>
+              <td>
+                <Select
+                  placeholder="Giv adgang"
+                  mt="sm"
+                  defaultValue={user.role}
+                  onChange={(item: RoleEnumKeys) => setRoleValue(item, user.id)}
+                  data={mapRoleEnumToObject()}
+                />
+              </td>
+              <td>
+                <Select
+                  placeholder="Giv adgang"
+                  mt="sm"
+                  defaultValue={user.access}
+                  onChange={(item: AccessEnumKeys) =>
+                    setAccessValue(item, user.id)
+                  }
+                  data={mapAccessEnumToObject(
+                    pathName === "/requests"
+                      ? ["Disabled"]
+                      : ["Pending", "Denied"]
+                  )}
+                />
+              </td>
+              <td>{`${user.createdAt.getDate()}/${user.createdAt.getMonth()}/${user.createdAt.getFullYear()}`}</td>
+              <td>
+                {!isRequestPage && user.role !== "Administrator" && (
+                  <NavLink
+                    href={`/advertiser/${user.id}`}
+                    component="a"
+                    icon={<IconArrowRight color="blue" />}
+                  />
+                )}
+              </td>
+            </tr>
+          ))
+        ) : (
+          <tr>
+            <td colSpan={isRequestPage ? 5 : 6}>
+              {isRequestPage
+                ? `Der er endnu ikke nogle benægtede annoncøre her`
+                : `Der er endnu ikke nogle deaktiverede annoncøre her`}
             </td>
           </tr>
-        ))}
+        )}
       </tbody>
     </Table>
   );
