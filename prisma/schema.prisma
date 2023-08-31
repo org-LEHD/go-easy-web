@@ -78,7 +78,6 @@ model Location {
     summary       String
     description   String
     thumbnail     String
-    access        Access          @default(Pending)
     createdAt     DateTime        @default(now())
     updatedAt     DateTime        @updatedAt
     Advertisement Advertisement[]
@@ -108,7 +107,8 @@ model PointOfInterest {
     address     String
     lat         Float
     long        Float
-    media       String
+    thumbnail   String
+    description String
     createdAt   DateTime @default(now())
     updatedAt   DateTime @updatedAt
 }

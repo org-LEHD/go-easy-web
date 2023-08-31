@@ -1,6 +1,6 @@
 import { useSession } from "next-auth/react";
 import Login from "./login";
-import { Container, Flex } from "@mantine/core";
+import { Container, Flex, LoadingOverlay } from "@mantine/core";
 import { api } from "~/utils/api";
 import { Access } from "@prisma/client";
 import { UserTable } from "~/common/components/UserTable";
@@ -11,9 +11,10 @@ const Advertisers: React.FC = () => {
   const { data: users, isLoading } = api.user.getAll.useQuery();
 
   if (sessionData?.user === undefined) return <Login />;
-  if (isLoading) return <div>Im loading</div>;
+
   return (
     <Container>
+      <LoadingOverlay visible={isLoading} overlayBlur={2} />
       <Flex direction={"column"} gap={"md"}>
         <h1>Annoncører</h1>
         <UserTable

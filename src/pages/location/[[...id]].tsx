@@ -1,23 +1,8 @@
 import { useSession } from "next-auth/react";
 import Login from "../login";
-import {
-  Box,
-  Button,
-  TextInput,
-  Select,
-  NumberInput,
-  Group,
-  Stack,
-  Flex,
-} from "@mantine/core";
-import { useForm, zodResolver } from "@mantine/form";
-import { CategorySchema } from "../../../prisma/generated/zod";
-import { Category } from "@prisma/client";
-import { z } from "zod";
-import { useEffect } from "react";
+import { Box, LoadingOverlay, Flex } from "@mantine/core";
 import { api } from "~/utils/api";
 import LocationForm from "~/common/components/LocationForm";
-import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/router";
 import { AdvertisementTable } from "~/common/components/AdvertisementTable";
 
@@ -32,19 +17,16 @@ const Location: React.FC = ({}) => {
   const { data: advertisements, isLoading } =
     api.advertisement.getAllByLocationId.useQuery(routerParam);
 
-  if (!data) return <></>;
-
-  if (sessionData?.user === undefined) {
-    return <Login />;
-  }
+  if (sessionData?.user === undefined) return <Login />;
   return (
     <Flex justify={"center"}>
+      <LoadingOverlay visible={isLoading} overlayBlur={2} />
       <Box sx={{ maxWidth: 340 }}>
         <LocationForm data={data} />
       </Box>
       <Box mx={"right"}>
         {advertisements && (
-          <AdvertisementTable advertisements={advertisements as any} />
+          <AdvertisementTable advertisements={advertisements ?? []} />
         )}
       </Box>
     </Flex>

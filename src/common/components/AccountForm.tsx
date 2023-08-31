@@ -1,4 +1,4 @@
-import { Button, TextInput, Group } from "@mantine/core";
+import { Button, TextInput, Group, LoadingOverlay } from "@mantine/core";
 import { useForm, zodResolver } from "@mantine/form";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
@@ -24,7 +24,7 @@ export interface AccountFormProps {
 export const AccountForm: React.FC<AccountFormProps> = ({ data }) => {
   const session = useSession();
   const router = useRouter();
-  const { mutate: updateMutation } = api.user.update.useMutation({onSuccess: () => router.reload()});
+  const { mutate: updateMutation, isLoading } = api.user.update.useMutation({onSuccess: () => router.reload()});
 
   const form = useForm({
     validate: zodResolver(userValidadationSchema),
@@ -45,6 +45,7 @@ export const AccountForm: React.FC<AccountFormProps> = ({ data }) => {
 
   return (
     <form onSubmit={form.onSubmit((values) => onSubmitUpdate(values))}>
+      <LoadingOverlay visible={isLoading} overlayBlur={2} />
       <TextInput
         withAsterisk
         label="Navn"

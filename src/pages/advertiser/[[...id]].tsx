@@ -1,11 +1,34 @@
 import { useSession } from "next-auth/react";
 import Login from "../login";
+import { LocationTable } from "~/common/components/LocationTable";
+import { api } from "~/utils/api";
+import { useRouter } from "next/router";
+import { Container, LoadingOverlay } from "@mantine/core";
+import { pluralizeWithUppercase } from "~/utils/pluralizeWithUppercase";
 
 const Account: React.FC = () => {
   const { data: sessionData } = useSession();
-  if (sessionData === null) {
-    return <Login />;
-  }
-  return <div>requestoo</div>;
+  const routerInfo = useRouter();
+  const { id } = routerInfo.query;
+  const routerParam = id?.[0] !== undefined ? Number(id[0]) : 0;
+
+  const { data: locations, isLoading } = api.location.getAllById.useQuery(
+    routerParam,
+    { enabled: routerParam !== undefined }
+  );
+
+  const { data: user, isLoading: isLoadingUser } = api.user.getById.useQuery(
+    routerParam,
+    { enabled: routerParam !== undefined }
+  );
+
+  if (sessionData === null) return <Login />;
+  return (
+    <Container>
+      <LoadingOverlay visible={isLoading ?? isLoadingUser} overlayBlur={2} />
+      <h1>{`${pluralizeWithUppercase(user?.name ?? "")} Lokationer`}</h1>
+      <LocationTable locations={locations ?? []} />
+    </Container>
+  );
 };
 export default Account;

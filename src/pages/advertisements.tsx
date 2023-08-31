@@ -1,6 +1,6 @@
 import { useSession } from "next-auth/react";
 import Login from "./login";
-import { Button, Container, Flex, NavLink } from "@mantine/core";
+import { LoadingOverlay, Container, Flex, NavLink } from "@mantine/core";
 import { api } from "~/utils/api";
 import { AdvertisementTable } from "~/common/components/AdvertisementTable";
 import { IconArrowRight } from "@tabler/icons";
@@ -14,9 +14,10 @@ const Advertisements: React.FC = () => {
     });
 
   if (sessionData?.user === undefined) return <Login />;
-  if (isLoading) return <div>Im loading</div>;
+
   return (
     <Container>
+      <LoadingOverlay visible={isLoading} overlayBlur={2} />
       <Flex direction={"column"} gap={"md"}>
         <h1>Annoncer</h1>
         <AdvertisementTable advertisements={advertisements as any} />
@@ -24,7 +25,7 @@ const Advertisements: React.FC = () => {
           href={`/advertisement/new`}
           component="a"
           icon={<IconArrowRight color="blue" />}
-          />
+        />
       </Flex>
     </Container>
   );
