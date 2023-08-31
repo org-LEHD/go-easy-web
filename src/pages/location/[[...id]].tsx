@@ -22,7 +22,7 @@ const Location: React.FC = ({}) => {
     <Flex justify={"center"}>
       <LoadingOverlay visible={isLoading} overlayBlur={2} />
       <Box sx={{ maxWidth: 340 }}>
-        <LocationForm data={data} />
+        {data && <LocationForm data={data} />}
       </Box>
       <Box mx={"right"}>
         {advertisements && (
