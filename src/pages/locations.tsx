@@ -1,6 +1,6 @@
 import { useSession } from "next-auth/react";
 import Login from "./login";
-import { Container, Flex, NavLink } from "@mantine/core";
+import { Container, Flex, NavLink, LoadingOverlay } from "@mantine/core";
 import { api } from "~/utils/api";
 import { LocationTable } from "~/common/components/LocationTable";
 import { IconArrowRight } from "@tabler/icons";
@@ -13,9 +13,9 @@ const Locations: React.FC = () => {
   );
 
   if (sessionData?.user === undefined) return <Login />;
-  if (isLoading) return <div>Im loading</div>;
   return (
     <Container>
+      <LoadingOverlay visible={isLoading} overlayBlur={2} />
       <Flex direction={"column"} gap={"md"}>
         <h1>Lokationer</h1>
         <LocationTable locations={locations as any} />

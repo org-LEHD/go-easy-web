@@ -1,7 +1,8 @@
 import { NavLink, Table } from "@mantine/core";
 import { IconArrowRight } from "@tabler/icons";
-import { start } from "repl";
 import { formatDate, formatDateTime } from "~/utils/dateFormatter";
+// import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 
 interface AdvertisementTableProps {
   advertisements: any[];
@@ -10,8 +11,11 @@ interface AdvertisementTableProps {
 export const AdvertisementTable: React.FC<AdvertisementTableProps> = ({
   advertisements,
 }) => {
-  if (!advertisements.length)
-    return <div>Du har ikke oprettet nogen annoncer endnu</div>;
+  const router = useRouter();
+  const isAdvertiserPage = router.asPath.startsWith('/advertiser/locations')
+  // const { data: sessionData } = useSession();
+  // const isAdmin = sessionData?.user.role === "Administrator";
+
   return (
     <Table>
       <thead>
@@ -23,8 +27,7 @@ export const AdvertisementTable: React.FC<AdvertisementTableProps> = ({
           <th>Slut</th>
           <th>Oprettet</th>
           <th>Sidst ændret</th>
-
-          <th> </th>
+          {!isAdvertiserPage && <th> </th>}
         </tr>
       </thead>
       <tbody>
@@ -37,15 +40,20 @@ export const AdvertisementTable: React.FC<AdvertisementTableProps> = ({
             <td>{`${formatDateTime(advertisement.end)}`}</td>
             <td>{`${formatDate(advertisement.createdAt)}`}</td>
             <td>{`${formatDate(advertisement.updatedAt)}`}</td>
-            <td>
+            {!isAdvertiserPage && <td>
               <NavLink
                 href={`/advertisement/${advertisement.id}`}
                 component="a"
                 icon={<IconArrowRight color="blue" />}
               />
-            </td>
+            </td>}
           </tr>
         ))}
+        {advertisements?.length === 0 && (
+          <tr>
+            <td colSpan={5}>Denne lokation har endnu ingen annoncer.</td>
+          </tr>
+        )}
       </tbody>
     </Table>
   );

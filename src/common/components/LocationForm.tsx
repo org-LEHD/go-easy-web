@@ -7,6 +7,7 @@ import {
   Group,
   Text,
   Textarea,
+  LoadingOverlay
 } from "@mantine/core";
 import { useForm, zodResolver } from "@mantine/form";
 import { CategorySchema } from "../../../prisma/generated/zod";
@@ -92,8 +93,8 @@ export const LocationForm: React.FC<LocationFormProps> = ({ data }) => {
   
   const router = useRouter();
 
-  const { mutate: updateMutation } = api.location.update.useMutation({onSuccess: () => router.push('/locations')});
-  const { mutate: createMutation } = api.location.create.useMutation({onSuccess: () => router.push('/locations')});
+  const { mutate: updateMutation, isLoading: isUpdating } = api.location.update.useMutation({onSuccess: () => router.push('/locations')});
+  const { mutate: createMutation, isLoading: isCreating } = api.location.create.useMutation({onSuccess: () => router.push('/locations')});
 
 
   const onSubmitUpdate = (values: LocationObject) => {
@@ -154,6 +155,7 @@ export const LocationForm: React.FC<LocationFormProps> = ({ data }) => {
       onSubmit={form.onSubmit((values) => onSubmitUpdate(values))}
       ref={parent}
     >
+      <LoadingOverlay visible={isCreating ?? isUpdating} overlayBlur={2} />
       <TextInput
         withAsterisk
         label="Navn"
@@ -163,7 +165,7 @@ export const LocationForm: React.FC<LocationFormProps> = ({ data }) => {
       <TextInput
         withAsterisk
         label="Adresse"
-        placeholder="Vejgade 21"
+        placeholder="Vejgade 21."
         mt="sm"
         onChange={(event) => setSearchParam(event.currentTarget.value)}
         value={searchParam ?? form.values.address}
