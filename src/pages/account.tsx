@@ -1,6 +1,6 @@
 import { useSession } from "next-auth/react";
 import Login from "./login";
-import { Box } from "@mantine/core";
+import { Box, LoadingOverlay } from "@mantine/core";
 import { api } from "~/utils/api";
 import AccountForm from "~/common/components/AccountForm";
 
@@ -15,9 +15,9 @@ const Account: React.FC = () => {
   );
 
   if (sessionData?.user === undefined) return <Login />;
-  if (isLoading) return <div>Im loading</div>;
   return (
     <Box sx={{ maxWidth: 340 }} mx="auto">
+      <LoadingOverlay visible={isLoading} overlayBlur={2} />
       <AccountForm data={data} />
     </Box>
   );

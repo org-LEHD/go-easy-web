@@ -1,19 +1,13 @@
-import { useSession } from "next-auth/react";
 import {
-  Box,
   Button,
   TextInput,
-  Select,
   NumberInput,
   Group,
+  LoadingOverlay,
 } from "@mantine/core";
 import { useForm, zodResolver } from "@mantine/form";
-import { CategorySchema } from "../../../prisma/generated/zod";
-import { Category } from "@prisma/client";
 import { z } from "zod";
-import { useEffect } from "react";
 import { api } from "~/utils/api";
-import { mapCategoryEnumToObject } from "~/utils/mapCategoryEnumToObject";
 import { DateTimePicker } from "@mantine/dates";
 import { useRouter } from "next/router";
 
@@ -46,19 +40,22 @@ export const AdvertisementForm: React.FC<AdvertisementFormProps> = ({
   const { id } = router.query;
   const routerParam = id?.[0] !== undefined ? Number(id[0]) : 0;
 
-  const { mutate: updateMutation } = api.advertisement.update.useMutation({onSuccess: () => router.push("/advertisements")});
-  const { mutate: createMutation } = api.advertisement.create.useMutation({onSuccess: () => router.push("/advertisements")});
+  const { mutate: updateMutation, isLoading: isUpdating } =
+    api.advertisement.update.useMutation({
+      onSuccess: () => router.push("/advertisements"),
+    });
+  const { mutate: createMutation, isLoading: isCreating } =
+    api.advertisement.create.useMutation({
+      onSuccess: () => router.push("/advertisements"),
+    });
 
   const onSubmitUpdate = (values: AdvertisementObject) => {
-    console.log("Entry of onSubmitUpdate");
     if (routerParam !== 0) {
-      console.log("got to update");
       updateMutation({
         ...values,
         id: routerParam,
       } as any);
     } else {
-      console.log("got to create");
       const payload = {
         ...values,
       } as any;
@@ -83,6 +80,7 @@ export const AdvertisementForm: React.FC<AdvertisementFormProps> = ({
 
   return (
     <form onSubmit={form.onSubmit((values) => onSubmitUpdate(values))}>
+      <LoadingOverlay visible={isUpdating ?? isCreating} overlayBlur={2} />
       <NumberInput
         withAsterisk
         label="Lokation id"
@@ -125,7 +123,9 @@ export const AdvertisementForm: React.FC<AdvertisementFormProps> = ({
         {...form.getInputProps("end")}
       />
       <Group position="right" mt="xl">
-        <Button type="submit" variant="outline">Submit</Button>
+        <Button type="submit" variant="outline">
+          Submit
+        </Button>
       </Group>
     </form>
   );

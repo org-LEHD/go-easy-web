@@ -1,4 +1,4 @@
-export const formatDate = (date: Date) => {
+export const formatDate = (date: Date): string => {
     try {
       const day = date.getDate().toString().padStart(2, "0");
       const month = (date.getMonth() + 1).toString().padStart(2, "0"); // Months are 0-indexed
@@ -11,7 +11,7 @@ export const formatDate = (date: Date) => {
     }
   };
   
-export const formatDateTime = (date: Date) => {
+export const formatDateTime = (date: Date): string => {
     try {
       const day = date.getDate().toString().padStart(2, "0");
       const month = (date.getMonth() + 1).toString().padStart(2, "0");
