@@ -78,7 +78,6 @@ model Location {
     summary       String
     description   String
     thumbnail     String
-    access        Access          @default(Pending)
     createdAt     DateTime        @default(now())
     updatedAt     DateTime        @updatedAt
     Advertisement Advertisement[]
@@ -101,14 +100,15 @@ model Advertisement {
     @@index([locationId])
 }
 
-model PointOfInterest {
+model Attraction {
     id          Int      @id @default(autoincrement())
-    category_id Category @default(Undefined)
-    title       String
+    category    Category @default(Undefined)
+    name        String
     address     String
     lat         Float
     long        Float
-    media       String
+    thumbnail   String
+    description String
     createdAt   DateTime @default(now())
     updatedAt   DateTime @updatedAt
 }

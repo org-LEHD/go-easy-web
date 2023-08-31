@@ -2,23 +2,24 @@ import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "../trpc";
 import { Category } from "@prisma/client";
 
-export const pointOfInterestRouter = createTRPCRouter({
+export const attractionRouter = createTRPCRouter({
   /**
    * CREATE
    */
   create: publicProcedure
     .input(
       z.object({
-        category_id: z.nativeEnum(Category),
-        title: z.string(),
+        category: z.nativeEnum(Category),
+        name: z.string(),
         address: z.string(),
         lat: z.number(),
         long: z.number(),
-        media: z.string(),
+        thumbnail: z.string(),
+        description: z.string(),
       })
     )
     .mutation(async ({ input, ctx }) => {
-      return await ctx.prisma.pointOfInterest.create({
+      return await ctx.prisma.attraction.create({
         data: { ...input },
       });
     }),
@@ -27,7 +28,7 @@ export const pointOfInterestRouter = createTRPCRouter({
    *  READ
    */
   getById: publicProcedure.input(z.number()).query(async ({ input, ctx }) => {
-    return await ctx.prisma.pointOfInterest.findUnique({
+    return await ctx.prisma.attraction.findUnique({
       where: { id: input },
     });
   }),
@@ -35,7 +36,7 @@ export const pointOfInterestRouter = createTRPCRouter({
    * GET ALL
    */
   getAll: publicProcedure.query(({ ctx }) => {
-    return ctx.prisma.pointOfInterest.findMany({});
+    return ctx.prisma.attraction.findMany({});
   }),
 
   /**
@@ -45,8 +46,8 @@ export const pointOfInterestRouter = createTRPCRouter({
     .input(
       z.object({
         id: z.number(),
-        category_id: z.nativeEnum(Category),
-        title: z.string(),
+        category: z.nativeEnum(Category),
+        name: z.string(),
         address: z.string(),
         lat: z.number(),
         long: z.number(),
@@ -54,7 +55,7 @@ export const pointOfInterestRouter = createTRPCRouter({
       })
     )
     .mutation(async ({ input, ctx }) => {
-      return await ctx.prisma.pointOfInterest.update({
+      return await ctx.prisma.attraction.update({
         where: { id: input.id },
         data: { ...input },
       });
@@ -63,6 +64,6 @@ export const pointOfInterestRouter = createTRPCRouter({
    * DELETE
    */
   delete: publicProcedure.input(z.number()).query(async ({ ctx, input }) => {
-    return await ctx.prisma.pointOfInterest.delete({ where: { id: input } });
+    return await ctx.prisma.attraction.delete({ where: { id: input } });
   }),
 });

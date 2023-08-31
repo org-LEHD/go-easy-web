@@ -20,11 +20,11 @@ export const UserScalarFieldEnumSchema = z.enum(['id','name','email','emailVerif
 
 export const VerificationTokenScalarFieldEnumSchema = z.enum(['identifier','token','expires']);
 
-export const LocationScalarFieldEnumSchema = z.enum(['id','userId','category','name','address','lat','long','phone','website','summary','description','thumbnail','access','createdAt','updatedAt']);
+export const LocationScalarFieldEnumSchema = z.enum(['id','userId','category','name','address','lat','long','phone','website','summary','description','thumbnail','createdAt','updatedAt']);
 
 export const AdvertisementScalarFieldEnumSchema = z.enum(['id','locationId','title','description','media','start','end','createdAt','updatedAt']);
 
-export const PointOfInterestScalarFieldEnumSchema = z.enum(['id','category_id','title','address','lat','long','media','createdAt','updatedAt']);
+export const AttractionScalarFieldEnumSchema = z.enum(['id','category','name','address','lat','long','thumbnail','description','createdAt','updatedAt']);
 
 export const SortOrderSchema = z.enum(['asc','desc']);
 
@@ -116,7 +116,6 @@ export type VerificationToken = z.infer<typeof VerificationTokenSchema>
 
 export const LocationSchema = z.object({
   category: CategorySchema,
-  access: AccessSchema,
   id: z.number().int(),
   userId: z.number().int(),
   name: z.string(),
@@ -153,22 +152,23 @@ export const AdvertisementSchema = z.object({
 export type Advertisement = z.infer<typeof AdvertisementSchema>
 
 /////////////////////////////////////////
-// POINT OF INTEREST SCHEMA
+// ATTRACTION SCHEMA
 /////////////////////////////////////////
 
-export const PointOfInterestSchema = z.object({
-  category_id: CategorySchema,
+export const AttractionSchema = z.object({
+  category: CategorySchema,
   id: z.number().int(),
-  title: z.string(),
+  name: z.string(),
   address: z.string(),
   lat: z.number(),
   long: z.number(),
-  media: z.string(),
+  thumbnail: z.string(),
+  description: z.string(),
   createdAt: z.coerce.date(),
   updatedAt: z.coerce.date(),
 })
 
-export type PointOfInterest = z.infer<typeof PointOfInterestSchema>
+export type Attraction = z.infer<typeof AttractionSchema>
 
 /////////////////////////////////////////
 // SELECT & INCLUDE
@@ -307,7 +307,6 @@ export const LocationSelectSchema: z.ZodType<Prisma.LocationSelect> = z.object({
   summary: z.boolean().optional(),
   description: z.boolean().optional(),
   thumbnail: z.boolean().optional(),
-  access: z.boolean().optional(),
   createdAt: z.boolean().optional(),
   updatedAt: z.boolean().optional(),
   user: z.union([z.boolean(),z.lazy(() => UserArgsSchema)]).optional(),
@@ -340,17 +339,18 @@ export const AdvertisementSelectSchema: z.ZodType<Prisma.AdvertisementSelect> = 
   location: z.union([z.boolean(),z.lazy(() => LocationArgsSchema)]).optional(),
 }).strict()
 
-// POINT OF INTEREST
+// ATTRACTION
 //------------------------------------------------------
 
-export const PointOfInterestSelectSchema: z.ZodType<Prisma.PointOfInterestSelect> = z.object({
+export const AttractionSelectSchema: z.ZodType<Prisma.AttractionSelect> = z.object({
   id: z.boolean().optional(),
-  category_id: z.boolean().optional(),
-  title: z.boolean().optional(),
+  category: z.boolean().optional(),
+  name: z.boolean().optional(),
   address: z.boolean().optional(),
   lat: z.boolean().optional(),
   long: z.boolean().optional(),
-  media: z.boolean().optional(),
+  thumbnail: z.boolean().optional(),
+  description: z.boolean().optional(),
   createdAt: z.boolean().optional(),
   updatedAt: z.boolean().optional(),
 }).strict()
@@ -695,7 +695,6 @@ export const LocationWhereInputSchema: z.ZodType<Prisma.LocationWhereInput> = z.
   summary: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   description: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   thumbnail: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
-  access: z.union([ z.lazy(() => EnumAccessFilterSchema),z.lazy(() => AccessSchema) ]).optional(),
   createdAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
   updatedAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
   user: z.union([ z.lazy(() => UserRelationFilterSchema),z.lazy(() => UserWhereInputSchema) ]).optional(),
@@ -715,7 +714,6 @@ export const LocationOrderByWithRelationInputSchema: z.ZodType<Prisma.LocationOr
   summary: z.lazy(() => SortOrderSchema).optional(),
   description: z.lazy(() => SortOrderSchema).optional(),
   thumbnail: z.lazy(() => SortOrderSchema).optional(),
-  access: z.lazy(() => SortOrderSchema).optional(),
   createdAt: z.lazy(() => SortOrderSchema).optional(),
   updatedAt: z.lazy(() => SortOrderSchema).optional(),
   user: z.lazy(() => UserOrderByWithRelationInputSchema).optional(),
@@ -741,7 +739,6 @@ export const LocationWhereUniqueInputSchema: z.ZodType<Prisma.LocationWhereUniqu
   summary: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   description: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   thumbnail: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
-  access: z.union([ z.lazy(() => EnumAccessFilterSchema),z.lazy(() => AccessSchema) ]).optional(),
   createdAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
   updatedAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
   user: z.union([ z.lazy(() => UserRelationFilterSchema),z.lazy(() => UserWhereInputSchema) ]).optional(),
@@ -761,7 +758,6 @@ export const LocationOrderByWithAggregationInputSchema: z.ZodType<Prisma.Locatio
   summary: z.lazy(() => SortOrderSchema).optional(),
   description: z.lazy(() => SortOrderSchema).optional(),
   thumbnail: z.lazy(() => SortOrderSchema).optional(),
-  access: z.lazy(() => SortOrderSchema).optional(),
   createdAt: z.lazy(() => SortOrderSchema).optional(),
   updatedAt: z.lazy(() => SortOrderSchema).optional(),
   _count: z.lazy(() => LocationCountOrderByAggregateInputSchema).optional(),
@@ -787,7 +783,6 @@ export const LocationScalarWhereWithAggregatesInputSchema: z.ZodType<Prisma.Loca
   summary: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
   description: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
   thumbnail: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
-  access: z.union([ z.lazy(() => EnumAccessWithAggregatesFilterSchema),z.lazy(() => AccessSchema) ]).optional(),
   createdAt: z.union([ z.lazy(() => DateTimeWithAggregatesFilterSchema),z.coerce.date() ]).optional(),
   updatedAt: z.union([ z.lazy(() => DateTimeWithAggregatesFilterSchema),z.coerce.date() ]).optional(),
 }).strict();
@@ -872,79 +867,84 @@ export const AdvertisementScalarWhereWithAggregatesInputSchema: z.ZodType<Prisma
   updatedAt: z.union([ z.lazy(() => DateTimeWithAggregatesFilterSchema),z.coerce.date() ]).optional(),
 }).strict();
 
-export const PointOfInterestWhereInputSchema: z.ZodType<Prisma.PointOfInterestWhereInput> = z.object({
-  AND: z.union([ z.lazy(() => PointOfInterestWhereInputSchema),z.lazy(() => PointOfInterestWhereInputSchema).array() ]).optional(),
-  OR: z.lazy(() => PointOfInterestWhereInputSchema).array().optional(),
-  NOT: z.union([ z.lazy(() => PointOfInterestWhereInputSchema),z.lazy(() => PointOfInterestWhereInputSchema).array() ]).optional(),
+export const AttractionWhereInputSchema: z.ZodType<Prisma.AttractionWhereInput> = z.object({
+  AND: z.union([ z.lazy(() => AttractionWhereInputSchema),z.lazy(() => AttractionWhereInputSchema).array() ]).optional(),
+  OR: z.lazy(() => AttractionWhereInputSchema).array().optional(),
+  NOT: z.union([ z.lazy(() => AttractionWhereInputSchema),z.lazy(() => AttractionWhereInputSchema).array() ]).optional(),
   id: z.union([ z.lazy(() => IntFilterSchema),z.number() ]).optional(),
-  category_id: z.union([ z.lazy(() => EnumCategoryFilterSchema),z.lazy(() => CategorySchema) ]).optional(),
-  title: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  category: z.union([ z.lazy(() => EnumCategoryFilterSchema),z.lazy(() => CategorySchema) ]).optional(),
+  name: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   address: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   lat: z.union([ z.lazy(() => FloatFilterSchema),z.number() ]).optional(),
   long: z.union([ z.lazy(() => FloatFilterSchema),z.number() ]).optional(),
-  media: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  thumbnail: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  description: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   createdAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
   updatedAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
 }).strict();
 
-export const PointOfInterestOrderByWithRelationInputSchema: z.ZodType<Prisma.PointOfInterestOrderByWithRelationInput> = z.object({
+export const AttractionOrderByWithRelationInputSchema: z.ZodType<Prisma.AttractionOrderByWithRelationInput> = z.object({
   id: z.lazy(() => SortOrderSchema).optional(),
-  category_id: z.lazy(() => SortOrderSchema).optional(),
-  title: z.lazy(() => SortOrderSchema).optional(),
+  category: z.lazy(() => SortOrderSchema).optional(),
+  name: z.lazy(() => SortOrderSchema).optional(),
   address: z.lazy(() => SortOrderSchema).optional(),
   lat: z.lazy(() => SortOrderSchema).optional(),
   long: z.lazy(() => SortOrderSchema).optional(),
-  media: z.lazy(() => SortOrderSchema).optional(),
+  thumbnail: z.lazy(() => SortOrderSchema).optional(),
+  description: z.lazy(() => SortOrderSchema).optional(),
   createdAt: z.lazy(() => SortOrderSchema).optional(),
   updatedAt: z.lazy(() => SortOrderSchema).optional()
 }).strict();
 
-export const PointOfInterestWhereUniqueInputSchema: z.ZodType<Prisma.PointOfInterestWhereUniqueInput> = z.object({
+export const AttractionWhereUniqueInputSchema: z.ZodType<Prisma.AttractionWhereUniqueInput> = z.object({
   id: z.number().int()
 })
 .and(z.object({
   id: z.number().int().optional(),
-  AND: z.union([ z.lazy(() => PointOfInterestWhereInputSchema),z.lazy(() => PointOfInterestWhereInputSchema).array() ]).optional(),
-  OR: z.lazy(() => PointOfInterestWhereInputSchema).array().optional(),
-  NOT: z.union([ z.lazy(() => PointOfInterestWhereInputSchema),z.lazy(() => PointOfInterestWhereInputSchema).array() ]).optional(),
-  category_id: z.union([ z.lazy(() => EnumCategoryFilterSchema),z.lazy(() => CategorySchema) ]).optional(),
-  title: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  AND: z.union([ z.lazy(() => AttractionWhereInputSchema),z.lazy(() => AttractionWhereInputSchema).array() ]).optional(),
+  OR: z.lazy(() => AttractionWhereInputSchema).array().optional(),
+  NOT: z.union([ z.lazy(() => AttractionWhereInputSchema),z.lazy(() => AttractionWhereInputSchema).array() ]).optional(),
+  category: z.union([ z.lazy(() => EnumCategoryFilterSchema),z.lazy(() => CategorySchema) ]).optional(),
+  name: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   address: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   lat: z.union([ z.lazy(() => FloatFilterSchema),z.number() ]).optional(),
   long: z.union([ z.lazy(() => FloatFilterSchema),z.number() ]).optional(),
-  media: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  thumbnail: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  description: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   createdAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
   updatedAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
 }).strict());
 
-export const PointOfInterestOrderByWithAggregationInputSchema: z.ZodType<Prisma.PointOfInterestOrderByWithAggregationInput> = z.object({
+export const AttractionOrderByWithAggregationInputSchema: z.ZodType<Prisma.AttractionOrderByWithAggregationInput> = z.object({
   id: z.lazy(() => SortOrderSchema).optional(),
-  category_id: z.lazy(() => SortOrderSchema).optional(),
-  title: z.lazy(() => SortOrderSchema).optional(),
+  category: z.lazy(() => SortOrderSchema).optional(),
+  name: z.lazy(() => SortOrderSchema).optional(),
   address: z.lazy(() => SortOrderSchema).optional(),
   lat: z.lazy(() => SortOrderSchema).optional(),
   long: z.lazy(() => SortOrderSchema).optional(),
-  media: z.lazy(() => SortOrderSchema).optional(),
+  thumbnail: z.lazy(() => SortOrderSchema).optional(),
+  description: z.lazy(() => SortOrderSchema).optional(),
   createdAt: z.lazy(() => SortOrderSchema).optional(),
   updatedAt: z.lazy(() => SortOrderSchema).optional(),
-  _count: z.lazy(() => PointOfInterestCountOrderByAggregateInputSchema).optional(),
-  _avg: z.lazy(() => PointOfInterestAvgOrderByAggregateInputSchema).optional(),
-  _max: z.lazy(() => PointOfInterestMaxOrderByAggregateInputSchema).optional(),
-  _min: z.lazy(() => PointOfInterestMinOrderByAggregateInputSchema).optional(),
-  _sum: z.lazy(() => PointOfInterestSumOrderByAggregateInputSchema).optional()
+  _count: z.lazy(() => AttractionCountOrderByAggregateInputSchema).optional(),
+  _avg: z.lazy(() => AttractionAvgOrderByAggregateInputSchema).optional(),
+  _max: z.lazy(() => AttractionMaxOrderByAggregateInputSchema).optional(),
+  _min: z.lazy(() => AttractionMinOrderByAggregateInputSchema).optional(),
+  _sum: z.lazy(() => AttractionSumOrderByAggregateInputSchema).optional()
 }).strict();
 
-export const PointOfInterestScalarWhereWithAggregatesInputSchema: z.ZodType<Prisma.PointOfInterestScalarWhereWithAggregatesInput> = z.object({
-  AND: z.union([ z.lazy(() => PointOfInterestScalarWhereWithAggregatesInputSchema),z.lazy(() => PointOfInterestScalarWhereWithAggregatesInputSchema).array() ]).optional(),
-  OR: z.lazy(() => PointOfInterestScalarWhereWithAggregatesInputSchema).array().optional(),
-  NOT: z.union([ z.lazy(() => PointOfInterestScalarWhereWithAggregatesInputSchema),z.lazy(() => PointOfInterestScalarWhereWithAggregatesInputSchema).array() ]).optional(),
+export const AttractionScalarWhereWithAggregatesInputSchema: z.ZodType<Prisma.AttractionScalarWhereWithAggregatesInput> = z.object({
+  AND: z.union([ z.lazy(() => AttractionScalarWhereWithAggregatesInputSchema),z.lazy(() => AttractionScalarWhereWithAggregatesInputSchema).array() ]).optional(),
+  OR: z.lazy(() => AttractionScalarWhereWithAggregatesInputSchema).array().optional(),
+  NOT: z.union([ z.lazy(() => AttractionScalarWhereWithAggregatesInputSchema),z.lazy(() => AttractionScalarWhereWithAggregatesInputSchema).array() ]).optional(),
   id: z.union([ z.lazy(() => IntWithAggregatesFilterSchema),z.number() ]).optional(),
-  category_id: z.union([ z.lazy(() => EnumCategoryWithAggregatesFilterSchema),z.lazy(() => CategorySchema) ]).optional(),
-  title: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
+  category: z.union([ z.lazy(() => EnumCategoryWithAggregatesFilterSchema),z.lazy(() => CategorySchema) ]).optional(),
+  name: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
   address: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
   lat: z.union([ z.lazy(() => FloatWithAggregatesFilterSchema),z.number() ]).optional(),
   long: z.union([ z.lazy(() => FloatWithAggregatesFilterSchema),z.number() ]).optional(),
-  media: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
+  thumbnail: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
+  description: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
   createdAt: z.union([ z.lazy(() => DateTimeWithAggregatesFilterSchema),z.coerce.date() ]).optional(),
   updatedAt: z.union([ z.lazy(() => DateTimeWithAggregatesFilterSchema),z.coerce.date() ]).optional(),
 }).strict();
@@ -1241,7 +1241,6 @@ export const LocationCreateInputSchema: z.ZodType<Prisma.LocationCreateInput> = 
   summary: z.string(),
   description: z.string(),
   thumbnail: z.string(),
-  access: z.lazy(() => AccessSchema).optional(),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
   user: z.lazy(() => UserCreateNestedOneWithoutLocationsInputSchema),
@@ -1261,7 +1260,6 @@ export const LocationUncheckedCreateInputSchema: z.ZodType<Prisma.LocationUnchec
   summary: z.string(),
   description: z.string(),
   thumbnail: z.string(),
-  access: z.lazy(() => AccessSchema).optional(),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
   Advertisement: z.lazy(() => AdvertisementUncheckedCreateNestedManyWithoutLocationInputSchema).optional()
@@ -1278,7 +1276,6 @@ export const LocationUpdateInputSchema: z.ZodType<Prisma.LocationUpdateInput> = 
   summary: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   description: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   thumbnail: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  access: z.union([ z.lazy(() => AccessSchema),z.lazy(() => EnumAccessFieldUpdateOperationsInputSchema) ]).optional(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   user: z.lazy(() => UserUpdateOneRequiredWithoutLocationsNestedInputSchema).optional(),
@@ -1298,7 +1295,6 @@ export const LocationUncheckedUpdateInputSchema: z.ZodType<Prisma.LocationUnchec
   summary: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   description: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   thumbnail: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  access: z.union([ z.lazy(() => AccessSchema),z.lazy(() => EnumAccessFieldUpdateOperationsInputSchema) ]).optional(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   Advertisement: z.lazy(() => AdvertisementUncheckedUpdateManyWithoutLocationNestedInputSchema).optional()
@@ -1317,7 +1313,6 @@ export const LocationCreateManyInputSchema: z.ZodType<Prisma.LocationCreateManyI
   summary: z.string(),
   description: z.string(),
   thumbnail: z.string(),
-  access: z.lazy(() => AccessSchema).optional(),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional()
 }).strict();
@@ -1333,7 +1328,6 @@ export const LocationUpdateManyMutationInputSchema: z.ZodType<Prisma.LocationUpd
   summary: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   description: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   thumbnail: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  access: z.union([ z.lazy(() => AccessSchema),z.lazy(() => EnumAccessFieldUpdateOperationsInputSchema) ]).optional(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
 }).strict();
@@ -1351,7 +1345,6 @@ export const LocationUncheckedUpdateManyInputSchema: z.ZodType<Prisma.LocationUn
   summary: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   description: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   thumbnail: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  access: z.union([ z.lazy(() => AccessSchema),z.lazy(() => EnumAccessFieldUpdateOperationsInputSchema) ]).optional(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
 }).strict();
@@ -1436,83 +1429,90 @@ export const AdvertisementUncheckedUpdateManyInputSchema: z.ZodType<Prisma.Adver
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
 }).strict();
 
-export const PointOfInterestCreateInputSchema: z.ZodType<Prisma.PointOfInterestCreateInput> = z.object({
-  category_id: z.lazy(() => CategorySchema).optional(),
-  title: z.string(),
+export const AttractionCreateInputSchema: z.ZodType<Prisma.AttractionCreateInput> = z.object({
+  category: z.lazy(() => CategorySchema).optional(),
+  name: z.string(),
   address: z.string(),
   lat: z.number(),
   long: z.number(),
-  media: z.string(),
+  thumbnail: z.string(),
+  description: z.string(),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional()
 }).strict();
 
-export const PointOfInterestUncheckedCreateInputSchema: z.ZodType<Prisma.PointOfInterestUncheckedCreateInput> = z.object({
+export const AttractionUncheckedCreateInputSchema: z.ZodType<Prisma.AttractionUncheckedCreateInput> = z.object({
   id: z.number().int().optional(),
-  category_id: z.lazy(() => CategorySchema).optional(),
-  title: z.string(),
+  category: z.lazy(() => CategorySchema).optional(),
+  name: z.string(),
   address: z.string(),
   lat: z.number(),
   long: z.number(),
-  media: z.string(),
+  thumbnail: z.string(),
+  description: z.string(),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional()
 }).strict();
 
-export const PointOfInterestUpdateInputSchema: z.ZodType<Prisma.PointOfInterestUpdateInput> = z.object({
-  category_id: z.union([ z.lazy(() => CategorySchema),z.lazy(() => EnumCategoryFieldUpdateOperationsInputSchema) ]).optional(),
-  title: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+export const AttractionUpdateInputSchema: z.ZodType<Prisma.AttractionUpdateInput> = z.object({
+  category: z.union([ z.lazy(() => CategorySchema),z.lazy(() => EnumCategoryFieldUpdateOperationsInputSchema) ]).optional(),
+  name: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   address: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   lat: z.union([ z.number(),z.lazy(() => FloatFieldUpdateOperationsInputSchema) ]).optional(),
   long: z.union([ z.number(),z.lazy(() => FloatFieldUpdateOperationsInputSchema) ]).optional(),
-  media: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  thumbnail: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  description: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
 }).strict();
 
-export const PointOfInterestUncheckedUpdateInputSchema: z.ZodType<Prisma.PointOfInterestUncheckedUpdateInput> = z.object({
+export const AttractionUncheckedUpdateInputSchema: z.ZodType<Prisma.AttractionUncheckedUpdateInput> = z.object({
   id: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
-  category_id: z.union([ z.lazy(() => CategorySchema),z.lazy(() => EnumCategoryFieldUpdateOperationsInputSchema) ]).optional(),
-  title: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  category: z.union([ z.lazy(() => CategorySchema),z.lazy(() => EnumCategoryFieldUpdateOperationsInputSchema) ]).optional(),
+  name: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   address: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   lat: z.union([ z.number(),z.lazy(() => FloatFieldUpdateOperationsInputSchema) ]).optional(),
   long: z.union([ z.number(),z.lazy(() => FloatFieldUpdateOperationsInputSchema) ]).optional(),
-  media: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  thumbnail: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  description: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
 }).strict();
 
-export const PointOfInterestCreateManyInputSchema: z.ZodType<Prisma.PointOfInterestCreateManyInput> = z.object({
+export const AttractionCreateManyInputSchema: z.ZodType<Prisma.AttractionCreateManyInput> = z.object({
   id: z.number().int().optional(),
-  category_id: z.lazy(() => CategorySchema).optional(),
-  title: z.string(),
+  category: z.lazy(() => CategorySchema).optional(),
+  name: z.string(),
   address: z.string(),
   lat: z.number(),
   long: z.number(),
-  media: z.string(),
+  thumbnail: z.string(),
+  description: z.string(),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional()
 }).strict();
 
-export const PointOfInterestUpdateManyMutationInputSchema: z.ZodType<Prisma.PointOfInterestUpdateManyMutationInput> = z.object({
-  category_id: z.union([ z.lazy(() => CategorySchema),z.lazy(() => EnumCategoryFieldUpdateOperationsInputSchema) ]).optional(),
-  title: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+export const AttractionUpdateManyMutationInputSchema: z.ZodType<Prisma.AttractionUpdateManyMutationInput> = z.object({
+  category: z.union([ z.lazy(() => CategorySchema),z.lazy(() => EnumCategoryFieldUpdateOperationsInputSchema) ]).optional(),
+  name: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   address: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   lat: z.union([ z.number(),z.lazy(() => FloatFieldUpdateOperationsInputSchema) ]).optional(),
   long: z.union([ z.number(),z.lazy(() => FloatFieldUpdateOperationsInputSchema) ]).optional(),
-  media: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  thumbnail: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  description: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
 }).strict();
 
-export const PointOfInterestUncheckedUpdateManyInputSchema: z.ZodType<Prisma.PointOfInterestUncheckedUpdateManyInput> = z.object({
+export const AttractionUncheckedUpdateManyInputSchema: z.ZodType<Prisma.AttractionUncheckedUpdateManyInput> = z.object({
   id: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
-  category_id: z.union([ z.lazy(() => CategorySchema),z.lazy(() => EnumCategoryFieldUpdateOperationsInputSchema) ]).optional(),
-  title: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  category: z.union([ z.lazy(() => CategorySchema),z.lazy(() => EnumCategoryFieldUpdateOperationsInputSchema) ]).optional(),
+  name: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   address: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   lat: z.union([ z.number(),z.lazy(() => FloatFieldUpdateOperationsInputSchema) ]).optional(),
   long: z.union([ z.number(),z.lazy(() => FloatFieldUpdateOperationsInputSchema) ]).optional(),
-  media: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  thumbnail: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  description: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
 }).strict();
@@ -1958,7 +1958,6 @@ export const LocationCountOrderByAggregateInputSchema: z.ZodType<Prisma.Location
   summary: z.lazy(() => SortOrderSchema).optional(),
   description: z.lazy(() => SortOrderSchema).optional(),
   thumbnail: z.lazy(() => SortOrderSchema).optional(),
-  access: z.lazy(() => SortOrderSchema).optional(),
   createdAt: z.lazy(() => SortOrderSchema).optional(),
   updatedAt: z.lazy(() => SortOrderSchema).optional()
 }).strict();
@@ -1984,7 +1983,6 @@ export const LocationMaxOrderByAggregateInputSchema: z.ZodType<Prisma.LocationMa
   summary: z.lazy(() => SortOrderSchema).optional(),
   description: z.lazy(() => SortOrderSchema).optional(),
   thumbnail: z.lazy(() => SortOrderSchema).optional(),
-  access: z.lazy(() => SortOrderSchema).optional(),
   createdAt: z.lazy(() => SortOrderSchema).optional(),
   updatedAt: z.lazy(() => SortOrderSchema).optional()
 }).strict();
@@ -2002,7 +2000,6 @@ export const LocationMinOrderByAggregateInputSchema: z.ZodType<Prisma.LocationMi
   summary: z.lazy(() => SortOrderSchema).optional(),
   description: z.lazy(() => SortOrderSchema).optional(),
   thumbnail: z.lazy(() => SortOrderSchema).optional(),
-  access: z.lazy(() => SortOrderSchema).optional(),
   createdAt: z.lazy(() => SortOrderSchema).optional(),
   updatedAt: z.lazy(() => SortOrderSchema).optional()
 }).strict();
@@ -2092,49 +2089,52 @@ export const AdvertisementSumOrderByAggregateInputSchema: z.ZodType<Prisma.Adver
   locationId: z.lazy(() => SortOrderSchema).optional()
 }).strict();
 
-export const PointOfInterestCountOrderByAggregateInputSchema: z.ZodType<Prisma.PointOfInterestCountOrderByAggregateInput> = z.object({
+export const AttractionCountOrderByAggregateInputSchema: z.ZodType<Prisma.AttractionCountOrderByAggregateInput> = z.object({
   id: z.lazy(() => SortOrderSchema).optional(),
-  category_id: z.lazy(() => SortOrderSchema).optional(),
-  title: z.lazy(() => SortOrderSchema).optional(),
+  category: z.lazy(() => SortOrderSchema).optional(),
+  name: z.lazy(() => SortOrderSchema).optional(),
   address: z.lazy(() => SortOrderSchema).optional(),
   lat: z.lazy(() => SortOrderSchema).optional(),
   long: z.lazy(() => SortOrderSchema).optional(),
-  media: z.lazy(() => SortOrderSchema).optional(),
+  thumbnail: z.lazy(() => SortOrderSchema).optional(),
+  description: z.lazy(() => SortOrderSchema).optional(),
   createdAt: z.lazy(() => SortOrderSchema).optional(),
   updatedAt: z.lazy(() => SortOrderSchema).optional()
 }).strict();
 
-export const PointOfInterestAvgOrderByAggregateInputSchema: z.ZodType<Prisma.PointOfInterestAvgOrderByAggregateInput> = z.object({
+export const AttractionAvgOrderByAggregateInputSchema: z.ZodType<Prisma.AttractionAvgOrderByAggregateInput> = z.object({
   id: z.lazy(() => SortOrderSchema).optional(),
   lat: z.lazy(() => SortOrderSchema).optional(),
   long: z.lazy(() => SortOrderSchema).optional()
 }).strict();
 
-export const PointOfInterestMaxOrderByAggregateInputSchema: z.ZodType<Prisma.PointOfInterestMaxOrderByAggregateInput> = z.object({
+export const AttractionMaxOrderByAggregateInputSchema: z.ZodType<Prisma.AttractionMaxOrderByAggregateInput> = z.object({
   id: z.lazy(() => SortOrderSchema).optional(),
-  category_id: z.lazy(() => SortOrderSchema).optional(),
-  title: z.lazy(() => SortOrderSchema).optional(),
+  category: z.lazy(() => SortOrderSchema).optional(),
+  name: z.lazy(() => SortOrderSchema).optional(),
   address: z.lazy(() => SortOrderSchema).optional(),
   lat: z.lazy(() => SortOrderSchema).optional(),
   long: z.lazy(() => SortOrderSchema).optional(),
-  media: z.lazy(() => SortOrderSchema).optional(),
+  thumbnail: z.lazy(() => SortOrderSchema).optional(),
+  description: z.lazy(() => SortOrderSchema).optional(),
   createdAt: z.lazy(() => SortOrderSchema).optional(),
   updatedAt: z.lazy(() => SortOrderSchema).optional()
 }).strict();
 
-export const PointOfInterestMinOrderByAggregateInputSchema: z.ZodType<Prisma.PointOfInterestMinOrderByAggregateInput> = z.object({
+export const AttractionMinOrderByAggregateInputSchema: z.ZodType<Prisma.AttractionMinOrderByAggregateInput> = z.object({
   id: z.lazy(() => SortOrderSchema).optional(),
-  category_id: z.lazy(() => SortOrderSchema).optional(),
-  title: z.lazy(() => SortOrderSchema).optional(),
+  category: z.lazy(() => SortOrderSchema).optional(),
+  name: z.lazy(() => SortOrderSchema).optional(),
   address: z.lazy(() => SortOrderSchema).optional(),
   lat: z.lazy(() => SortOrderSchema).optional(),
   long: z.lazy(() => SortOrderSchema).optional(),
-  media: z.lazy(() => SortOrderSchema).optional(),
+  thumbnail: z.lazy(() => SortOrderSchema).optional(),
+  description: z.lazy(() => SortOrderSchema).optional(),
   createdAt: z.lazy(() => SortOrderSchema).optional(),
   updatedAt: z.lazy(() => SortOrderSchema).optional()
 }).strict();
 
-export const PointOfInterestSumOrderByAggregateInputSchema: z.ZodType<Prisma.PointOfInterestSumOrderByAggregateInput> = z.object({
+export const AttractionSumOrderByAggregateInputSchema: z.ZodType<Prisma.AttractionSumOrderByAggregateInput> = z.object({
   id: z.lazy(() => SortOrderSchema).optional(),
   lat: z.lazy(() => SortOrderSchema).optional(),
   long: z.lazy(() => SortOrderSchema).optional()
@@ -2880,7 +2880,6 @@ export const LocationCreateWithoutUserInputSchema: z.ZodType<Prisma.LocationCrea
   summary: z.string(),
   description: z.string(),
   thumbnail: z.string(),
-  access: z.lazy(() => AccessSchema).optional(),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
   Advertisement: z.lazy(() => AdvertisementCreateNestedManyWithoutLocationInputSchema).optional()
@@ -2898,7 +2897,6 @@ export const LocationUncheckedCreateWithoutUserInputSchema: z.ZodType<Prisma.Loc
   summary: z.string(),
   description: z.string(),
   thumbnail: z.string(),
-  access: z.lazy(() => AccessSchema).optional(),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
   Advertisement: z.lazy(() => AdvertisementUncheckedCreateNestedManyWithoutLocationInputSchema).optional()
@@ -3006,7 +3004,6 @@ export const LocationScalarWhereInputSchema: z.ZodType<Prisma.LocationScalarWher
   summary: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   description: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   thumbnail: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
-  access: z.union([ z.lazy(() => EnumAccessFilterSchema),z.lazy(() => AccessSchema) ]).optional(),
   createdAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
   updatedAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
 }).strict();
@@ -3154,7 +3151,6 @@ export const LocationCreateWithoutAdvertisementInputSchema: z.ZodType<Prisma.Loc
   summary: z.string(),
   description: z.string(),
   thumbnail: z.string(),
-  access: z.lazy(() => AccessSchema).optional(),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
   user: z.lazy(() => UserCreateNestedOneWithoutLocationsInputSchema)
@@ -3173,7 +3169,6 @@ export const LocationUncheckedCreateWithoutAdvertisementInputSchema: z.ZodType<P
   summary: z.string(),
   description: z.string(),
   thumbnail: z.string(),
-  access: z.lazy(() => AccessSchema).optional(),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional()
 }).strict();
@@ -3205,7 +3200,6 @@ export const LocationUpdateWithoutAdvertisementInputSchema: z.ZodType<Prisma.Loc
   summary: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   description: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   thumbnail: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  access: z.union([ z.lazy(() => AccessSchema),z.lazy(() => EnumAccessFieldUpdateOperationsInputSchema) ]).optional(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   user: z.lazy(() => UserUpdateOneRequiredWithoutLocationsNestedInputSchema).optional()
@@ -3224,7 +3218,6 @@ export const LocationUncheckedUpdateWithoutAdvertisementInputSchema: z.ZodType<P
   summary: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   description: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   thumbnail: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  access: z.union([ z.lazy(() => AccessSchema),z.lazy(() => EnumAccessFieldUpdateOperationsInputSchema) ]).optional(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
 }).strict();
@@ -3261,7 +3254,6 @@ export const LocationCreateManyUserInputSchema: z.ZodType<Prisma.LocationCreateM
   summary: z.string(),
   description: z.string(),
   thumbnail: z.string(),
-  access: z.lazy(() => AccessSchema).optional(),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional()
 }).strict();
@@ -3335,7 +3327,6 @@ export const LocationUpdateWithoutUserInputSchema: z.ZodType<Prisma.LocationUpda
   summary: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   description: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   thumbnail: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  access: z.union([ z.lazy(() => AccessSchema),z.lazy(() => EnumAccessFieldUpdateOperationsInputSchema) ]).optional(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   Advertisement: z.lazy(() => AdvertisementUpdateManyWithoutLocationNestedInputSchema).optional()
@@ -3353,7 +3344,6 @@ export const LocationUncheckedUpdateWithoutUserInputSchema: z.ZodType<Prisma.Loc
   summary: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   description: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   thumbnail: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  access: z.union([ z.lazy(() => AccessSchema),z.lazy(() => EnumAccessFieldUpdateOperationsInputSchema) ]).optional(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   Advertisement: z.lazy(() => AdvertisementUncheckedUpdateManyWithoutLocationNestedInputSchema).optional()
@@ -3371,7 +3361,6 @@ export const LocationUncheckedUpdateManyWithoutUserInputSchema: z.ZodType<Prisma
   summary: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   description: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   thumbnail: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  access: z.union([ z.lazy(() => AccessSchema),z.lazy(() => EnumAccessFieldUpdateOperationsInputSchema) ]).optional(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
 }).strict();
@@ -3790,61 +3779,61 @@ export const AdvertisementFindUniqueOrThrowArgsSchema: z.ZodType<Prisma.Advertis
   where: AdvertisementWhereUniqueInputSchema,
 }).strict()
 
-export const PointOfInterestFindFirstArgsSchema: z.ZodType<Prisma.PointOfInterestFindFirstArgs> = z.object({
-  select: PointOfInterestSelectSchema.optional(),
-  where: PointOfInterestWhereInputSchema.optional(),
-  orderBy: z.union([ PointOfInterestOrderByWithRelationInputSchema.array(),PointOfInterestOrderByWithRelationInputSchema ]).optional(),
-  cursor: PointOfInterestWhereUniqueInputSchema.optional(),
+export const AttractionFindFirstArgsSchema: z.ZodType<Prisma.AttractionFindFirstArgs> = z.object({
+  select: AttractionSelectSchema.optional(),
+  where: AttractionWhereInputSchema.optional(),
+  orderBy: z.union([ AttractionOrderByWithRelationInputSchema.array(),AttractionOrderByWithRelationInputSchema ]).optional(),
+  cursor: AttractionWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
-  distinct: z.union([ PointOfInterestScalarFieldEnumSchema,PointOfInterestScalarFieldEnumSchema.array() ]).optional(),
+  distinct: z.union([ AttractionScalarFieldEnumSchema,AttractionScalarFieldEnumSchema.array() ]).optional(),
 }).strict()
 
-export const PointOfInterestFindFirstOrThrowArgsSchema: z.ZodType<Prisma.PointOfInterestFindFirstOrThrowArgs> = z.object({
-  select: PointOfInterestSelectSchema.optional(),
-  where: PointOfInterestWhereInputSchema.optional(),
-  orderBy: z.union([ PointOfInterestOrderByWithRelationInputSchema.array(),PointOfInterestOrderByWithRelationInputSchema ]).optional(),
-  cursor: PointOfInterestWhereUniqueInputSchema.optional(),
+export const AttractionFindFirstOrThrowArgsSchema: z.ZodType<Prisma.AttractionFindFirstOrThrowArgs> = z.object({
+  select: AttractionSelectSchema.optional(),
+  where: AttractionWhereInputSchema.optional(),
+  orderBy: z.union([ AttractionOrderByWithRelationInputSchema.array(),AttractionOrderByWithRelationInputSchema ]).optional(),
+  cursor: AttractionWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
-  distinct: z.union([ PointOfInterestScalarFieldEnumSchema,PointOfInterestScalarFieldEnumSchema.array() ]).optional(),
+  distinct: z.union([ AttractionScalarFieldEnumSchema,AttractionScalarFieldEnumSchema.array() ]).optional(),
 }).strict()
 
-export const PointOfInterestFindManyArgsSchema: z.ZodType<Prisma.PointOfInterestFindManyArgs> = z.object({
-  select: PointOfInterestSelectSchema.optional(),
-  where: PointOfInterestWhereInputSchema.optional(),
-  orderBy: z.union([ PointOfInterestOrderByWithRelationInputSchema.array(),PointOfInterestOrderByWithRelationInputSchema ]).optional(),
-  cursor: PointOfInterestWhereUniqueInputSchema.optional(),
+export const AttractionFindManyArgsSchema: z.ZodType<Prisma.AttractionFindManyArgs> = z.object({
+  select: AttractionSelectSchema.optional(),
+  where: AttractionWhereInputSchema.optional(),
+  orderBy: z.union([ AttractionOrderByWithRelationInputSchema.array(),AttractionOrderByWithRelationInputSchema ]).optional(),
+  cursor: AttractionWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
-  distinct: z.union([ PointOfInterestScalarFieldEnumSchema,PointOfInterestScalarFieldEnumSchema.array() ]).optional(),
+  distinct: z.union([ AttractionScalarFieldEnumSchema,AttractionScalarFieldEnumSchema.array() ]).optional(),
 }).strict()
 
-export const PointOfInterestAggregateArgsSchema: z.ZodType<Prisma.PointOfInterestAggregateArgs> = z.object({
-  where: PointOfInterestWhereInputSchema.optional(),
-  orderBy: z.union([ PointOfInterestOrderByWithRelationInputSchema.array(),PointOfInterestOrderByWithRelationInputSchema ]).optional(),
-  cursor: PointOfInterestWhereUniqueInputSchema.optional(),
-  take: z.number().optional(),
-  skip: z.number().optional(),
-}).strict()
-
-export const PointOfInterestGroupByArgsSchema: z.ZodType<Prisma.PointOfInterestGroupByArgs> = z.object({
-  where: PointOfInterestWhereInputSchema.optional(),
-  orderBy: z.union([ PointOfInterestOrderByWithAggregationInputSchema.array(),PointOfInterestOrderByWithAggregationInputSchema ]).optional(),
-  by: PointOfInterestScalarFieldEnumSchema.array(),
-  having: PointOfInterestScalarWhereWithAggregatesInputSchema.optional(),
+export const AttractionAggregateArgsSchema: z.ZodType<Prisma.AttractionAggregateArgs> = z.object({
+  where: AttractionWhereInputSchema.optional(),
+  orderBy: z.union([ AttractionOrderByWithRelationInputSchema.array(),AttractionOrderByWithRelationInputSchema ]).optional(),
+  cursor: AttractionWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
 }).strict()
 
-export const PointOfInterestFindUniqueArgsSchema: z.ZodType<Prisma.PointOfInterestFindUniqueArgs> = z.object({
-  select: PointOfInterestSelectSchema.optional(),
-  where: PointOfInterestWhereUniqueInputSchema,
+export const AttractionGroupByArgsSchema: z.ZodType<Prisma.AttractionGroupByArgs> = z.object({
+  where: AttractionWhereInputSchema.optional(),
+  orderBy: z.union([ AttractionOrderByWithAggregationInputSchema.array(),AttractionOrderByWithAggregationInputSchema ]).optional(),
+  by: AttractionScalarFieldEnumSchema.array(),
+  having: AttractionScalarWhereWithAggregatesInputSchema.optional(),
+  take: z.number().optional(),
+  skip: z.number().optional(),
 }).strict()
 
-export const PointOfInterestFindUniqueOrThrowArgsSchema: z.ZodType<Prisma.PointOfInterestFindUniqueOrThrowArgs> = z.object({
-  select: PointOfInterestSelectSchema.optional(),
-  where: PointOfInterestWhereUniqueInputSchema,
+export const AttractionFindUniqueArgsSchema: z.ZodType<Prisma.AttractionFindUniqueArgs> = z.object({
+  select: AttractionSelectSchema.optional(),
+  where: AttractionWhereUniqueInputSchema,
+}).strict()
+
+export const AttractionFindUniqueOrThrowArgsSchema: z.ZodType<Prisma.AttractionFindUniqueOrThrowArgs> = z.object({
+  select: AttractionSelectSchema.optional(),
+  where: AttractionWhereUniqueInputSchema,
 }).strict()
 
 export const AccountCreateArgsSchema: z.ZodType<Prisma.AccountCreateArgs> = z.object({
@@ -4089,39 +4078,39 @@ export const AdvertisementDeleteManyArgsSchema: z.ZodType<Prisma.AdvertisementDe
   where: AdvertisementWhereInputSchema.optional(),
 }).strict()
 
-export const PointOfInterestCreateArgsSchema: z.ZodType<Prisma.PointOfInterestCreateArgs> = z.object({
-  select: PointOfInterestSelectSchema.optional(),
-  data: z.union([ PointOfInterestCreateInputSchema,PointOfInterestUncheckedCreateInputSchema ]),
+export const AttractionCreateArgsSchema: z.ZodType<Prisma.AttractionCreateArgs> = z.object({
+  select: AttractionSelectSchema.optional(),
+  data: z.union([ AttractionCreateInputSchema,AttractionUncheckedCreateInputSchema ]),
 }).strict()
 
-export const PointOfInterestUpsertArgsSchema: z.ZodType<Prisma.PointOfInterestUpsertArgs> = z.object({
-  select: PointOfInterestSelectSchema.optional(),
-  where: PointOfInterestWhereUniqueInputSchema,
-  create: z.union([ PointOfInterestCreateInputSchema,PointOfInterestUncheckedCreateInputSchema ]),
-  update: z.union([ PointOfInterestUpdateInputSchema,PointOfInterestUncheckedUpdateInputSchema ]),
+export const AttractionUpsertArgsSchema: z.ZodType<Prisma.AttractionUpsertArgs> = z.object({
+  select: AttractionSelectSchema.optional(),
+  where: AttractionWhereUniqueInputSchema,
+  create: z.union([ AttractionCreateInputSchema,AttractionUncheckedCreateInputSchema ]),
+  update: z.union([ AttractionUpdateInputSchema,AttractionUncheckedUpdateInputSchema ]),
 }).strict()
 
-export const PointOfInterestCreateManyArgsSchema: z.ZodType<Prisma.PointOfInterestCreateManyArgs> = z.object({
-  data: z.union([ PointOfInterestCreateManyInputSchema,PointOfInterestCreateManyInputSchema.array() ]),
+export const AttractionCreateManyArgsSchema: z.ZodType<Prisma.AttractionCreateManyArgs> = z.object({
+  data: z.union([ AttractionCreateManyInputSchema,AttractionCreateManyInputSchema.array() ]),
   skipDuplicates: z.boolean().optional(),
 }).strict()
 
-export const PointOfInterestDeleteArgsSchema: z.ZodType<Prisma.PointOfInterestDeleteArgs> = z.object({
-  select: PointOfInterestSelectSchema.optional(),
-  where: PointOfInterestWhereUniqueInputSchema,
+export const AttractionDeleteArgsSchema: z.ZodType<Prisma.AttractionDeleteArgs> = z.object({
+  select: AttractionSelectSchema.optional(),
+  where: AttractionWhereUniqueInputSchema,
 }).strict()
 
-export const PointOfInterestUpdateArgsSchema: z.ZodType<Prisma.PointOfInterestUpdateArgs> = z.object({
-  select: PointOfInterestSelectSchema.optional(),
-  data: z.union([ PointOfInterestUpdateInputSchema,PointOfInterestUncheckedUpdateInputSchema ]),
-  where: PointOfInterestWhereUniqueInputSchema,
+export const AttractionUpdateArgsSchema: z.ZodType<Prisma.AttractionUpdateArgs> = z.object({
+  select: AttractionSelectSchema.optional(),
+  data: z.union([ AttractionUpdateInputSchema,AttractionUncheckedUpdateInputSchema ]),
+  where: AttractionWhereUniqueInputSchema,
 }).strict()
 
-export const PointOfInterestUpdateManyArgsSchema: z.ZodType<Prisma.PointOfInterestUpdateManyArgs> = z.object({
-  data: z.union([ PointOfInterestUpdateManyMutationInputSchema,PointOfInterestUncheckedUpdateManyInputSchema ]),
-  where: PointOfInterestWhereInputSchema.optional(),
+export const AttractionUpdateManyArgsSchema: z.ZodType<Prisma.AttractionUpdateManyArgs> = z.object({
+  data: z.union([ AttractionUpdateManyMutationInputSchema,AttractionUncheckedUpdateManyInputSchema ]),
+  where: AttractionWhereInputSchema.optional(),
 }).strict()
 
-export const PointOfInterestDeleteManyArgsSchema: z.ZodType<Prisma.PointOfInterestDeleteManyArgs> = z.object({
-  where: PointOfInterestWhereInputSchema.optional(),
+export const AttractionDeleteManyArgsSchema: z.ZodType<Prisma.AttractionDeleteManyArgs> = z.object({
+  where: AttractionWhereInputSchema.optional(),
 }).strict()
