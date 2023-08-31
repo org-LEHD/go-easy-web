@@ -1,5 +1,6 @@
 import { NavLink, Table } from "@mantine/core";
 import { IconArrowRight } from "@tabler/icons";
+import { formatDate } from "~/utils/dateFormatter";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import Login from "~/pages/login";
@@ -31,7 +32,7 @@ export const LocationTable: React.FC<LocationTableProps> = ({
             <td>{location.id}</td>
             <td>{location.name}</td>
             <td>{location.website}</td>
-            <td>{`${location.createdAt.getDate()}/${location.createdAt.getMonth()}/${location.createdAt.getFullYear()}`}</td>
+            <td>{`${formatDate(location.createdAt)}`}</td>
             <td>
               <NavLink
                 href={

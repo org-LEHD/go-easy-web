@@ -1,13 +1,14 @@
 import { useSession } from "next-auth/react";
 import Login from "./login";
-import { Button, Container, Flex, LoadingOverlay } from "@mantine/core";
+import { Container, Flex, LoadingOverlay, NavLink } from "@mantine/core";
 import { api } from "~/utils/api";
-import { LocationTable } from "~/common/components/LocationTable";
+import { AttractionTable } from "~/common/components/AttractionTable";
+import { IconArrowRight } from "@tabler/icons";
 
 const Attractions: React.FC = () => {
   const { data: sessionData } = useSession();
 
-  const { data: locations, isLoading } = api.pointOfInterest.getAll.useQuery();
+  const { data: Attractions, isLoading } = api.attraction.getAll.useQuery();
 
   if (sessionData?.user === undefined) return <Login />;
   return (
@@ -15,8 +16,12 @@ const Attractions: React.FC = () => {
       <LoadingOverlay visible={isLoading} overlayBlur={2} />
       <Flex direction={"column"} gap={"md"}>
         <h1>Seværdighedder</h1>
-        <LocationTable locations={locations as any} />
-        <Button>Ny Lokation</Button>
+        <AttractionTable attractions={Attractions as any} />
+        <NavLink
+          href={`/attraction/new`}
+          component="a"
+          icon={<IconArrowRight color="blue" />}
+          />
       </Flex>
     </Container>
   );

@@ -10,6 +10,7 @@ import {
 import { useRouter } from "next/router";
 import { usePathname } from "next/navigation";
 import { RoleEnumKeys, mapRoleEnumToObject } from "~/utils/mapRoleEnumToObject";
+import { formatDate } from "~/utils/dateFormatter";
 
 interface UserTableProps {
   users: any[];
@@ -87,7 +88,7 @@ export const UserTable: React.FC<UserTableProps> = ({ users }) => {
                 )}
               />
             </td>
-            <td>{`${user.createdAt.getDate()}/${user.createdAt.getMonth()}/${user.createdAt.getFullYear()}`}</td>
+            <td>{`${formatDate(user.createdAt)}`}</td>
             <td>
               {!isRequestPage && user.role !== "Administrator" && (
                 <NavLink

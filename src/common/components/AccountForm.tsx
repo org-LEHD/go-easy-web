@@ -60,7 +60,7 @@ export const AccountForm: React.FC<AccountFormProps> = ({ data }) => {
         {...form.getInputProps("email")}
       />
       <Group position="right" mt="xl">
-        <Button type="submit">Submit</Button>
+        <Button type="submit" variant="outline">Submit</Button>
       </Group>
     </form>
   );

@@ -100,10 +100,10 @@ model Advertisement {
     @@index([locationId])
 }
 
-model PointOfInterest {
+model Attraction {
     id          Int      @id @default(autoincrement())
-    category_id Category @default(Undefined)
-    title       String
+    category    Category @default(Undefined)
+    name        String
     address     String
     lat         Float
     long        Float
