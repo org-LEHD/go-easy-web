@@ -1,9 +1,7 @@
 import { useSession } from "next-auth/react";
 import Login from "../login";
 import { Box } from "@mantine/core";
-
 import LocationForm from "~/common/components/LocationForm";
-
 
 const Location: React.FC = () => {
   const { data: sessionData } = useSession();
