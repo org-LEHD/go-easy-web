@@ -5,10 +5,11 @@ import { api } from "~/utils/api";
 import LocationForm from "~/common/components/LocationForm";
 import { useRouter } from "next/router";
 import { AdvertisementTable } from "~/common/components/AdvertisementTable";
+import { useMediaQuery } from "@mantine/hooks";
 
 const Location: React.FC = ({}) => {
   const { data: sessionData } = useSession();
-
+  const matches = useMediaQuery("(min-width: 988px)");
   const router = useRouter();
   const { id } = router.query;
   const routerParam = id?.[0] !== undefined ? Number(id[0]) : 0;
@@ -21,10 +22,19 @@ const Location: React.FC = ({}) => {
 
   if (sessionData?.user === undefined) return <Login />;
   return (
-    <Flex justify={"center"}>
+    <Flex
+      justify={"center"}
+      align={matches ? "baseline" : "center"}
+      gap={"xl"}
+      direction={matches ? "row" : "column"}
+    >
       <LoadingOverlay visible={isLoading} overlayBlur={2} />
-      <Box sx={{ maxWidth: 340 }}>{data && <LocationForm data={data} />}</Box>
-      <Box mx={"right"}>
+      <Box>
+        <h1>Opdatér Lokation</h1>
+        {data && <LocationForm data={data} />}
+      </Box>
+      <Box>
+        <h1>Tilhørende annoncer</h1>
         {advertisements && (
           <AdvertisementTable advertisements={advertisements ?? []} />
         )}

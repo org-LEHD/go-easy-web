@@ -7,7 +7,10 @@ import {
   Group,
   Text,
   Textarea,
-  LoadingOverlay
+  LoadingOverlay,
+  Tooltip,
+  Popover,
+  Flex,
 } from "@mantine/core";
 import { useForm, zodResolver } from "@mantine/form";
 import { CategorySchema } from "../../../prisma/generated/zod";
@@ -21,6 +24,7 @@ import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { api } from "~/utils/api";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
+import { formatAddressForLocation } from "~/utils/formatAddressForLocations";
 
 const locationValidationSchema = z.object({
   name: z.string(),
@@ -90,12 +94,17 @@ export const LocationForm: React.FC<LocationFormProps> = ({ data }) => {
   const routerInfo = useRouter();
   const { id } = routerInfo.query;
   const routerParam = id?.[0] !== undefined ? Number(id[0]) : 0;
-  
+
   const router = useRouter();
 
-  const { mutate: updateMutation, isLoading: isUpdating } = api.location.update.useMutation({onSuccess: () => router.push('/locations')});
-  const { mutate: createMutation, isLoading: isCreating } = api.location.create.useMutation({onSuccess: () => router.push('/locations')});
-
+  const { mutate: updateMutation, isLoading: isUpdating } =
+    api.location.update.useMutation({
+      onSuccess: () => router.push("/locations"),
+    });
+  const { mutate: createMutation, isLoading: isCreating } =
+    api.location.create.useMutation({
+      onSuccess: () => router.push("/locations"),
+    });
 
   const onSubmitUpdate = (values: LocationObject) => {
     if (!session.data?.user.id) return;
@@ -162,6 +171,57 @@ export const LocationForm: React.FC<LocationFormProps> = ({ data }) => {
         placeholder="John Doe"
         {...form.getInputProps("name")}
       />
+      <Popover>
+        <Popover.Target>
+          <TextInput
+            withAsterisk
+            label="Adresse"
+            placeholder="Vejgade 21."
+            mt="sm"
+            onChange={(event) => setSearchParam(event.currentTarget.value)}
+            value={searchParam ?? form.values.address}
+            error={
+              coordError
+                ? "Kunne ikke finde koordinater på den valgte addresse"
+                : false
+            }
+          />
+        </Popover.Target>
+        {coords?.length > 0 && <Popover.Dropdown>
+          <Flex direction={"column"} align={"baseline"}>
+            {coords.map(
+              (
+                coord: {
+                  display_name: string;
+                  latitude: number;
+                  longitude: number;
+                },
+                idx: number
+              ) => {
+                return (
+                  <Tooltip key={idx} label={coord.display_name} openDelay={250}>
+                    <Button
+                      variant="subtle"
+                      key={idx}
+                      onClick={() => setAddress(coord.display_name)}
+                    >
+                      {formatAddressForLocation(coord.display_name)}
+                    </Button>
+                  </Tooltip>
+                );
+              }
+            )}
+          </Flex>
+        </Popover.Dropdown>}
+      </Popover>
+      {form.values.address && (
+        <Text
+          c="dimmed"
+          fz={"xs"}
+        >{`Latitude: ${form.values.lat}, Longitude: ${form.values.long}`}</Text>
+      )}
+
+      {/* 
       <TextInput
         withAsterisk
         label="Adresse"
@@ -181,7 +241,6 @@ export const LocationForm: React.FC<LocationFormProps> = ({ data }) => {
           fz={"xs"}
         >{`Latitude: ${form.values.lat}, Longitude: ${form.values.long}`}</Text>
       )}
-
       {coords && (
         <Select
           withAsterisk
@@ -197,7 +256,7 @@ export const LocationForm: React.FC<LocationFormProps> = ({ data }) => {
           )}
           onChange={setAddress}
         />
-      )}
+      )} */}
       <Select
         label="Kategori"
         placeholder="Vælg en kategori"
@@ -242,7 +301,9 @@ export const LocationForm: React.FC<LocationFormProps> = ({ data }) => {
         {...form.getInputProps("thumbnail")}
       />
       <Group position="right" mt="xl">
-        <Button type="submit" variant="outline">Submit</Button>
+        <Button type="submit" variant="outline">
+          Submit
+        </Button>
       </Group>
     </form>
   );
