@@ -68,6 +68,8 @@ export const locationRouter = createTRPCRouter({
         name: z.string(),
         address: z.string(),
         phone: z.number(),
+        lat: z.number(),
+        long: z.number(),
         website: z.string().optional(),
         thumbnail: z.string().optional(),
         summary: z.string().optional(),

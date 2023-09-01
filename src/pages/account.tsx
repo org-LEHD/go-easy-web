@@ -18,7 +18,7 @@ const Account: React.FC = () => {
   return (
     <Box sx={{ maxWidth: 340 }} mx="auto">
       <LoadingOverlay visible={isLoading} overlayBlur={2} />
-      <AccountForm data={data} />
+      {data && <AccountForm data={data} />}
     </Box>
   );
 };

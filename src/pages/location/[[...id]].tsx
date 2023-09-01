@@ -15,15 +15,15 @@ const Location: React.FC = ({}) => {
 
   const { data } = api.location.getById.useQuery(routerParam);
   const { data: advertisements, isLoading } =
-    api.advertisement.getAllByLocationId.useQuery(routerParam);
+    api.advertisement.getAllByLocationId.useQuery(routerParam, {
+      enabled: !!routerParam,
+    });
 
   if (sessionData?.user === undefined) return <Login />;
   return (
     <Flex justify={"center"}>
       <LoadingOverlay visible={isLoading} overlayBlur={2} />
-      <Box sx={{ maxWidth: 340 }}>
-        <LocationForm data={data} />
-      </Box>
+      <Box sx={{ maxWidth: 340 }}>{data && <LocationForm data={data} />}</Box>
       <Box mx={"right"}>
         {advertisements && (
           <AdvertisementTable advertisements={advertisements ?? []} />
