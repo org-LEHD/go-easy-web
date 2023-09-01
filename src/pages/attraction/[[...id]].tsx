@@ -5,19 +5,23 @@ import { api } from "~/utils/api";
 import { useRouter } from "next/router";
 import AttractionForm from "~/common/components/AttractionForm";
 import { useEffect } from "react";
+import { redirect } from "~/utils/redirect";
 
 const Attraction: React.FC = ({}) => {
   const { data: sessionData } = useSession();
-
   const router = useRouter();
-  useEffect(() => {
-    sessionData && sessionData.user.role !== "Administrator"
-      ? router.push("/")
-      : null;
-  }, [sessionData?.user]);
-
   const { id } = router.query;
   const routerParam = id?.[0] !== undefined ? Number(id[0]) : 0;
+
+  useEffect(() => {
+    const shouldRedirect = async () => {
+      if (sessionData && sessionData.user.role !== "Administrator") {
+        await redirect(router);
+      }
+    };
+    void shouldRedirect();
+  }, [router, sessionData, sessionData?.user]);
+
 
   const { data } = api.attraction.getById.useQuery(routerParam);
 
