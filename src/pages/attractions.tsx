@@ -1,9 +1,8 @@
 import { useSession } from "next-auth/react";
 import Login from "./login";
-import { Container, Flex, LoadingOverlay, NavLink } from "@mantine/core";
+import { Button, Container, Flex, LoadingOverlay } from "@mantine/core";
 import { api } from "~/utils/api";
 import { AttractionTable } from "~/common/components/AttractionTable";
-import { IconArrowRight } from "@tabler/icons";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 
@@ -26,11 +25,16 @@ const Attractions: React.FC = () => {
       <Flex direction={"column"} gap={"md"}>
         <h1>Seværdighedder</h1>
         <AttractionTable attractions={Attractions ?? []} />
-        <NavLink
-          href={`/attraction/new`}
-          component="a"
-          icon={<IconArrowRight color="blue" />}
-        />
+        <Flex justify={"flex-end"}>
+          <Button
+            href={`/attraction/new`}
+            component="a"
+            variant="outline"
+            w={200}
+          >
+            Ny seværdighed
+          </Button>
+        </Flex>
       </Flex>
     </Container>
   );

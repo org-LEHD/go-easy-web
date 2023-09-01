@@ -1,7 +1,6 @@
 import { NavLink, Table } from "@mantine/core";
 import { IconArrowRight } from "@tabler/icons";
 import { formatDate, formatDateTime } from "~/utils/dateFormatter";
-// import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 
 interface AdvertisementTableProps {

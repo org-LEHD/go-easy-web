@@ -1,9 +1,8 @@
 import { useSession } from "next-auth/react";
 import Login from "./login";
-import { LoadingOverlay, Container, Flex, NavLink } from "@mantine/core";
+import { LoadingOverlay, Container, Flex, Button } from "@mantine/core";
 import { api } from "~/utils/api";
 import { AdvertisementTable } from "~/common/components/AdvertisementTable";
-import { IconArrowRight } from "@tabler/icons";
 
 const Advertisements: React.FC = () => {
   const { data: sessionData } = useSession();
@@ -21,11 +20,16 @@ const Advertisements: React.FC = () => {
       <Flex direction={"column"} gap={"md"}>
         <h1>Annoncer</h1>
         <AdvertisementTable advertisements={advertisements as any} />
-        <NavLink
-          href={`/advertisement/new`}
-          component="a"
-          icon={<IconArrowRight color="blue" />}
-        />
+        <Flex justify={"flex-end"}>
+          <Button
+            href={`/advertisement/new`}
+            component="a"
+            variant="outline"
+            w={200}
+          >
+            Ny annonce
+          </Button>
+        </Flex>
       </Flex>
     </Container>
   );
