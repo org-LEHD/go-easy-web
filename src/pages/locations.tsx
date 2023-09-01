@@ -1,6 +1,11 @@
 import { useSession } from "next-auth/react";
 import Login from "./login";
-import { Container, Flex, NavLink, LoadingOverlay } from "@mantine/core";
+import {
+  Container,
+  Flex,
+  LoadingOverlay,
+  Button,
+} from "@mantine/core";
 import { api } from "~/utils/api";
 import { LocationTable } from "~/common/components/LocationTable";
 import { IconArrowRight } from "@tabler/icons";
@@ -19,11 +24,16 @@ const Locations: React.FC = () => {
       <Flex direction={"column"} gap={"md"}>
         <h1>Lokationer</h1>
         <LocationTable locations={locations as any} />
-        <NavLink
-          href={`/location/new`}
-          component="a"
-          icon={<IconArrowRight color="blue" />}
-        />
+        <Flex justify={"flex-end"}>
+          <Button
+            href={`/location/new`}
+            component="a"
+            variant="outline"
+            w={200}
+          >
+            Ny lokation
+          </Button>
+        </Flex>
       </Flex>
     </Container>
   );
