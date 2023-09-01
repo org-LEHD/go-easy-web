@@ -6,8 +6,9 @@ interface AttractionTableProps {
   attractions: any[];
 }
 
-export const AttractionTable: React.FC<AttractionTableProps> = ({ attractions }) => {
-  if (!attractions.length) return <div>Der findes ingen seværdighedder her</div>;
+export const AttractionTable: React.FC<AttractionTableProps> = ({
+  attractions,
+}) => {
   return (
     <Table>
       <thead>
@@ -35,6 +36,11 @@ export const AttractionTable: React.FC<AttractionTableProps> = ({ attractions })
             </td>
           </tr>
         ))}
+        {attractions?.length === 0 && (
+          <tr>
+            <td colSpan={5}>Der findes ingen seværdighedder her</td>
+          </tr>
+        )}
       </tbody>
     </Table>
   );

@@ -11,6 +11,8 @@ import { useRouter } from "next/router";
 import { usePathname } from "next/navigation";
 import { RoleEnumKeys, mapRoleEnumToObject } from "~/utils/mapRoleEnumToObject";
 import { formatDate } from "~/utils/dateFormatter";
+import { useEffect } from "react";
+import { redirect } from "~/utils/redirect";
 
 interface UserTableProps {
   users: any[];
@@ -21,6 +23,15 @@ export const UserTable: React.FC<UserTableProps> = ({ users }) => {
   const router = useRouter();
   const pathName = usePathname();
   const isRequestPage = pathName === "/requests";
+
+  useEffect(() => {
+    const shouldRedirect = async () => {
+      if (sessionData && sessionData.user.role !== "Administrator") {
+        await redirect(router);
+      }
+    };
+    void shouldRedirect();
+  }, [router, sessionData, sessionData?.user]);
 
   const { mutate: updateAccessMutation } = api.user.updateAccess.useMutation({
     onSuccess: () => router.reload(),

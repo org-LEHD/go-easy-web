@@ -5,13 +5,24 @@ import { api } from "~/utils/api";
 import { useRouter } from "next/router";
 import { Container, LoadingOverlay } from "@mantine/core";
 import { pluralizeWithUppercase } from "~/utils/pluralizeWithUppercase";
+import { useEffect } from "react";
+import { redirect } from "~/utils/redirect";
 
 const Account: React.FC = () => {
   const { data: sessionData } = useSession();
-  const routerInfo = useRouter();
-  const { id } = routerInfo.query;
+  const router = useRouter();
+  const { id } = router.query;
   const routerParam = id?.[0] !== undefined ? Number(id[0]) : 0;
-
+  
+  useEffect(() => {
+    const shouldRedirect = async () => {
+      if (sessionData && sessionData.user.role !== "Administrator") {
+        await redirect(router);
+      }
+    };
+    void shouldRedirect();
+  }, [router, sessionData, sessionData?.user]);
+  
   const { data: locations, isLoading } = api.location.getAllById.useQuery(
     routerParam,
     { enabled: routerParam !== undefined }

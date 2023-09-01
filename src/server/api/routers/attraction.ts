@@ -1,12 +1,12 @@
 import { z } from "zod";
-import { createTRPCRouter, publicProcedure } from "../trpc";
+import { createTRPCRouter, publicProcedure, protectedProcedure, adminProcedure } from "../trpc";
 import { Category } from "@prisma/client";
 
 export const attractionRouter = createTRPCRouter({
   /**
    * CREATE
    */
-  create: publicProcedure
+  create: adminProcedure
     .input(
       z.object({
         category: z.nativeEnum(Category),
@@ -42,7 +42,7 @@ export const attractionRouter = createTRPCRouter({
   /**
    * UPDATE
    */
-  update: publicProcedure
+  update: adminProcedure
     .input(
       z.object({
         id: z.number(),
@@ -63,7 +63,7 @@ export const attractionRouter = createTRPCRouter({
   /**
    * DELETE
    */
-  delete: publicProcedure.input(z.number()).query(async ({ ctx, input }) => {
+  delete: adminProcedure.input(z.number()).query(async ({ ctx, input }) => {
     return await ctx.prisma.attraction.delete({ where: { id: input } });
   }),
 });
