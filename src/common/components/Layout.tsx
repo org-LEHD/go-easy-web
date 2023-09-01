@@ -48,77 +48,61 @@ const Layout: React.FC<Props> = ({ children }) => {
   );
 
   return (
-    <>
-      <main>
-        <AppShell
-          padding={"md"}
-          header={
-            <Header height={60} p="xs">
-              <Flex justify={"space-between"}>
-                <Logo />
-                {matches ? (
-                  <>
-                    <Container m="auto" display={"flex"}>
-                      {navItems.map((item, idx) => {
-                        return (
-                          <NavItem
-                            key={idx}
-                            text={item.text}
-                            href={item.href}
-                          />
-                        );
-                      })}
-                    </Container>
-                    <PersonaItem sessionData={sessionData} />
-                  </>
-                ) : (
-                  <Burger opened={opened} onClick={toggle} aria-label={label} />
-                )}
-                <Drawer
-                  position="right"
-                  opened={opened}
-                  onClose={close}
-                  //   transitionDuration={400}
-                  id={"layout-drawer"}
-                  styles={{
-                    root: {},
-                    body: {},
-                  }}
-                >
-                  <Stack h={"100%"} justify={"space-between"}>
-                    <Flex direction={"column"} gap={24} align={"center"}>
-                      {navItems.map((item, idx) => {
-                        return (
-                          <NavItem
-                            key={idx}
-                            text={item.text}
-                            href={item.href}
-                          />
-                        );
-                      })}
-                    </Flex>
-                    <Space h={"xl"} />
-                    <Divider />
-                    <ColorSchemeToggle />
-                    <LogoutButton />
-                  </Stack>
-                </Drawer>
-              </Flex>
-            </Header>
-          }
-          styles={(theme) => ({
-            main: {
-              backgroundColor:
-                theme.colorScheme === "dark"
-                  ? theme.colors.dark[8]
-                  : theme.colors.gray[0],
-            },
-          })}
-        >
-          <main>{children}</main>
-        </AppShell>
-      </main>
-    </>
+    <AppShell
+      padding={"md"}
+      header={
+        <Header height={60} p="xs">
+          <Flex justify={"space-between"}>
+            <Logo />
+            {matches ? (
+              <>
+                <Container m="auto" display={"flex"}>
+                  {navItems.map((item, idx) => {
+                    return (
+                      <NavItem key={idx} text={item.text} href={item.href} />
+                    );
+                  })}
+                </Container>
+                <PersonaItem sessionData={sessionData} />
+              </>
+            ) : (
+              <Burger opened={opened} onClick={toggle} aria-label={label} />
+            )}
+            <Drawer
+              position="right"
+              opened={opened}
+              onClose={close}
+              id={"layout-drawer"}
+              styles={{
+                root: {},
+                body: {},
+              }}
+            >
+              <Stack h={"100%"} justify={"space-between"}>
+                <Flex direction={"column"} gap={24} align={"center"}>
+                  {navItems.map((item, idx) => {
+                    return (
+                      <NavItem key={idx} text={item.text} href={item.href} />
+                    );
+                  })}
+                </Flex>
+                <Space h={"xl"} />
+                <Divider />
+                <ColorSchemeToggle />
+                <LogoutButton />
+              </Stack>
+            </Drawer>
+          </Flex>
+        </Header>
+      }
+      styles={() => ({
+        main: {
+          overflowY: "hidden",
+        },
+      })}
+    >
+      {children}
+    </AppShell>
   );
 };
 

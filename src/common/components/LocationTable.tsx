@@ -23,7 +23,7 @@ export const LocationTable: React.FC<LocationTableProps> = ({
           <th>Forretning</th>
           <th>Website</th>
           <th>Oprettet</th>
-          <th> </th>
+          <th style={{width: 20}}> </th>
         </tr>
       </thead>
       <tbody>
