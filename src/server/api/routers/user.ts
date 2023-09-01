@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { createTRPCRouter, publicProcedure, protectedProcedure } from "../trpc";
+import { createTRPCRouter, publicProcedure, protectedProcedure, adminProcedure } from "../trpc";
 import { Access, Role } from "@prisma/client";
 
 export const userRouter = createTRPCRouter({
@@ -11,7 +11,7 @@ export const userRouter = createTRPCRouter({
   /**
    *  READ
    */
-  getById: publicProcedure.input(z.number()).query(async ({ input, ctx }) => {
+  getById: protectedProcedure.input(z.number()).query(async ({ input, ctx }) => {
     return await ctx.prisma.user.findFirst({
       where: { id: input },
       include: { accounts: true, sessions: true, locations: true },
@@ -19,7 +19,7 @@ export const userRouter = createTRPCRouter({
   }),
 
   // GET ALL
-  getAll: publicProcedure.query(({ ctx }) => {
+  getAll: adminProcedure.query(({ ctx }) => {
     return ctx.prisma.user.findMany({
       include: { accounts: true, sessions: true, locations: true },
     });
@@ -28,7 +28,7 @@ export const userRouter = createTRPCRouter({
   /**
    * UPDATE
    */
-  update: publicProcedure
+  update: protectedProcedure
     .input(z.object({ id: z.number(), name: z.string(), email: z.string() }))
     .mutation(async ({ input, ctx }) => {
       return await ctx.prisma.user.update({
@@ -39,7 +39,7 @@ export const userRouter = createTRPCRouter({
   /**
    * UPDATE ACCESS
    */
-  updateAccess: publicProcedure
+  updateAccess: adminProcedure
     .input(z.object({ id: z.number(), access: z.nativeEnum(Access), }))
     .mutation(async ({ input, ctx }) => {
       return await ctx.prisma.user.update({
@@ -50,7 +50,7 @@ export const userRouter = createTRPCRouter({
   /**
    * UPDATE ROLE
    */
-  updateRole: publicProcedure
+  updateRole: adminProcedure
     .input(z.object({ id: z.number(), role: z.nativeEnum(Role), }))
     .mutation(async ({ input, ctx }) => {
       return await ctx.prisma.user.update({
@@ -61,10 +61,7 @@ export const userRouter = createTRPCRouter({
   /**
    * DELETE
    */
-  delete: publicProcedure.input(z.number()).query(async ({ ctx, input }) => {
+  delete: protectedProcedure.input(z.number()).query(async ({ ctx, input }) => {
     return await ctx.prisma.user.delete({ where: { id: input } });
-  }),
-  getSecretMessage: protectedProcedure.query(() => {
-    return "you can now see this secret message!";
   }),
 });

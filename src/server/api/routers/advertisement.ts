@@ -39,7 +39,7 @@ export const advertisementRouter = createTRPCRouter({
   }),
 
   // CREATE
-  create: publicProcedure
+  create: protectedProcedure
     .input(
       z.object({
         locationId: z.number(),
@@ -57,7 +57,7 @@ export const advertisementRouter = createTRPCRouter({
     }),
 
   // UPDATE
-  update: publicProcedure
+  update: protectedProcedure
     .input(
       z.object({
         id: z.number(),
@@ -77,7 +77,7 @@ export const advertisementRouter = createTRPCRouter({
     }),
 
   // DELETE
-  delete: publicProcedure.input(z.number()).query(async ({ ctx, input }) => {
+  delete: protectedProcedure.input(z.number()).query(async ({ ctx, input }) => {
     return await ctx.prisma.advertisement.delete({ where: { id: input } });
   }),
 });

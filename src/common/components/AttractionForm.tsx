@@ -20,6 +20,7 @@ import {
   import { api } from "~/utils/api";
   import { useSession } from "next-auth/react";
   import { useRouter } from "next/router";
+  import { useEffect } from "react";
   
   const attractionValidationSchema = z.object({
     name: z.string(),
@@ -79,8 +80,14 @@ import {
     const [searchParam, setSearchParam] = useState<string | null>(null);
     const [debounced] = useDebouncedValue(searchParam, 500);
     const session = useSession();
+    const { data: sessionData } = useSession();
   
     const routerInfo = useRouter();
+    useEffect(() => {
+      sessionData && sessionData.user.role !== "Administrator"
+        ? router.push("/")
+        : null;
+    }, [sessionData?.user]);
     const { id } = routerInfo.query;
     const routerParam = id?.[0] !== undefined ? Number(id[0]) : 0;
     

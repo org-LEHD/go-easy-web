@@ -5,11 +5,17 @@ import { api } from "~/utils/api";
 import { useRouter } from "next/router";
 import { Container, LoadingOverlay } from "@mantine/core";
 import { pluralizeWithUppercase } from "~/utils/pluralizeWithUppercase";
+import { useEffect } from "react";
 
 const Account: React.FC = () => {
   const { data: sessionData } = useSession();
-  const routerInfo = useRouter();
-  const { id } = routerInfo.query;
+  const router = useRouter();
+  useEffect(() => {
+    sessionData && sessionData.user.role !== "Administrator"
+      ? router.push("/")
+      : null;
+  }, [sessionData?.user]);
+  const { id } = router.query;
   const routerParam = id?.[0] !== undefined ? Number(id[0]) : 0;
 
   const { data: locations, isLoading } = api.location.getAllById.useQuery(

@@ -4,14 +4,22 @@ import { Container, Flex, LoadingOverlay } from "@mantine/core";
 import { api } from "~/utils/api";
 import { Access } from "@prisma/client";
 import { UserTable } from "~/common/components/UserTable";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 const Advertisers: React.FC = () => {
   const { data: sessionData } = useSession();
 
+  const router = useRouter();
+  useEffect(() => {
+    sessionData && sessionData.user.role !== "Administrator"
+      ? router.push("/")
+      : null;
+  }, [sessionData?.user]);
+
   const { data: users, isLoading } = api.user.getAll.useQuery();
 
   if (sessionData?.user === undefined) return <Login />;
-
   return (
     <Container>
       <LoadingOverlay visible={isLoading} overlayBlur={2} />
