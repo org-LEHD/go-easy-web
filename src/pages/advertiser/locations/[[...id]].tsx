@@ -5,13 +5,24 @@ import { Container, LoadingOverlay } from "@mantine/core";
 import { pluralizeWithUppercase } from "~/utils/pluralizeWithUppercase";
 import Login from "~/pages/login";
 import { AdvertisementTable } from "~/common/components/AdvertisementTable";
+import { useEffect } from "react";
+import { redirect } from "~/utils/redirect";
 
 const Account: React.FC = () => {
-  const { data: session } = useSession();
-  const routerInfo = useRouter();
-  const { id } = routerInfo.query;
+  const { data: sessionData } = useSession();
+  const router = useRouter();
+  const { id } = router.query;
   const routerParam = id?.[0] !== undefined ? Number(id[0]) : 0;
-
+  
+  useEffect(() => {
+    const shouldRedirect = async () => {
+      if (sessionData && sessionData.user.role !== "Administrator") {
+        await redirect(router);
+      }
+    };
+    void shouldRedirect();
+  }, [router, sessionData, sessionData?.user]);
+  
   const { data: locations, isLoading } =
     api.advertisement.getAllByLocationId.useQuery(routerParam, {
       enabled: routerParam !== undefined,
@@ -22,7 +33,7 @@ const Account: React.FC = () => {
       enabled: routerParam !== undefined,
     });
 
-  if (session === null) return <Login />;
+  if (sessionData === null) return <Login />;
   return (
     <Container>
       <h1>{`${pluralizeWithUppercase(location?.name ?? "")} annoncer`}</h1>
