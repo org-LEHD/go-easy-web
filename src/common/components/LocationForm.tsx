@@ -90,13 +90,15 @@ export const LocationForm: React.FC<LocationFormProps> = ({ data }) => {
   const [searchParam, setSearchParam] = useState<string | null>(null);
   const [debounced] = useDebouncedValue(searchParam, 500);
   const session = useSession();
-
-  const routerInfo = useRouter();
-  const { id } = routerInfo.query;
-  const routerParam = id?.[0] !== undefined ? Number(id[0]) : 0;
-
   const router = useRouter();
-
+  const { id } = router.query;
+  const routerParam = id?.[0] !== undefined ? Number(id[0]) : 0;
+  const isUpdate = routerParam > 0;
+  const { refetch } = api.location.delete.useQuery(routerParam, {
+    enabled: false,
+    refetchOnWindowFocus: false,
+    onSuccess: () => void router.back(),
+  });
   const { mutate: updateMutation, isLoading: isUpdating } =
     api.location.update.useMutation({
       onSuccess: () => router.push("/locations"),
@@ -122,6 +124,9 @@ export const LocationForm: React.FC<LocationFormProps> = ({ data }) => {
       delete payload.id;
       createMutation(payload);
     }
+  };
+  const onSubmitDelete = () => {
+    void refetch();
   };
 
   const form = useForm({
@@ -187,32 +192,38 @@ export const LocationForm: React.FC<LocationFormProps> = ({ data }) => {
             }
           />
         </Popover.Target>
-        {coords?.length > 0 && <Popover.Dropdown>
-          <Flex direction={"column"} align={"baseline"}>
-            {coords.map(
-              (
-                coord: {
-                  display_name: string;
-                  latitude: number;
-                  longitude: number;
-                },
-                idx: number
-              ) => {
-                return (
-                  <Tooltip key={idx} label={coord.display_name} openDelay={250}>
-                    <Button
-                      variant="subtle"
+        {coords?.length > 0 && (
+          <Popover.Dropdown>
+            <Flex direction={"column"} align={"baseline"}>
+              {coords.map(
+                (
+                  coord: {
+                    display_name: string;
+                    latitude: number;
+                    longitude: number;
+                  },
+                  idx: number
+                ) => {
+                  return (
+                    <Tooltip
                       key={idx}
-                      onClick={() => setAddress(coord.display_name)}
+                      label={coord.display_name}
+                      openDelay={250}
                     >
-                      {formatAddressForLocation(coord.display_name)}
-                    </Button>
-                  </Tooltip>
-                );
-              }
-            )}
-          </Flex>
-        </Popover.Dropdown>}
+                      <Button
+                        variant="subtle"
+                        key={idx}
+                        onClick={() => setAddress(coord.display_name)}
+                      >
+                        {formatAddressForLocation(coord.display_name)}
+                      </Button>
+                    </Tooltip>
+                  );
+                }
+              )}
+            </Flex>
+          </Popover.Dropdown>
+        )}
       </Popover>
       {form.values.address && (
         <Text
@@ -220,43 +231,6 @@ export const LocationForm: React.FC<LocationFormProps> = ({ data }) => {
           fz={"xs"}
         >{`Latitude: ${form.values.lat}, Longitude: ${form.values.long}`}</Text>
       )}
-
-      {/* 
-      <TextInput
-        withAsterisk
-        label="Adresse"
-        placeholder="Vejgade 21."
-        mt="sm"
-        onChange={(event) => setSearchParam(event.currentTarget.value)}
-        value={searchParam ?? form.values.address}
-        error={
-          coordError
-            ? "Kunne ikke finde koordinater på den valgte addresse"
-            : false
-        }
-      />
-      {form.values.address && (
-        <Text
-          c="dimmed"
-          fz={"xs"}
-        >{`Latitude: ${form.values.lat}, Longitude: ${form.values.long}`}</Text>
-      )}
-      {coords && (
-        <Select
-          withAsterisk
-          label="Vælg resultat"
-          data={coords.map(
-            (coord: {
-              display_name: string;
-              latitude: number;
-              longitude: number;
-            }) => {
-              return { value: coord.display_name, label: coord.display_name };
-            }
-          )}
-          onChange={setAddress}
-        />
-      )} */}
       <Select
         label="Kategori"
         placeholder="Vælg en kategori"
@@ -300,7 +274,12 @@ export const LocationForm: React.FC<LocationFormProps> = ({ data }) => {
         mt="sm"
         {...form.getInputProps("thumbnail")}
       />
-      <Group position="right" mt="xl">
+      <Group position={isUpdate ? "apart" : "right"} mt="xl">
+        {isUpdate && (
+          <Button variant="outline" color="red" onClick={onSubmitDelete}>
+            Delete
+          </Button>
+        )}
         <Button type="submit" variant="outline">
           Submit
         </Button>

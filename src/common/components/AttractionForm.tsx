@@ -84,7 +84,12 @@ export const AttractionForm: React.FC<AttractionFormProps> = ({ data }) => {
   const router = useRouter();
   const { id } = router.query;
   const routerParam = id?.[0] !== undefined ? Number(id[0]) : 0;
-
+  const isUpdate = routerParam > 0;
+  const { refetch } = api.attraction.delete.useQuery(routerParam, {
+    enabled: false,
+    refetchOnWindowFocus: false,
+    onSuccess: () => void router.push("/attractions"),
+  });
   useEffect(() => {
     const shouldRedirect = async () => {
       if (sessionData && sessionData.user.role !== "Administrator") {
@@ -117,7 +122,9 @@ export const AttractionForm: React.FC<AttractionFormProps> = ({ data }) => {
       createMutation(payload);
     }
   };
-
+  const onSubmitDelete = () => {
+    void refetch();
+  };
   const form = useForm({
     validate: zodResolver(attractionValidationSchema),
     initialValues: {
@@ -218,7 +225,12 @@ export const AttractionForm: React.FC<AttractionFormProps> = ({ data }) => {
         mt="sm"
         {...form.getInputProps("thumbnail")}
       />
-      <Group position="right" mt="xl">
+      <Group position={isUpdate ? "apart" : "right"} mt="xl">
+        {isUpdate && (
+          <Button variant="outline" color="red" onClick={onSubmitDelete}>
+            Delete
+          </Button>
+        )}
         <Button type="submit" variant="outline">
           Submit
         </Button>
