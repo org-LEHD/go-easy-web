@@ -39,7 +39,12 @@ export const AdvertisementForm: React.FC<AdvertisementFormProps> = ({
   const router = useRouter();
   const { id } = router.query;
   const routerParam = id?.[0] !== undefined ? Number(id[0]) : 0;
-
+  const isUpdate = routerParam > 0;
+  const { refetch } = api.advertisement.delete.useQuery(routerParam, {
+    enabled: false,
+    refetchOnWindowFocus: false,
+    onSuccess: () => void router.back(),
+  });
   const { mutate: updateMutation, isLoading: isUpdating } =
     api.advertisement.update.useMutation({
       onSuccess: () => router.push("/advertisements"),
@@ -63,7 +68,9 @@ export const AdvertisementForm: React.FC<AdvertisementFormProps> = ({
       createMutation(payload);
     }
   };
-
+  const onSubmitDelete = () => {
+    void refetch();
+  };
   const form = useForm({
     validate: zodResolver(advertisementValidationSchema),
     initialValues: {
@@ -122,7 +129,12 @@ export const AdvertisementForm: React.FC<AdvertisementFormProps> = ({
         mx="auto"
         {...form.getInputProps("end")}
       />
-      <Group position="right" mt="xl">
+      <Group position={isUpdate ? "apart" : "right"} mt="xl">
+        {isUpdate && (
+          <Button variant="outline" color="red" onClick={onSubmitDelete}>
+            Delete
+          </Button>
+        )}
         <Button type="submit" variant="outline">
           Submit
         </Button>

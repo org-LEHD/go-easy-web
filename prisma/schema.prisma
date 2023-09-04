@@ -87,7 +87,7 @@ model Location {
 
 model Advertisement {
     id          Int      @id @default(autoincrement())
-    location    Location @relation(fields: [locationId], references: [id])
+    location    Location @relation(fields: [locationId], references: [id], onDelete: Cascade)
     locationId  Int
     title       String
     description String
