@@ -7,7 +7,7 @@ export const LogoutButton: React.FC = () => {
     <Button
       h={"24px"}
       w={"100%"}
-      styles={(theme) => ({
+      styles={() => ({
         root: {
           backgroundColor: "transparent",
           "&:hover": {
@@ -15,8 +15,7 @@ export const LogoutButton: React.FC = () => {
           },
         },
       })}
-    //   leftIcon={<IconLogout size={14} />}
-      leftIcon={<IconLogout/>}
+      leftIcon={<IconLogout />}
       variant="subtle"
       color="red"
       onClick={() => void signOut()}

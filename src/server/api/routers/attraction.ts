@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { createTRPCRouter, publicProcedure, protectedProcedure, adminProcedure } from "../trpc";
+import { createTRPCRouter, publicProcedure, adminProcedure } from "../trpc";
 import { Category } from "@prisma/client";
 
 export const attractionRouter = createTRPCRouter({

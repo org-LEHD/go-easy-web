@@ -15,7 +15,7 @@ const Requests: React.FC = () => {
     sessionData && sessionData.user.role !== "Administrator"
       ? router.push("/")
       : null;
-  }, [sessionData?.user]);
+  }, [router, sessionData, sessionData?.user]);
 
   const { data: users, isLoading } = api.user.getAll.useQuery();
 
