@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { createTRPCRouter, publicProcedure, protectedProcedure, adminProcedure } from "../trpc";
+import { createTRPCRouter, protectedProcedure, adminProcedure } from "../trpc";
 import { Access, Role } from "@prisma/client";
 
 export const userRouter = createTRPCRouter({
@@ -11,12 +11,14 @@ export const userRouter = createTRPCRouter({
   /**
    *  READ
    */
-  getById: protectedProcedure.input(z.number()).query(async ({ input, ctx }) => {
-    return await ctx.prisma.user.findFirst({
-      where: { id: input },
-      include: { accounts: true, sessions: true, locations: true },
-    });
-  }),
+  getById: protectedProcedure
+    .input(z.number())
+    .query(async ({ input, ctx }) => {
+      return await ctx.prisma.user.findFirst({
+        where: { id: input },
+        include: { accounts: true, sessions: true, locations: true },
+      });
+    }),
 
   // GET ALL
   getAll: adminProcedure.query(({ ctx }) => {
@@ -40,7 +42,7 @@ export const userRouter = createTRPCRouter({
    * UPDATE ACCESS
    */
   updateAccess: adminProcedure
-    .input(z.object({ id: z.number(), access: z.nativeEnum(Access), }))
+    .input(z.object({ id: z.number(), access: z.nativeEnum(Access) }))
     .mutation(async ({ input, ctx }) => {
       return await ctx.prisma.user.update({
         where: { id: input.id },
@@ -51,7 +53,7 @@ export const userRouter = createTRPCRouter({
    * UPDATE ROLE
    */
   updateRole: adminProcedure
-    .input(z.object({ id: z.number(), role: z.nativeEnum(Role), }))
+    .input(z.object({ id: z.number(), role: z.nativeEnum(Role) }))
     .mutation(async ({ input, ctx }) => {
       return await ctx.prisma.user.update({
         where: { id: input.id },

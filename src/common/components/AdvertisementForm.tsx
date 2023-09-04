@@ -1,15 +1,17 @@
 import {
   Button,
   TextInput,
-  NumberInput,
+  Select,
   Group,
   LoadingOverlay,
+  Textarea,
 } from "@mantine/core";
 import { useForm, zodResolver } from "@mantine/form";
 import { z } from "zod";
 import { api } from "~/utils/api";
 import { DateTimePicker } from "@mantine/dates";
 import { useRouter } from "next/router";
+import { useSession } from "next-auth/react";
 
 const advertisementValidationSchema = z.object({
   locationId: z.number().int(),
@@ -45,6 +47,14 @@ export const AdvertisementForm: React.FC<AdvertisementFormProps> = ({
     refetchOnWindowFocus: false,
     onSuccess: () => void router.back(),
   });
+  const { data: sessionData } = useSession();
+  const { data: locations } = api.location.getAllById.useQuery(
+    sessionData?.user.id ?? 0,
+    {
+      enabled:
+        sessionData?.user.id !== undefined && sessionData?.user.id !== null,
+    }
+  );
   const { mutate: updateMutation, isLoading: isUpdating } =
     api.advertisement.update.useMutation({
       onSuccess: () => router.push("/advertisements"),
@@ -71,6 +81,7 @@ export const AdvertisementForm: React.FC<AdvertisementFormProps> = ({
   const onSubmitDelete = () => {
     void refetch();
   };
+
   const form = useForm({
     validate: zodResolver(advertisementValidationSchema),
     initialValues: {
@@ -85,14 +96,28 @@ export const AdvertisementForm: React.FC<AdvertisementFormProps> = ({
     },
   });
 
+  const onSelectLocation = (input: any) => {
+    form.setValues({ locationId: Number(input) });
+  };
+
   return (
     <form onSubmit={form.onSubmit((values) => onSubmitUpdate(values))}>
       <LoadingOverlay visible={isUpdating ?? isCreating} overlayBlur={2} />
-      <NumberInput
+      <Select
         withAsterisk
-        label="Lokation id"
-        placeholder="123"
-        {...form.getInputProps("locationId")}
+        label={"Vælg lokation"}
+        data={
+          locations && locations.length > 0
+            ? locations?.map((location) => {
+                return {
+                  value: location.id.toString(),
+                  label: location.name,
+                };
+              })
+            : []
+        }
+        defaultValue={data?.locationId.toString()}
+        onChange={onSelectLocation}
       />
       <TextInput
         withAsterisk
@@ -101,7 +126,7 @@ export const AdvertisementForm: React.FC<AdvertisementFormProps> = ({
         mt="sm"
         {...form.getInputProps("title")}
       />
-      <TextInput
+      <Textarea
         withAsterisk
         label="Beskrivelse"
         placeholder="Byens bedste pizza"

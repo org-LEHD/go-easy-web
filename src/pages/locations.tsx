@@ -1,14 +1,9 @@
 import { useSession } from "next-auth/react";
 import Login from "./login";
-import {
-  Container,
-  Flex,
-  LoadingOverlay,
-  Button,
-} from "@mantine/core";
+import { Container, Flex, LoadingOverlay, Button } from "@mantine/core";
 import { api } from "~/utils/api";
 import { LocationTable } from "~/common/components/LocationTable";
-import { IconArrowRight } from "@tabler/icons";
+
 const Locations: React.FC = () => {
   const { data: sessionData } = useSession();
 

@@ -14,7 +14,7 @@ const Attractions: React.FC = () => {
     sessionData && sessionData.user.role !== "Administrator"
       ? router.push("/")
       : null;
-  }, [sessionData?.user]);
+  }, [router, sessionData, sessionData?.user]);
 
   const { data: Attractions, isLoading } = api.attraction.getAll.useQuery();
 

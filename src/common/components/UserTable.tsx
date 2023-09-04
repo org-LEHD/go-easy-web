@@ -9,7 +9,10 @@ import {
 } from "~/utils/mapAccessEnumToObject";
 import { useRouter } from "next/router";
 import { usePathname } from "next/navigation";
-import { RoleEnumKeys, mapRoleEnumToObject } from "~/utils/mapRoleEnumToObject";
+import {
+  type RoleEnumKeys,
+  mapRoleEnumToObject,
+} from "~/utils/mapRoleEnumToObject";
 import { formatDate } from "~/utils/dateFormatter";
 import { useEffect } from "react";
 import { redirect } from "~/utils/redirect";

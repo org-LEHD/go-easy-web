@@ -14,7 +14,7 @@ const Location: React.FC = () => {
     sessionData && sessionData.user.role !== "Administrator"
       ? router.push("/")
       : null;
-  }, [sessionData?.user]);
+  }, [router, sessionData, sessionData?.user]);
 
   if (sessionData?.user === undefined) {
     return <Login />;
