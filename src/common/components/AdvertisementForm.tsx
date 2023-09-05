@@ -12,6 +12,8 @@ import { api } from "~/utils/api";
 import { DateTimePicker } from "@mantine/dates";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
+import { redirect } from "~/utils/redirect";
+import { useEffect } from "react";
 
 const advertisementValidationSchema = z.object({
   locationId: z.number().int(),
@@ -55,6 +57,14 @@ export const AdvertisementForm: React.FC<AdvertisementFormProps> = ({
         sessionData?.user.id !== undefined && sessionData?.user.id !== null,
     }
   );
+  useEffect(() => {
+    const shouldRedirect = async () => {
+      if (sessionData && sessionData.user.access !== "Granted") {
+        await redirect(router);
+      }
+    };
+    void shouldRedirect();
+  }, [router, sessionData, sessionData?.user]);
   const { mutate: updateMutation, isLoading: isUpdating } =
     api.advertisement.update.useMutation({
       onSuccess: () => router.push("/advertisements"),
