@@ -16,7 +16,7 @@ import { useForm, zodResolver } from "@mantine/form";
 import { CategorySchema } from "../../../prisma/generated/zod";
 import { type $Enums, Category } from "@prisma/client";
 import { z } from "zod";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { mapCategoryEnumToObject } from "~/utils/mapCategoryEnumToObject";
 import { useQuery } from "@tanstack/react-query";
 import { useDebouncedValue } from "@mantine/hooks";
@@ -25,6 +25,7 @@ import { api } from "~/utils/api";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { formatAddressForLocation } from "~/utils/formatAddressForLocations";
+import { redirect } from "~/utils/redirect";
 
 const locationValidationSchema = z.object({
   name: z.string(),
@@ -90,6 +91,7 @@ export const LocationForm: React.FC<LocationFormProps> = ({ data }) => {
   const [searchParam, setSearchParam] = useState<string | null>(null);
   const [debounced] = useDebouncedValue(searchParam, 500);
   const session = useSession();
+  const { data: sessionData } = useSession();
   const router = useRouter();
   const { id } = router.query;
   const routerParam = id?.[0] !== undefined ? Number(id[0]) : 0;
@@ -107,7 +109,14 @@ export const LocationForm: React.FC<LocationFormProps> = ({ data }) => {
     api.location.create.useMutation({
       onSuccess: () => router.push("/locations"),
     });
-
+  useEffect(() => {
+    const shouldRedirect = async () => {
+      if (sessionData && sessionData.user.access !== "Granted") {
+        await redirect(router);
+      }
+    };
+    void shouldRedirect();
+  }, [router, sessionData, sessionData?.user]);
   const onSubmitUpdate = (values: LocationObject) => {
     if (!session.data?.user.id) return;
     if (routerParam !== 0) {

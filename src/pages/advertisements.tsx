@@ -3,10 +3,21 @@ import Login from "./login";
 import { LoadingOverlay, Container, Flex, Button } from "@mantine/core";
 import { api } from "~/utils/api";
 import { AdvertisementTable } from "~/common/components/AdvertisementTable";
+import { redirect } from "~/utils/redirect";
+import { useEffect } from "react";
+import { useRouter } from "next/router";
 
 const Advertisements: React.FC = () => {
   const { data: sessionData } = useSession();
-
+  const router = useRouter();
+  useEffect(() => {
+    const shouldRedirect = async () => {
+      if (sessionData && sessionData.user.access !== "Granted") {
+        await redirect(router);
+      }
+    };
+    void shouldRedirect();
+  }, [router, sessionData, sessionData?.user]);
   const { data: advertisements, isLoading } =
     api.advertisement.getAllByUserId.useQuery(sessionData?.user?.id ?? 0, {
       enabled: sessionData?.user.id !== undefined,

@@ -18,7 +18,7 @@ import { Logo } from "./navbar/Logo";
 import { useMediaQuery, useDisclosure } from "@mantine/hooks";
 import { ColorSchemeToggle } from "./navbar/ColorSchemeToggle";
 import { LogoutButton } from "./navbar/LogoutButton";
-import { Role } from "@prisma/client";
+import { Access, Role } from "@prisma/client";
 
 type Props = {
   children: ReactElement;
@@ -30,22 +30,26 @@ const Layout: React.FC<Props> = ({ children }) => {
 
   const [opened, { toggle, close }] = useDisclosure(false);
   const label = opened ? "Close navigation" : "Open navigation";
-
-  const navItems: NavItemProps[] = useMemo(
-    () =>
-      sessionData?.user?.role == Role.Administrator
-        ? [
-            { text: "Anmodninger", href: "/requests" },
-            { text: "Annoncører", href: "/advertisers" },
-            { text: "Seværdigheder", href: "/attractions" },
-          ]
-        : [
-            { text: "Konto", href: "/account" },
-            { text: "Lokationer", href: "/locations" },
-            { text: "Annoncer", href: "/advertisements" },
-          ],
-    [sessionData?.user?.role]
-  );
+  const isGrantedAccess = sessionData?.user.access == Access.Granted;
+  const navItems: NavItemProps[] = useMemo(() => {
+    if (sessionData?.user?.role === Role.Administrator) {
+      return [
+        { text: "Anmodninger", href: "/requests" },
+        { text: "Annoncører", href: "/advertisers" },
+        { text: "Seværdigheder", href: "/attractions" },
+      ];
+    } else {
+      if (isGrantedAccess) {
+        return [
+          { text: "Konto", href: "/account" },
+          { text: "Lokationer", href: "/locations" },
+          { text: "Annoncer", href: "/advertisements" },
+        ];
+      } else {
+        return [{ text: "Konto", href: "/account" }];
+      }
+    }
+  }, [sessionData?.user?.role, isGrantedAccess]);
 
   return (
     <AppShell
