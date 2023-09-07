@@ -21,11 +21,12 @@ export const LocationTable: React.FC<LocationTableProps> = ({
         <tr>
           <th>ID</th>
           <th>Forretning</th>
-          <th>Hjemmeside</th>
           <th>Telefon</th>
+          <th>Addresse</th>
+          <th>Hjemmeside</th>
+          <th>Thumbnail</th>
           <th>Oprettet</th>
           <th>Annoncer</th>
-          <th></th>
         </tr>
       </thead>
       <tbody>
@@ -37,6 +38,12 @@ export const LocationTable: React.FC<LocationTableProps> = ({
                 <Text truncate>{location.name}</Text>
               </Tooltip>
             </td>
+            <td>{location.phone}</td>
+            <td style={{ maxWidth: 200 }}>
+              <Tooltip label={location.address}>
+                <Text truncate>{location.address}</Text>
+              </Tooltip>
+            </td>
             <td style={{ maxWidth: 200 }}>
               <Anchor href={location.website} target={"_blank"}>
                 <Tooltip label={location.website}>
@@ -44,9 +51,14 @@ export const LocationTable: React.FC<LocationTableProps> = ({
                 </Tooltip>
               </Anchor>
             </td>
-            <td>{location.phone}</td>
+            <td style={{ maxWidth: 200 }}>
+              <Anchor href={location.thumbnail} target={"_blank"}>
+                <Tooltip label={location.thumbnail}>
+                  <Text truncate>{location.thumbnail}</Text>
+                </Tooltip>
+              </Anchor>
+            </td>
             <td>{`${formatDate(location.createdAt)}`}</td>
-            <td>{location.advertisements.length}</td>
             <td>
               <NavLink
                 href={
