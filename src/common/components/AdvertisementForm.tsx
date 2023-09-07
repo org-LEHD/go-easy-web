@@ -140,6 +140,7 @@ export const AdvertisementForm: React.FC<AdvertisementFormProps> = ({
         withAsterisk
         label="Beskrivelse"
         placeholder="Byens bedste pizza"
+        maxLength={191}
         mt="sm"
         {...form.getInputProps("description")}
       />

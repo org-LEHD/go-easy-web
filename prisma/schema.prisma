@@ -109,6 +109,7 @@ model Attraction {
     long        Float
     thumbnail   String
     description String
+    summary     String?
     createdAt   DateTime @default(now())
     updatedAt   DateTime @updatedAt
 }

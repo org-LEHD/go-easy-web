@@ -27,6 +27,7 @@ const attractionValidationSchema = z.object({
   category: CategorySchema,
   thumbnail: z.string(),
   description: z.string(),
+  summary: z.string(),
   address: z.string(),
   lat: z.number(),
   long: z.number(),
@@ -44,6 +45,7 @@ interface AttractionObject {
   lat: number;
   long: number;
   description: string;
+  summary: string;
   thumbnail: string;
 }
 
@@ -133,6 +135,7 @@ export const AttractionForm: React.FC<AttractionFormProps> = ({ data }) => {
       address: data?.address ?? "",
       category: data?.category ?? Category.Undefined,
       description: data?.description ?? "",
+      summary: data?.summary ?? "",
       thumbnail: data?.thumbnail ?? "",
       lat: data?.lat ?? 0,
       long: data?.long ?? 0,
@@ -213,8 +216,17 @@ export const AttractionForm: React.FC<AttractionFormProps> = ({ data }) => {
       />
       <Textarea
         withAsterisk
+        label="Resumé"
+        placeholder="resumé skrives her"
+        maxLength={191}
+        mt="sm"
+        {...form.getInputProps("summary")}
+      />
+      <Textarea
+        withAsterisk
         label="Beskrivelse"
         placeholder="Beskrivelse"
+        maxLength={191}
         mt="sm"
         {...form.getInputProps("description")}
       />

@@ -16,6 +16,7 @@ export const attractionRouter = createTRPCRouter({
         long: z.number(),
         thumbnail: z.string(),
         description: z.string(),
+        summary: z.string(),
       })
     )
     .mutation(async ({ input, ctx }) => {
@@ -53,6 +54,7 @@ export const attractionRouter = createTRPCRouter({
         long: z.number(),
         media: z.string().optional(),
         description: z.string(),
+        summary: z.string(),
       })
     )
     .mutation(async ({ input, ctx }) => {

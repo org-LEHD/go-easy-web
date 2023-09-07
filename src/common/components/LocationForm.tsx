@@ -273,6 +273,7 @@ export const LocationForm: React.FC<LocationFormProps> = ({ data }) => {
         withAsterisk
         label="Beskrivelse"
         placeholder="Beskrivelse"
+        maxLength={191}
         mt="sm"
         {...form.getInputProps("description")}
       />
