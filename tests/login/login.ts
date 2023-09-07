@@ -1,10 +1,6 @@
 import { type Page } from "@playwright/test";
 
-export const login = async (
-  page: Page,
-  name: string,
-  password: string,
-) => {
+export const login = async (page: Page, name: string, password: string) => {
   await page.goto("http://localhost:3000");
   await page.click("text=Sign in");
   await page.click("text=Sign in with Discord");

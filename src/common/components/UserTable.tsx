@@ -87,7 +87,7 @@ export const UserTable: React.FC<UserTableProps> = ({ users }) => {
                 data={mapRoleEnumToObject()}
               />
             </td>
-            <td>
+            <td test-column={"access"}>
               <Select
                 placeholder="Giv adgang"
                 mt="sm"
