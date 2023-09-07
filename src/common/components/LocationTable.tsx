@@ -1,4 +1,4 @@
-import { NavLink, Table } from "@mantine/core";
+import { NavLink, Table, Anchor, Text, Tooltip } from "@mantine/core";
 import { IconArrowRight } from "@tabler/icons";
 import { formatDate } from "~/utils/dateFormatter";
 import { useSession } from "next-auth/react";
@@ -21,18 +21,32 @@ export const LocationTable: React.FC<LocationTableProps> = ({
         <tr>
           <th>ID</th>
           <th>Forretning</th>
-          <th>Website</th>
+          <th>Hjemmeside</th>
+          <th>Telefon</th>
           <th>Oprettet</th>
-          <th style={{width: 20}}> </th>
+          <th>Annoncer</th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
         {locations?.map((location, key) => (
           <tr key={key}>
             <td>{location.id}</td>
-            <td>{location.name}</td>
-            <td>{location.website}</td>
+            <td style={{ maxWidth: 100 }}>
+              <Tooltip label={location.name}>
+                <Text truncate>{location.name}</Text>
+              </Tooltip>
+            </td>
+            <td style={{ maxWidth: 200 }}>
+              <Anchor href={location.website} target={"_blank"}>
+                <Tooltip label={location.website}>
+                  <Text truncate>{location.website}</Text>
+                </Tooltip>
+              </Anchor>
+            </td>
+            <td>{location.phone}</td>
             <td>{`${formatDate(location.createdAt)}`}</td>
+            <td>{location.advertisements.length}</td>
             <td>
               <NavLink
                 href={

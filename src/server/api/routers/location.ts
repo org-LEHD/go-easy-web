@@ -25,7 +25,7 @@ export const locationRouter = createTRPCRouter({
     .mutation(async ({ input, ctx }) => {
       return await ctx.prisma.location.create({
         data: { ...input },
-        include: { Advertisement: true },
+        include: { advertisements: true },
       });
     }),
 
@@ -46,7 +46,7 @@ export const locationRouter = createTRPCRouter({
     .query(async ({ input, ctx }) => {
       return await ctx.prisma.location.findMany({
         where: { userId: input },
-        include: { Advertisement: true, user: true },
+        include: { advertisements: true, user: true },
       });
     }),
   /**
