@@ -46,11 +46,14 @@ const Layout: React.FC<Props> = ({ children }) => {
           { text: "Lokationer", href: "/locations" },
           { text: "Annoncer", href: "/advertisements" },
         ];
-      } else {
+      } else if(sessionData?.user){
         return [{ text: "Konto", href: "/account" }];
       }
+        else {
+        return [];
+      }
     }
-  }, [sessionData?.user?.role, isGrantedAccess]);
+  }, [sessionData?.user, isGrantedAccess]);
 
   return (
     <AppShell
