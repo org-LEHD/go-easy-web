@@ -24,7 +24,7 @@ export const LocationScalarFieldEnumSchema = z.enum(['id','userId','category','n
 
 export const AdvertisementScalarFieldEnumSchema = z.enum(['id','locationId','title','description','media','start','end','createdAt','updatedAt']);
 
-export const AttractionScalarFieldEnumSchema = z.enum(['id','category','name','address','lat','long','thumbnail','description','createdAt','updatedAt']);
+export const AttractionScalarFieldEnumSchema = z.enum(['id','category','name','address','lat','long','thumbnail','description','summary','createdAt','updatedAt']);
 
 export const SortOrderSchema = z.enum(['asc','desc']);
 
@@ -164,6 +164,7 @@ export const AttractionSchema = z.object({
   long: z.number(),
   thumbnail: z.string(),
   description: z.string(),
+  summary: z.string(),
   createdAt: z.coerce.date(),
   updatedAt: z.coerce.date(),
 })
@@ -351,6 +352,7 @@ export const AttractionSelectSchema: z.ZodType<Prisma.AttractionSelect> = z.obje
   long: z.boolean().optional(),
   thumbnail: z.boolean().optional(),
   description: z.boolean().optional(),
+  summary: z.boolean().optional(),
   createdAt: z.boolean().optional(),
   updatedAt: z.boolean().optional(),
 }).strict()
@@ -879,6 +881,7 @@ export const AttractionWhereInputSchema: z.ZodType<Prisma.AttractionWhereInput> 
   long: z.union([ z.lazy(() => FloatFilterSchema),z.number() ]).optional(),
   thumbnail: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   description: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  summary: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   createdAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
   updatedAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
 }).strict();
@@ -892,6 +895,7 @@ export const AttractionOrderByWithRelationInputSchema: z.ZodType<Prisma.Attracti
   long: z.lazy(() => SortOrderSchema).optional(),
   thumbnail: z.lazy(() => SortOrderSchema).optional(),
   description: z.lazy(() => SortOrderSchema).optional(),
+  summary: z.lazy(() => SortOrderSchema).optional(),
   createdAt: z.lazy(() => SortOrderSchema).optional(),
   updatedAt: z.lazy(() => SortOrderSchema).optional()
 }).strict();
@@ -911,6 +915,7 @@ export const AttractionWhereUniqueInputSchema: z.ZodType<Prisma.AttractionWhereU
   long: z.union([ z.lazy(() => FloatFilterSchema),z.number() ]).optional(),
   thumbnail: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   description: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  summary: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   createdAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
   updatedAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
 }).strict());
@@ -924,6 +929,7 @@ export const AttractionOrderByWithAggregationInputSchema: z.ZodType<Prisma.Attra
   long: z.lazy(() => SortOrderSchema).optional(),
   thumbnail: z.lazy(() => SortOrderSchema).optional(),
   description: z.lazy(() => SortOrderSchema).optional(),
+  summary: z.lazy(() => SortOrderSchema).optional(),
   createdAt: z.lazy(() => SortOrderSchema).optional(),
   updatedAt: z.lazy(() => SortOrderSchema).optional(),
   _count: z.lazy(() => AttractionCountOrderByAggregateInputSchema).optional(),
@@ -945,6 +951,7 @@ export const AttractionScalarWhereWithAggregatesInputSchema: z.ZodType<Prisma.At
   long: z.union([ z.lazy(() => FloatWithAggregatesFilterSchema),z.number() ]).optional(),
   thumbnail: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
   description: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
+  summary: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
   createdAt: z.union([ z.lazy(() => DateTimeWithAggregatesFilterSchema),z.coerce.date() ]).optional(),
   updatedAt: z.union([ z.lazy(() => DateTimeWithAggregatesFilterSchema),z.coerce.date() ]).optional(),
 }).strict();
@@ -1437,6 +1444,7 @@ export const AttractionCreateInputSchema: z.ZodType<Prisma.AttractionCreateInput
   long: z.number(),
   thumbnail: z.string(),
   description: z.string(),
+  summary: z.string(),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional()
 }).strict();
@@ -1450,6 +1458,7 @@ export const AttractionUncheckedCreateInputSchema: z.ZodType<Prisma.AttractionUn
   long: z.number(),
   thumbnail: z.string(),
   description: z.string(),
+  summary: z.string(),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional()
 }).strict();
@@ -1462,6 +1471,7 @@ export const AttractionUpdateInputSchema: z.ZodType<Prisma.AttractionUpdateInput
   long: z.union([ z.number(),z.lazy(() => FloatFieldUpdateOperationsInputSchema) ]).optional(),
   thumbnail: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   description: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  summary: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
 }).strict();
@@ -1475,6 +1485,7 @@ export const AttractionUncheckedUpdateInputSchema: z.ZodType<Prisma.AttractionUn
   long: z.union([ z.number(),z.lazy(() => FloatFieldUpdateOperationsInputSchema) ]).optional(),
   thumbnail: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   description: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  summary: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
 }).strict();
@@ -1488,6 +1499,7 @@ export const AttractionCreateManyInputSchema: z.ZodType<Prisma.AttractionCreateM
   long: z.number(),
   thumbnail: z.string(),
   description: z.string(),
+  summary: z.string(),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional()
 }).strict();
@@ -1500,6 +1512,7 @@ export const AttractionUpdateManyMutationInputSchema: z.ZodType<Prisma.Attractio
   long: z.union([ z.number(),z.lazy(() => FloatFieldUpdateOperationsInputSchema) ]).optional(),
   thumbnail: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   description: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  summary: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
 }).strict();
@@ -1513,6 +1526,7 @@ export const AttractionUncheckedUpdateManyInputSchema: z.ZodType<Prisma.Attracti
   long: z.union([ z.number(),z.lazy(() => FloatFieldUpdateOperationsInputSchema) ]).optional(),
   thumbnail: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   description: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  summary: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
 }).strict();
@@ -2098,6 +2112,7 @@ export const AttractionCountOrderByAggregateInputSchema: z.ZodType<Prisma.Attrac
   long: z.lazy(() => SortOrderSchema).optional(),
   thumbnail: z.lazy(() => SortOrderSchema).optional(),
   description: z.lazy(() => SortOrderSchema).optional(),
+  summary: z.lazy(() => SortOrderSchema).optional(),
   createdAt: z.lazy(() => SortOrderSchema).optional(),
   updatedAt: z.lazy(() => SortOrderSchema).optional()
 }).strict();
@@ -2117,6 +2132,7 @@ export const AttractionMaxOrderByAggregateInputSchema: z.ZodType<Prisma.Attracti
   long: z.lazy(() => SortOrderSchema).optional(),
   thumbnail: z.lazy(() => SortOrderSchema).optional(),
   description: z.lazy(() => SortOrderSchema).optional(),
+  summary: z.lazy(() => SortOrderSchema).optional(),
   createdAt: z.lazy(() => SortOrderSchema).optional(),
   updatedAt: z.lazy(() => SortOrderSchema).optional()
 }).strict();
@@ -2130,6 +2146,7 @@ export const AttractionMinOrderByAggregateInputSchema: z.ZodType<Prisma.Attracti
   long: z.lazy(() => SortOrderSchema).optional(),
   thumbnail: z.lazy(() => SortOrderSchema).optional(),
   description: z.lazy(() => SortOrderSchema).optional(),
+  summary: z.lazy(() => SortOrderSchema).optional(),
   createdAt: z.lazy(() => SortOrderSchema).optional(),
   updatedAt: z.lazy(() => SortOrderSchema).optional()
 }).strict();
