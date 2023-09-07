@@ -168,11 +168,11 @@ export const AdvertisementForm: React.FC<AdvertisementFormProps> = ({
       <Group position={isUpdate ? "apart" : "right"} mt="xl">
         {isUpdate && (
           <Button variant="outline" color="red" onClick={onSubmitDelete}>
-            Delete
+            Slet
           </Button>
         )}
         <Button type="submit" variant="outline">
-          Submit
+          {isUpdate ? "Opdatér" : "Opret"}
         </Button>
       </Group>
     </form>

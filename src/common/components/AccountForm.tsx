@@ -24,7 +24,9 @@ export interface AccountFormProps {
 export const AccountForm: React.FC<AccountFormProps> = ({ data }) => {
   const session = useSession();
   const router = useRouter();
-  const { mutate: updateMutation, isLoading } = api.user.update.useMutation({onSuccess: () => router.reload()});
+  const { mutate: updateMutation, isLoading } = api.user.update.useMutation({
+    onSuccess: () => router.reload(),
+  });
 
   const form = useForm({
     validate: zodResolver(userValidadationSchema),
@@ -60,7 +62,9 @@ export const AccountForm: React.FC<AccountFormProps> = ({ data }) => {
         {...form.getInputProps("email")}
       />
       <Group position="right" mt="xl">
-        <Button type="submit" variant="outline">Submit</Button>
+        <Button type="submit" variant="outline">
+          Opdatér
+        </Button>
       </Group>
     </form>
   );

@@ -2,7 +2,7 @@
   "cookies": [
     {
       "name": "next-auth.csrf-token",
-      "value": "e9fe8bc7f2baec99531b4bc11bbe3ec4e19a0bb9ec100ab0d9057fed1c727fb4%7C974425b5e4286e44d88eeac46056ea1a6109c317cbfcb644b727730ea4d6a608",
+      "value": "28ae6957eb14a71227cb64b315bb383ce37c68aaea38046269eca4f1c46bc71d%7Cf1ea5a3bdce255fde3a5bd72f6abd277aa196c084666f1d6cc9cd4d33e577b8e",
       "domain": "localhost",
       "path": "/",
       "expires": -1,
@@ -22,57 +22,27 @@
     },
     {
       "name": "__dcfduid",
-      "value": "9997a2dc4d5311eeb5a602bdcd827df8",
+      "value": "e8aeb5ae4d7b11eea6507acf952cd30a",
       "domain": "discord.com",
       "path": "/",
-      "expires": 1728633194.309302,
+      "expires": 1728650506.622075,
       "httpOnly": true,
       "secure": true,
       "sameSite": "Lax"
     },
     {
       "name": "__sdcfduid",
-      "value": "9997a2dc4d5311eeb5a602bdcd827df8fcc29fec4f1a925ea0df11f2fa25b37976d43948c759328ac0b0561c58fa46af",
+      "value": "e8aeb5ae4d7b11eea6507acf952cd30a71975fe1fb65bae544b33aec2116d78bd8b179eb5e3e78e8f33ed9dc376e6efe",
       "domain": "discord.com",
       "path": "/",
-      "expires": 1728633194.309343,
+      "expires": 1728650506.622131,
       "httpOnly": true,
       "secure": true,
-      "sameSite": "Lax"
-    },
-    {
-      "name": "cf_clearance",
-      "value": "Z7n51_ITOGFy6zDosP.Ia2Xq15Qg75.vPckaiy0nMyQ-1694073197-0-1-a70f4d2f.b078fd1f.d8c7b4e1-0.1.1694073197",
-      "domain": ".discord.com",
-      "path": "/",
-      "expires": 1725609197.012557,
-      "httpOnly": true,
-      "secure": true,
-      "sameSite": "None"
-    },
-    {
-      "name": "__cf_bm",
-      "value": "92duj.meyC9smIM9au0TPEnrYti_lnSPZOolUZLJUeU-1694073203-0-Aehc95LplQmzfXgyL7ZUzy8HMk5v+XgnpI7er+g3CInelGCHTfBNrdGFcfGHDfuuSiojnH9L1WsVBiPO8RIZTTI=",
-      "domain": ".discordapp.com",
-      "path": "/",
-      "expires": 1694075003.152061,
-      "httpOnly": true,
-      "secure": true,
-      "sameSite": "None"
-    },
-    {
-      "name": "next-auth.session-token",
-      "value": "677f1c96-d0a6-4b5e-911f-15404d7f2f1f",
-      "domain": "localhost",
-      "path": "/",
-      "expires": 1696665207.353378,
-      "httpOnly": true,
-      "secure": false,
       "sameSite": "Lax"
     },
     {
       "name": "__cfruid",
-      "value": "bc3cc3cd366d4ceffa7fcff4edbb227748a9ca22-1694073208",
+      "value": "0af709274fe95b940c2e2623f41140742591c613-1694090507",
       "domain": ".discord.com",
       "path": "/",
       "expires": -1,
@@ -82,13 +52,33 @@
     },
     {
       "name": "_cfuvid",
-      "value": "e8jaq4gu6vwnjfmCsalhvdE1KRjBWfNocPYxgbuN3Xw-1694073208219-0-604800000",
+      "value": "XX3IDBTMxBRgDM9kPiH0Jg3B3bRqtt54YCDBBYS_0Vk-1694090507570-0-604800000",
       "domain": ".discord.com",
       "path": "/",
       "expires": -1,
       "httpOnly": true,
       "secure": true,
       "sameSite": "None"
+    },
+    {
+      "name": "cf_clearance",
+      "value": "gQxPDk1aWeHaR87O1TWnDR80FQ5dBk_Hhn4noYJoaG0-1694090510-0-1-ee5ca793.72e65152.6025bcd5-0.1.1694090510",
+      "domain": ".discord.com",
+      "path": "/",
+      "expires": 1725626509.790529,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "next-auth.session-token",
+      "value": "2c1461e2-5027-43e5-a7f0-b2bddc8918be",
+      "domain": "localhost",
+      "path": "/",
+      "expires": 1696682514.350624,
+      "httpOnly": true,
+      "secure": false,
+      "sameSite": "Lax"
     }
   ],
   "origins": [
@@ -97,7 +87,7 @@
       "localStorage": [
         {
           "name": "nextauth.message",
-          "value": "{\"event\":\"session\",\"data\":{\"trigger\":\"getSession\"},\"timestamp\":1694073191}"
+          "value": "{\"event\":\"session\",\"data\":{\"trigger\":\"getSession\"},\"timestamp\":1694090514}"
         }
       ]
     },
@@ -186,11 +176,11 @@
         },
         {
           "name": "scientist:triggered",
-          "value": "{\"v\":1,\"e\":{\"user|2021-04_impression_logging\":{\"time\":1694073202875,\"hash\":3695065393}}}"
+          "value": "{\"v\":1,\"e\":{\"user|2021-04_impression_logging\":{\"time\":1694090511566,\"hash\":3695065393}}}"
         },
         {
           "name": "token",
-          "value": "\"MjA5NjE4NDI5NzY0ODI5MTg0.GDaWNm.5jWyhb-clWy4crP7iuY1muTaqnFGNzHCyOV38M\""
+          "value": "\"MjA5NjE4NDI5NzY0ODI5MTg0.G1CX9K.rGEdKIcKicyarHL55a8QkCtrOtQpTTZApzwuXA\""
         }
       ]
     }

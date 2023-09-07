@@ -2,7 +2,7 @@
   "cookies": [
     {
       "name": "next-auth.csrf-token",
-      "value": "fd3431f6998b4645e7f289f1a8d241d885b60eae3a891bb4f25b29b88e46022d%7C80e15abf4199ef4131d33c1d5d5cd2a62abeae0b193ca150116102fbbbe8bccb",
+      "value": "9a3b86f26707e9d15b19e6b240f5f3d5b3cb492dd0b7f778a4af3e69862e3015%7C2244818c2a53302a18fe3922d8dae2f5c93cfada93971543a8c3beaec1c9c930",
       "domain": "localhost",
       "path": "/",
       "expires": -1,
@@ -22,27 +22,27 @@
     },
     {
       "name": "__dcfduid",
-      "value": "12a852984d5411eeba343e22bc990cc0",
+      "value": "988dae8a4d7c11ee9c7d3ea17028ed07",
       "domain": "discord.com",
       "path": "/",
-      "expires": 1728633397.42111,
+      "expires": 1728650801.681286,
       "httpOnly": true,
       "secure": true,
       "sameSite": "Lax"
     },
     {
       "name": "__sdcfduid",
-      "value": "12a852984d5411eeba343e22bc990cc03a27ea453008e00e0040d0d2d1ff1cffd6a11654b704a2ada362cc25e4efec15",
+      "value": "988dae8a4d7c11ee9c7d3ea17028ed07cc175bfa72660a1d68ba49c0aab8ab1fda1303f60e49e9065098729df72d7a72",
       "domain": "discord.com",
       "path": "/",
-      "expires": 1728633397.421158,
+      "expires": 1728650801.681325,
       "httpOnly": true,
       "secure": true,
       "sameSite": "Lax"
     },
     {
       "name": "__cfruid",
-      "value": "f64c035f7c4edd8bdb2e3f663733f717c50e2e84-1694073398",
+      "value": "9704147f49d07320b68210f23d8dd43e1f6b760c-1694090802",
       "domain": ".discord.com",
       "path": "/",
       "expires": -1,
@@ -52,7 +52,7 @@
     },
     {
       "name": "_cfuvid",
-      "value": "lg_GVWTHza2pa2ok9B82JMzMIhY8CgVXqi6QXujajr4-1694073398125-0-604800000",
+      "value": "7Mwgsl7q7NBTsxWRtjd5462TZvGa.5I064HQDv_W1ps-1694090802634-0-604800000",
       "domain": ".discord.com",
       "path": "/",
       "expires": -1,
@@ -62,20 +62,20 @@
     },
     {
       "name": "cf_clearance",
-      "value": "6tNjKo_G1Nntie5ipsOJW10oavlQSGXTjO_U7yeQ5.4-1694073400-0-1-a70f4d2f.b078fd1f.d8c7b4e1-0.1.1694073400",
+      "value": "H_ZuWXpKwbSW2qb1lcV8sKoNkquEwGq1.d2McYP8Yi0-1694090805-0-1-ee5ca793.72e65152.6025bcd5-0.1.1694090805",
       "domain": ".discord.com",
       "path": "/",
-      "expires": 1725609400.269038,
+      "expires": 1725626804.266792,
       "httpOnly": true,
       "secure": true,
       "sameSite": "None"
     },
     {
       "name": "next-auth.session-token",
-      "value": "2b1692fe-6449-47b4-919b-5a9c864884b2",
+      "value": "27522ee2-24b3-4c98-817b-469de93ebee4",
       "domain": "localhost",
       "path": "/",
-      "expires": 1696665403.674386,
+      "expires": 1696682808.644052,
       "httpOnly": true,
       "secure": false,
       "sameSite": "Lax"
@@ -87,7 +87,7 @@
       "localStorage": [
         {
           "name": "nextauth.message",
-          "value": "{\"event\":\"session\",\"data\":{\"trigger\":\"getSession\"},\"timestamp\":1694073396}"
+          "value": "{\"event\":\"session\",\"data\":{\"trigger\":\"getSession\"},\"timestamp\":1694090808}"
         }
       ]
     },
@@ -176,11 +176,11 @@
         },
         {
           "name": "scientist:triggered",
-          "value": "{\"v\":1,\"e\":{\"user|2021-04_impression_logging\":{\"time\":1694073401977,\"hash\":3695065393}}}"
+          "value": "{\"v\":1,\"e\":{\"user|2021-04_impression_logging\":{\"time\":1694090805941,\"hash\":3695065393}}}"
         },
         {
           "name": "token",
-          "value": "\"MTE0OTI0NjI5NDQwNjIxNzcyOA.GuyZ0q.0Hok7zlLt1dIEjzo09U1Y-zF-bJGl2VimT8rXE\""
+          "value": "\"MTE0OTI0NjI5NDQwNjIxNzcyOA.GMF-Wt.FNDgtgfVx-c0Z4CWcaMLePKsyQIQXUpwbbMikw\""
         }
       ]
     }

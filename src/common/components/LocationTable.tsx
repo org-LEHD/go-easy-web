@@ -74,7 +74,7 @@ export const LocationTable: React.FC<LocationTableProps> = ({
         ))}
         {locations?.length === 0 && (
           <tr>
-            <td colSpan={5}>Brugeren har endnu ikke oprettet annoncer.</td>
+            <td colSpan={5}>Brugeren har endnu ikke oprettet lokationer.</td>
           </tr>
         )}
       </tbody>
