@@ -52,6 +52,7 @@ export const attractionRouter = createTRPCRouter({
         lat: z.number(),
         long: z.number(),
         media: z.string().optional(),
+        description: z.string(),
       })
     )
     .mutation(async ({ input, ctx }) => {

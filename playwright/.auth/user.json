@@ -1,0 +1,198 @@
+{
+  "cookies": [
+    {
+      "name": "next-auth.csrf-token",
+      "value": "e9fe8bc7f2baec99531b4bc11bbe3ec4e19a0bb9ec100ab0d9057fed1c727fb4%7C974425b5e4286e44d88eeac46056ea1a6109c317cbfcb644b727730ea4d6a608",
+      "domain": "localhost",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": true,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "next-auth.callback-url",
+      "value": "http%3A%2F%2Flocalhost%3A3000%2F",
+      "domain": "localhost",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": true,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "__dcfduid",
+      "value": "9997a2dc4d5311eeb5a602bdcd827df8",
+      "domain": "discord.com",
+      "path": "/",
+      "expires": 1728633194.309302,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "__sdcfduid",
+      "value": "9997a2dc4d5311eeb5a602bdcd827df8fcc29fec4f1a925ea0df11f2fa25b37976d43948c759328ac0b0561c58fa46af",
+      "domain": "discord.com",
+      "path": "/",
+      "expires": 1728633194.309343,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "cf_clearance",
+      "value": "Z7n51_ITOGFy6zDosP.Ia2Xq15Qg75.vPckaiy0nMyQ-1694073197-0-1-a70f4d2f.b078fd1f.d8c7b4e1-0.1.1694073197",
+      "domain": ".discord.com",
+      "path": "/",
+      "expires": 1725609197.012557,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "__cf_bm",
+      "value": "92duj.meyC9smIM9au0TPEnrYti_lnSPZOolUZLJUeU-1694073203-0-Aehc95LplQmzfXgyL7ZUzy8HMk5v+XgnpI7er+g3CInelGCHTfBNrdGFcfGHDfuuSiojnH9L1WsVBiPO8RIZTTI=",
+      "domain": ".discordapp.com",
+      "path": "/",
+      "expires": 1694075003.152061,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "next-auth.session-token",
+      "value": "677f1c96-d0a6-4b5e-911f-15404d7f2f1f",
+      "domain": "localhost",
+      "path": "/",
+      "expires": 1696665207.353378,
+      "httpOnly": true,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "__cfruid",
+      "value": "bc3cc3cd366d4ceffa7fcff4edbb227748a9ca22-1694073208",
+      "domain": ".discord.com",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "_cfuvid",
+      "value": "e8jaq4gu6vwnjfmCsalhvdE1KRjBWfNocPYxgbuN3Xw-1694073208219-0-604800000",
+      "domain": ".discord.com",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "None"
+    }
+  ],
+  "origins": [
+    {
+      "origin": "http://localhost:3000",
+      "localStorage": [
+        {
+          "name": "nextauth.message",
+          "value": "{\"event\":\"session\",\"data\":{\"trigger\":\"getSession\"},\"timestamp\":1694073191}"
+        }
+      ]
+    },
+    {
+      "origin": "https://discord.com",
+      "localStorage": [
+        {
+          "name": "StreamerModeStore",
+          "value": "{\"_state\":{\"209618429764829184\":{\"enabled\":false,\"autoToggle\":true,\"hideInstantInvites\":true,\"hidePersonalInformation\":true,\"disableSounds\":true,\"disableNotifications\":true,\"enableContentProtection\":false}},\"_version\":1}"
+        },
+        {
+          "name": "email_cache",
+          "value": "\"galvit28@gmail.com\""
+        },
+        {
+          "name": "MultiAccountStore",
+          "value": "{\"_state\":{\"users\":[],\"canUseMultiAccountMobile\":false},\"_version\":1}"
+        },
+        {
+          "name": "UserSettingsOverridesStore",
+          "value": "{\"_state\":{},\"_version\":1}"
+        },
+        {
+          "name": "UserTrialStore",
+          "value": "{\"_state\":{\"userTrialOffers\":{}},\"_version\":0}"
+        },
+        {
+          "name": "SoundpackStore",
+          "value": "{\"_state\":{\"soundpack\":\"classic\"},\"_version\":0}"
+        },
+        {
+          "name": "OverridePremiumTypeStore",
+          "value": "{\"_state\":{\"premiumTypeActual\":null},\"_version\":0}"
+        },
+        {
+          "name": "DraftStore",
+          "value": "{\"_state\":{},\"_version\":2}"
+        },
+        {
+          "name": "referralProperties",
+          "value": "{\"referrer\":\"http://localhost:3000/\",\"referring_domain\":\"localhost:3000\"}"
+        },
+        {
+          "name": "MediaEngineStore",
+          "value": "{\"default\":{\"mode\":\"VOICE_ACTIVITY\",\"modeOptions\":{\"threshold\":-60,\"autoThreshold\":false,\"vadUseKrisp\":true,\"vadLeading\":5,\"vadTrailing\":25,\"delay\":20,\"shortcut\":[]},\"vadUseKrispSettingVersion\":0,\"ncUseKrispSettingVersion\":0,\"av1EnabledSettingVersion\":0,\"hardwareClipEncodeSettingVersion\":0,\"mute\":false,\"deaf\":false,\"echoCancellation\":true,\"noiseSuppression\":false,\"automaticGainControl\":true,\"noiseCancellation\":false,\"experimentalEncoders\":false,\"hardwareH264\":true,\"silenceWarning\":true,\"attenuation\":0,\"attenuateWhileSpeakingSelf\":false,\"attenuateWhileSpeakingOthers\":true,\"localMutes\":{},\"disabledLocalVideos\":{},\"videoToggleStateMap\":{},\"localVolumes\":{},\"localPans\":{},\"inputVolume\":100,\"outputVolume\":100,\"inputDeviceId\":\"default\",\"outputDeviceId\":\"default\",\"videoDeviceId\":\"default\",\"qos\":false,\"qosMigrated\":false,\"videoHook\":false,\"experimentalSoundshare2\":null,\"openH264\":true,\"av1Enabled\":true,\"h265Enabled\":true,\"hardwareClipEncode\":true,\"vadThrehsoldMigrated\":false,\"aecDumpEnabled\":false}}"
+        },
+        {
+          "name": "deviceProperties",
+          "value": "{\"os\":\"Windows\",\"browser\":\"Chrome\",\"device\":\"\",\"system_locale\":\"en-US\"}"
+        },
+        {
+          "name": "PhoneStore",
+          "value": "{\"_state\":{},\"_version\":0}"
+        },
+        {
+          "name": "UnsyncedUserSettingsStore",
+          "value": "{\"_state\":{\"darkSidebar\":false},\"_version\":1}"
+        },
+        {
+          "name": "tokens",
+          "value": "{}"
+        },
+        {
+          "name": "user_id_cache",
+          "value": "\"209618429764829184\""
+        },
+        {
+          "name": "DeveloperOptionsStore",
+          "value": "{\"trace\":false,\"canary\":false,\"logGatewayEvents\":false,\"logOverlayEvents\":false,\"logAnalyticsEvents\":false,\"sourceMapsEnabled\":false,\"axeEnabled\":false,\"analyticsDebuggerEnabled\":false,\"bugReporterEnabled\":true,\"idleStatusIndicatorEnabled\":false,\"appDirectoryIncludesInactiveCollections\":false}"
+        },
+        {
+          "name": "OverlayStoreV2",
+          "value": "{\"_state\":{\"209618429764829184\":{\"selectedGuildId\":null,\"selectedChannelId\":null,\"displayUserMode\":\"ALWAYS\",\"displayNameMode\":\"ALWAYS\",\"avatarSizeMode\":\"large\",\"notificationPositionMode\":\"topLeft\",\"textChatNotifications\":\"ENABLED\",\"disableExternalLinkAlert\":false,\"disablePinTutorial\":false,\"textWidgetOpacity\":0.25}},\"_version\":2}"
+        },
+        {
+          "name": "BrowserHandoffStore",
+          "value": "false"
+        },
+        {
+          "name": "SelectedChannelStore",
+          "value": "{\"selectedChannelId\":null,\"selectedVoiceChannelId\":null,\"lastChannelFollowingDestination\":{},\"selectedChannelIds\":{},\"mostRecentSelectedTextChannelIds\":{},\"knownThreadIds\":[]}"
+        },
+        {
+          "name": "SummaryStore",
+          "value": "{\"_state\":{\"summariesByChannel\":{},\"shouldShowTopicsBar\":true,\"summaryFetchStatusByChannel\":{},\"highlightedSummary\":null,\"visibleSummaryIndex\":null,\"selectedSummary\":null,\"summariesFeedback\":{},\"channelAffinities\":[],\"channelAffinitiesById\":{},\"channelAffinitiesStatus\":{\"status\":\"ok\",\"lastRequest\":null,\"lastResponse\":null}},\"_version\":0}"
+        },
+        {
+          "name": "scientist:triggered",
+          "value": "{\"v\":1,\"e\":{\"user|2021-04_impression_logging\":{\"time\":1694073202875,\"hash\":3695065393}}}"
+        },
+        {
+          "name": "token",
+          "value": "\"MjA5NjE4NDI5NzY0ODI5MTg0.GDaWNm.5jWyhb-clWy4crP7iuY1muTaqnFGNzHCyOV38M\""
+        }
+      ]
+    }
+  ]
+}

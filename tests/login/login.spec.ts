@@ -9,6 +9,14 @@ test.describe("Go Easy @login", () => {
     const headerText = await headerElement.innerText();
     expect(headerText).toContain("Go Easy Test");
   });
+  test("login with discord admin", async ({ page }) => {
+    await login(page, "delorang28@gmail.com", "abekat123456");
+    const headerElement = page.locator(
+      'header div div div:has-text("goeasytestadmin")'
+    );
+    const headerText = await headerElement.innerText();
+    expect(headerText).toContain("goeasytestadmin");
+  });
   test("login with discord failure", async ({ page }) => {
     await login(page, "Galvit28@gmail.com", "abekat123456");
     const headerElement = page.locator(

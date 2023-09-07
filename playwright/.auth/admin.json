@@ -1,0 +1,188 @@
+{
+  "cookies": [
+    {
+      "name": "next-auth.csrf-token",
+      "value": "fd3431f6998b4645e7f289f1a8d241d885b60eae3a891bb4f25b29b88e46022d%7C80e15abf4199ef4131d33c1d5d5cd2a62abeae0b193ca150116102fbbbe8bccb",
+      "domain": "localhost",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": true,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "next-auth.callback-url",
+      "value": "http%3A%2F%2Flocalhost%3A3000%2F",
+      "domain": "localhost",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": true,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "__dcfduid",
+      "value": "12a852984d5411eeba343e22bc990cc0",
+      "domain": "discord.com",
+      "path": "/",
+      "expires": 1728633397.42111,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "__sdcfduid",
+      "value": "12a852984d5411eeba343e22bc990cc03a27ea453008e00e0040d0d2d1ff1cffd6a11654b704a2ada362cc25e4efec15",
+      "domain": "discord.com",
+      "path": "/",
+      "expires": 1728633397.421158,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "__cfruid",
+      "value": "f64c035f7c4edd8bdb2e3f663733f717c50e2e84-1694073398",
+      "domain": ".discord.com",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "_cfuvid",
+      "value": "lg_GVWTHza2pa2ok9B82JMzMIhY8CgVXqi6QXujajr4-1694073398125-0-604800000",
+      "domain": ".discord.com",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "cf_clearance",
+      "value": "6tNjKo_G1Nntie5ipsOJW10oavlQSGXTjO_U7yeQ5.4-1694073400-0-1-a70f4d2f.b078fd1f.d8c7b4e1-0.1.1694073400",
+      "domain": ".discord.com",
+      "path": "/",
+      "expires": 1725609400.269038,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "next-auth.session-token",
+      "value": "2b1692fe-6449-47b4-919b-5a9c864884b2",
+      "domain": "localhost",
+      "path": "/",
+      "expires": 1696665403.674386,
+      "httpOnly": true,
+      "secure": false,
+      "sameSite": "Lax"
+    }
+  ],
+  "origins": [
+    {
+      "origin": "http://localhost:3000",
+      "localStorage": [
+        {
+          "name": "nextauth.message",
+          "value": "{\"event\":\"session\",\"data\":{\"trigger\":\"getSession\"},\"timestamp\":1694073396}"
+        }
+      ]
+    },
+    {
+      "origin": "https://discord.com",
+      "localStorage": [
+        {
+          "name": "StreamerModeStore",
+          "value": "{\"_state\":{\"1149246294406217728\":{\"enabled\":false,\"autoToggle\":true,\"hideInstantInvites\":true,\"hidePersonalInformation\":true,\"disableSounds\":true,\"disableNotifications\":true,\"enableContentProtection\":false}},\"_version\":1}"
+        },
+        {
+          "name": "email_cache",
+          "value": "\"delorang28@gmail.com\""
+        },
+        {
+          "name": "MultiAccountStore",
+          "value": "{\"_state\":{\"users\":[],\"canUseMultiAccountMobile\":false},\"_version\":1}"
+        },
+        {
+          "name": "UserSettingsOverridesStore",
+          "value": "{\"_state\":{},\"_version\":1}"
+        },
+        {
+          "name": "UserTrialStore",
+          "value": "{\"_state\":{\"userTrialOffers\":{}},\"_version\":0}"
+        },
+        {
+          "name": "SoundpackStore",
+          "value": "{\"_state\":{\"soundpack\":\"classic\"},\"_version\":0}"
+        },
+        {
+          "name": "OverridePremiumTypeStore",
+          "value": "{\"_state\":{\"premiumTypeActual\":null},\"_version\":0}"
+        },
+        {
+          "name": "DraftStore",
+          "value": "{\"_state\":{},\"_version\":2}"
+        },
+        {
+          "name": "referralProperties",
+          "value": "{\"referrer\":\"http://localhost:3000/\",\"referring_domain\":\"localhost:3000\"}"
+        },
+        {
+          "name": "MediaEngineStore",
+          "value": "{\"default\":{\"mode\":\"VOICE_ACTIVITY\",\"modeOptions\":{\"threshold\":-60,\"autoThreshold\":false,\"vadUseKrisp\":true,\"vadLeading\":5,\"vadTrailing\":25,\"delay\":20,\"shortcut\":[]},\"vadUseKrispSettingVersion\":0,\"ncUseKrispSettingVersion\":0,\"av1EnabledSettingVersion\":0,\"hardwareClipEncodeSettingVersion\":0,\"mute\":false,\"deaf\":false,\"echoCancellation\":true,\"noiseSuppression\":false,\"automaticGainControl\":true,\"noiseCancellation\":false,\"experimentalEncoders\":false,\"hardwareH264\":true,\"silenceWarning\":true,\"attenuation\":0,\"attenuateWhileSpeakingSelf\":false,\"attenuateWhileSpeakingOthers\":true,\"localMutes\":{},\"disabledLocalVideos\":{},\"videoToggleStateMap\":{},\"localVolumes\":{},\"localPans\":{},\"inputVolume\":100,\"outputVolume\":100,\"inputDeviceId\":\"default\",\"outputDeviceId\":\"default\",\"videoDeviceId\":\"default\",\"qos\":false,\"qosMigrated\":false,\"videoHook\":false,\"experimentalSoundshare2\":null,\"openH264\":true,\"av1Enabled\":true,\"h265Enabled\":true,\"hardwareClipEncode\":true,\"vadThrehsoldMigrated\":false,\"aecDumpEnabled\":false}}"
+        },
+        {
+          "name": "deviceProperties",
+          "value": "{\"os\":\"Windows\",\"browser\":\"Chrome\",\"device\":\"\",\"system_locale\":\"en-US\"}"
+        },
+        {
+          "name": "PhoneStore",
+          "value": "{\"_state\":{},\"_version\":0}"
+        },
+        {
+          "name": "UnsyncedUserSettingsStore",
+          "value": "{\"_state\":{\"darkSidebar\":false},\"_version\":1}"
+        },
+        {
+          "name": "tokens",
+          "value": "{}"
+        },
+        {
+          "name": "user_id_cache",
+          "value": "\"1149246294406217728\""
+        },
+        {
+          "name": "DeveloperOptionsStore",
+          "value": "{\"trace\":false,\"canary\":false,\"logGatewayEvents\":false,\"logOverlayEvents\":false,\"logAnalyticsEvents\":false,\"sourceMapsEnabled\":false,\"axeEnabled\":false,\"analyticsDebuggerEnabled\":false,\"bugReporterEnabled\":true,\"idleStatusIndicatorEnabled\":false,\"appDirectoryIncludesInactiveCollections\":false}"
+        },
+        {
+          "name": "OverlayStoreV2",
+          "value": "{\"_state\":{\"1149246294406217728\":{\"selectedGuildId\":null,\"selectedChannelId\":null,\"displayUserMode\":\"ALWAYS\",\"displayNameMode\":\"ALWAYS\",\"avatarSizeMode\":\"large\",\"notificationPositionMode\":\"topLeft\",\"textChatNotifications\":\"ENABLED\",\"disableExternalLinkAlert\":false,\"disablePinTutorial\":false,\"textWidgetOpacity\":0.25}},\"_version\":2}"
+        },
+        {
+          "name": "BrowserHandoffStore",
+          "value": "false"
+        },
+        {
+          "name": "SelectedChannelStore",
+          "value": "{\"selectedChannelId\":null,\"selectedVoiceChannelId\":null,\"lastChannelFollowingDestination\":{},\"selectedChannelIds\":{},\"mostRecentSelectedTextChannelIds\":{},\"knownThreadIds\":[]}"
+        },
+        {
+          "name": "SummaryStore",
+          "value": "{\"_state\":{\"summariesByChannel\":{},\"shouldShowTopicsBar\":true,\"summaryFetchStatusByChannel\":{},\"highlightedSummary\":null,\"visibleSummaryIndex\":null,\"selectedSummary\":null,\"summariesFeedback\":{},\"channelAffinities\":[],\"channelAffinitiesById\":{},\"channelAffinitiesStatus\":{\"status\":\"ok\",\"lastRequest\":null,\"lastResponse\":null}},\"_version\":0}"
+        },
+        {
+          "name": "scientist:triggered",
+          "value": "{\"v\":1,\"e\":{\"user|2021-04_impression_logging\":{\"time\":1694073401977,\"hash\":3695065393}}}"
+        },
+        {
+          "name": "token",
+          "value": "\"MTE0OTI0NjI5NDQwNjIxNzcyOA.GuyZ0q.0Hok7zlLt1dIEjzo09U1Y-zF-bJGl2VimT8rXE\""
+        }
+      ]
+    }
+  ]
+}
