@@ -98,7 +98,7 @@ export const UserTable: React.FC<UserTableProps> = ({ users }) => {
                 data={mapAccessEnumToObject(
                   pathName === "/requests"
                     ? ["Disabled"]
-                    : ["Pending", "Denied"]
+                    : ["Denied"]
                 )}
               />
             </td>
