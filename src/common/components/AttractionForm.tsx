@@ -5,6 +5,9 @@ import {
   Select,
   Group,
   Text,
+  Flex,
+  Tooltip,
+  Popover,
   Textarea,
 } from "@mantine/core";
 import { useForm, zodResolver } from "@mantine/form";
@@ -21,6 +24,7 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { redirect } from "~/utils/redirect";
+import { formatAddressForLocation } from "~/utils/formatAddressForLocations";
 
 const attractionValidationSchema = z.object({
   name: z.string(),
@@ -171,7 +175,62 @@ export const AttractionForm: React.FC<AttractionFormProps> = ({ data }) => {
         placeholder="John Doe"
         {...form.getInputProps("name")}
       />
-      <TextInput
+      <Popover>
+        <Popover.Target>
+          <TextInput
+            withAsterisk
+            label="Adresse"
+            placeholder="Vejgade 21."
+            mt="sm"
+            onChange={(event) => setSearchParam(event.currentTarget.value)}
+            value={searchParam ?? form.values.address}
+            error={
+              coordError
+                ? "Kunne ikke finde koordinater på den valgte addresse"
+                : false
+            }
+          />
+        </Popover.Target>
+        {coords?.length > 0 && (
+          <Popover.Dropdown>
+            <Flex direction={"column"} align={"baseline"}>
+              {coords.map(
+                (
+                  coord: {
+                    display_name: string;
+                    latitude: number;
+                    longitude: number;
+                  },
+                  idx: number
+                ) => {
+                  return (
+                    <Tooltip
+                      key={idx}
+                      label={coord.display_name}
+                      openDelay={250}
+                    >
+                      <Button
+                        variant="subtle"
+                        key={idx}
+                        onClick={() => setAddress(coord.display_name)}
+                      >
+                        {formatAddressForLocation(coord.display_name)}
+                      </Button>
+                    </Tooltip>
+                  );
+                }
+              )}
+            </Flex>
+          </Popover.Dropdown>
+        )}
+      </Popover>
+      {form.values.address && (
+        <Text
+          c="dimmed"
+          fz={"xs"}
+        >{`Latitude: ${form.values.lat}, Longitude: ${form.values.long}`}</Text>
+      )}
+      {/* <TextInput
         withAsterisk
         label="Adresse"
         placeholder="Vejgade 21"
@@ -206,7 +265,7 @@ export const AttractionForm: React.FC<AttractionFormProps> = ({ data }) => {
           )}
           onChange={setAddress}
         />
-      )}
+      )} */}
       <Select
         label="Kategori"
         placeholder="Vælg en kategori"

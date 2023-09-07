@@ -129,6 +129,9 @@ enum Category {
     Cinema
     Museum
     Cafe
+    Attraction
+    Gallery
+    Castle
 }
 
 enum Access {

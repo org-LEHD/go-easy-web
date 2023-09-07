@@ -8,6 +8,10 @@ export const Logo: React.FC = () => {
     <Link href="/">
       <Button
         variant="subtle"
+        styles={() => ({
+          label: { overflow: "visible" },
+          root: { width: 114 },
+        })}
         leftIcon={
           <Image
             src={
