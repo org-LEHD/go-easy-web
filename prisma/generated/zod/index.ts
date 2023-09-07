@@ -277,7 +277,7 @@ export const VerificationTokenSelectSchema: z.ZodType<Prisma.VerificationTokenSe
 
 export const LocationIncludeSchema: z.ZodType<Prisma.LocationInclude> = z.object({
   user: z.union([z.boolean(),z.lazy(() => UserArgsSchema)]).optional(),
-  Advertisement: z.union([z.boolean(),z.lazy(() => AdvertisementFindManyArgsSchema)]).optional(),
+  advertisements: z.union([z.boolean(),z.lazy(() => AdvertisementFindManyArgsSchema)]).optional(),
   _count: z.union([z.boolean(),z.lazy(() => LocationCountOutputTypeArgsSchema)]).optional(),
 }).strict()
 
@@ -291,7 +291,7 @@ export const LocationCountOutputTypeArgsSchema: z.ZodType<Prisma.LocationCountOu
 }).strict();
 
 export const LocationCountOutputTypeSelectSchema: z.ZodType<Prisma.LocationCountOutputTypeSelect> = z.object({
-  Advertisement: z.boolean().optional(),
+  advertisements: z.boolean().optional(),
 }).strict();
 
 export const LocationSelectSchema: z.ZodType<Prisma.LocationSelect> = z.object({
@@ -310,7 +310,7 @@ export const LocationSelectSchema: z.ZodType<Prisma.LocationSelect> = z.object({
   createdAt: z.boolean().optional(),
   updatedAt: z.boolean().optional(),
   user: z.union([z.boolean(),z.lazy(() => UserArgsSchema)]).optional(),
-  Advertisement: z.union([z.boolean(),z.lazy(() => AdvertisementFindManyArgsSchema)]).optional(),
+  advertisements: z.union([z.boolean(),z.lazy(() => AdvertisementFindManyArgsSchema)]).optional(),
   _count: z.union([z.boolean(),z.lazy(() => LocationCountOutputTypeArgsSchema)]).optional(),
 }).strict()
 
@@ -698,7 +698,7 @@ export const LocationWhereInputSchema: z.ZodType<Prisma.LocationWhereInput> = z.
   createdAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
   updatedAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
   user: z.union([ z.lazy(() => UserRelationFilterSchema),z.lazy(() => UserWhereInputSchema) ]).optional(),
-  Advertisement: z.lazy(() => AdvertisementListRelationFilterSchema).optional()
+  advertisements: z.lazy(() => AdvertisementListRelationFilterSchema).optional()
 }).strict();
 
 export const LocationOrderByWithRelationInputSchema: z.ZodType<Prisma.LocationOrderByWithRelationInput> = z.object({
@@ -717,7 +717,7 @@ export const LocationOrderByWithRelationInputSchema: z.ZodType<Prisma.LocationOr
   createdAt: z.lazy(() => SortOrderSchema).optional(),
   updatedAt: z.lazy(() => SortOrderSchema).optional(),
   user: z.lazy(() => UserOrderByWithRelationInputSchema).optional(),
-  Advertisement: z.lazy(() => AdvertisementOrderByRelationAggregateInputSchema).optional()
+  advertisements: z.lazy(() => AdvertisementOrderByRelationAggregateInputSchema).optional()
 }).strict();
 
 export const LocationWhereUniqueInputSchema: z.ZodType<Prisma.LocationWhereUniqueInput> = z.object({
@@ -742,7 +742,7 @@ export const LocationWhereUniqueInputSchema: z.ZodType<Prisma.LocationWhereUniqu
   createdAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
   updatedAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
   user: z.union([ z.lazy(() => UserRelationFilterSchema),z.lazy(() => UserWhereInputSchema) ]).optional(),
-  Advertisement: z.lazy(() => AdvertisementListRelationFilterSchema).optional()
+  advertisements: z.lazy(() => AdvertisementListRelationFilterSchema).optional()
 }).strict());
 
 export const LocationOrderByWithAggregationInputSchema: z.ZodType<Prisma.LocationOrderByWithAggregationInput> = z.object({
@@ -1244,7 +1244,7 @@ export const LocationCreateInputSchema: z.ZodType<Prisma.LocationCreateInput> = 
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
   user: z.lazy(() => UserCreateNestedOneWithoutLocationsInputSchema),
-  Advertisement: z.lazy(() => AdvertisementCreateNestedManyWithoutLocationInputSchema).optional()
+  advertisements: z.lazy(() => AdvertisementCreateNestedManyWithoutLocationInputSchema).optional()
 }).strict();
 
 export const LocationUncheckedCreateInputSchema: z.ZodType<Prisma.LocationUncheckedCreateInput> = z.object({
@@ -1262,7 +1262,7 @@ export const LocationUncheckedCreateInputSchema: z.ZodType<Prisma.LocationUnchec
   thumbnail: z.string(),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
-  Advertisement: z.lazy(() => AdvertisementUncheckedCreateNestedManyWithoutLocationInputSchema).optional()
+  advertisements: z.lazy(() => AdvertisementUncheckedCreateNestedManyWithoutLocationInputSchema).optional()
 }).strict();
 
 export const LocationUpdateInputSchema: z.ZodType<Prisma.LocationUpdateInput> = z.object({
@@ -1279,7 +1279,7 @@ export const LocationUpdateInputSchema: z.ZodType<Prisma.LocationUpdateInput> = 
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   user: z.lazy(() => UserUpdateOneRequiredWithoutLocationsNestedInputSchema).optional(),
-  Advertisement: z.lazy(() => AdvertisementUpdateManyWithoutLocationNestedInputSchema).optional()
+  advertisements: z.lazy(() => AdvertisementUpdateManyWithoutLocationNestedInputSchema).optional()
 }).strict();
 
 export const LocationUncheckedUpdateInputSchema: z.ZodType<Prisma.LocationUncheckedUpdateInput> = z.object({
@@ -1297,7 +1297,7 @@ export const LocationUncheckedUpdateInputSchema: z.ZodType<Prisma.LocationUnchec
   thumbnail: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
-  Advertisement: z.lazy(() => AdvertisementUncheckedUpdateManyWithoutLocationNestedInputSchema).optional()
+  advertisements: z.lazy(() => AdvertisementUncheckedUpdateManyWithoutLocationNestedInputSchema).optional()
 }).strict();
 
 export const LocationCreateManyInputSchema: z.ZodType<Prisma.LocationCreateManyInput> = z.object({
@@ -1357,7 +1357,7 @@ export const AdvertisementCreateInputSchema: z.ZodType<Prisma.AdvertisementCreat
   end: z.coerce.date(),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
-  location: z.lazy(() => LocationCreateNestedOneWithoutAdvertisementInputSchema)
+  location: z.lazy(() => LocationCreateNestedOneWithoutAdvertisementsInputSchema)
 }).strict();
 
 export const AdvertisementUncheckedCreateInputSchema: z.ZodType<Prisma.AdvertisementUncheckedCreateInput> = z.object({
@@ -1380,7 +1380,7 @@ export const AdvertisementUpdateInputSchema: z.ZodType<Prisma.AdvertisementUpdat
   end: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
-  location: z.lazy(() => LocationUpdateOneRequiredWithoutAdvertisementNestedInputSchema).optional()
+  location: z.lazy(() => LocationUpdateOneRequiredWithoutAdvertisementsNestedInputSchema).optional()
 }).strict();
 
 export const AdvertisementUncheckedUpdateInputSchema: z.ZodType<Prisma.AdvertisementUncheckedUpdateInput> = z.object({
@@ -2402,18 +2402,18 @@ export const AdvertisementUncheckedUpdateManyWithoutLocationNestedInputSchema: z
   deleteMany: z.union([ z.lazy(() => AdvertisementScalarWhereInputSchema),z.lazy(() => AdvertisementScalarWhereInputSchema).array() ]).optional(),
 }).strict();
 
-export const LocationCreateNestedOneWithoutAdvertisementInputSchema: z.ZodType<Prisma.LocationCreateNestedOneWithoutAdvertisementInput> = z.object({
-  create: z.union([ z.lazy(() => LocationCreateWithoutAdvertisementInputSchema),z.lazy(() => LocationUncheckedCreateWithoutAdvertisementInputSchema) ]).optional(),
-  connectOrCreate: z.lazy(() => LocationCreateOrConnectWithoutAdvertisementInputSchema).optional(),
+export const LocationCreateNestedOneWithoutAdvertisementsInputSchema: z.ZodType<Prisma.LocationCreateNestedOneWithoutAdvertisementsInput> = z.object({
+  create: z.union([ z.lazy(() => LocationCreateWithoutAdvertisementsInputSchema),z.lazy(() => LocationUncheckedCreateWithoutAdvertisementsInputSchema) ]).optional(),
+  connectOrCreate: z.lazy(() => LocationCreateOrConnectWithoutAdvertisementsInputSchema).optional(),
   connect: z.lazy(() => LocationWhereUniqueInputSchema).optional()
 }).strict();
 
-export const LocationUpdateOneRequiredWithoutAdvertisementNestedInputSchema: z.ZodType<Prisma.LocationUpdateOneRequiredWithoutAdvertisementNestedInput> = z.object({
-  create: z.union([ z.lazy(() => LocationCreateWithoutAdvertisementInputSchema),z.lazy(() => LocationUncheckedCreateWithoutAdvertisementInputSchema) ]).optional(),
-  connectOrCreate: z.lazy(() => LocationCreateOrConnectWithoutAdvertisementInputSchema).optional(),
-  upsert: z.lazy(() => LocationUpsertWithoutAdvertisementInputSchema).optional(),
+export const LocationUpdateOneRequiredWithoutAdvertisementsNestedInputSchema: z.ZodType<Prisma.LocationUpdateOneRequiredWithoutAdvertisementsNestedInput> = z.object({
+  create: z.union([ z.lazy(() => LocationCreateWithoutAdvertisementsInputSchema),z.lazy(() => LocationUncheckedCreateWithoutAdvertisementsInputSchema) ]).optional(),
+  connectOrCreate: z.lazy(() => LocationCreateOrConnectWithoutAdvertisementsInputSchema).optional(),
+  upsert: z.lazy(() => LocationUpsertWithoutAdvertisementsInputSchema).optional(),
   connect: z.lazy(() => LocationWhereUniqueInputSchema).optional(),
-  update: z.union([ z.lazy(() => LocationUpdateToOneWithWhereWithoutAdvertisementInputSchema),z.lazy(() => LocationUpdateWithoutAdvertisementInputSchema),z.lazy(() => LocationUncheckedUpdateWithoutAdvertisementInputSchema) ]).optional(),
+  update: z.union([ z.lazy(() => LocationUpdateToOneWithWhereWithoutAdvertisementsInputSchema),z.lazy(() => LocationUpdateWithoutAdvertisementsInputSchema),z.lazy(() => LocationUncheckedUpdateWithoutAdvertisementsInputSchema) ]).optional(),
 }).strict();
 
 export const NestedIntFilterSchema: z.ZodType<Prisma.NestedIntFilter> = z.object({
@@ -2882,7 +2882,7 @@ export const LocationCreateWithoutUserInputSchema: z.ZodType<Prisma.LocationCrea
   thumbnail: z.string(),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
-  Advertisement: z.lazy(() => AdvertisementCreateNestedManyWithoutLocationInputSchema).optional()
+  advertisements: z.lazy(() => AdvertisementCreateNestedManyWithoutLocationInputSchema).optional()
 }).strict();
 
 export const LocationUncheckedCreateWithoutUserInputSchema: z.ZodType<Prisma.LocationUncheckedCreateWithoutUserInput> = z.object({
@@ -2899,7 +2899,7 @@ export const LocationUncheckedCreateWithoutUserInputSchema: z.ZodType<Prisma.Loc
   thumbnail: z.string(),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
-  Advertisement: z.lazy(() => AdvertisementUncheckedCreateNestedManyWithoutLocationInputSchema).optional()
+  advertisements: z.lazy(() => AdvertisementUncheckedCreateNestedManyWithoutLocationInputSchema).optional()
 }).strict();
 
 export const LocationCreateOrConnectWithoutUserInputSchema: z.ZodType<Prisma.LocationCreateOrConnectWithoutUserInput> = z.object({
@@ -3140,7 +3140,7 @@ export const AdvertisementScalarWhereInputSchema: z.ZodType<Prisma.Advertisement
   updatedAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
 }).strict();
 
-export const LocationCreateWithoutAdvertisementInputSchema: z.ZodType<Prisma.LocationCreateWithoutAdvertisementInput> = z.object({
+export const LocationCreateWithoutAdvertisementsInputSchema: z.ZodType<Prisma.LocationCreateWithoutAdvertisementsInput> = z.object({
   category: z.lazy(() => CategorySchema).optional(),
   name: z.string(),
   address: z.string(),
@@ -3156,7 +3156,7 @@ export const LocationCreateWithoutAdvertisementInputSchema: z.ZodType<Prisma.Loc
   user: z.lazy(() => UserCreateNestedOneWithoutLocationsInputSchema)
 }).strict();
 
-export const LocationUncheckedCreateWithoutAdvertisementInputSchema: z.ZodType<Prisma.LocationUncheckedCreateWithoutAdvertisementInput> = z.object({
+export const LocationUncheckedCreateWithoutAdvertisementsInputSchema: z.ZodType<Prisma.LocationUncheckedCreateWithoutAdvertisementsInput> = z.object({
   id: z.number().int().optional(),
   userId: z.number().int(),
   category: z.lazy(() => CategorySchema).optional(),
@@ -3173,23 +3173,23 @@ export const LocationUncheckedCreateWithoutAdvertisementInputSchema: z.ZodType<P
   updatedAt: z.coerce.date().optional()
 }).strict();
 
-export const LocationCreateOrConnectWithoutAdvertisementInputSchema: z.ZodType<Prisma.LocationCreateOrConnectWithoutAdvertisementInput> = z.object({
+export const LocationCreateOrConnectWithoutAdvertisementsInputSchema: z.ZodType<Prisma.LocationCreateOrConnectWithoutAdvertisementsInput> = z.object({
   where: z.lazy(() => LocationWhereUniqueInputSchema),
-  create: z.union([ z.lazy(() => LocationCreateWithoutAdvertisementInputSchema),z.lazy(() => LocationUncheckedCreateWithoutAdvertisementInputSchema) ]),
+  create: z.union([ z.lazy(() => LocationCreateWithoutAdvertisementsInputSchema),z.lazy(() => LocationUncheckedCreateWithoutAdvertisementsInputSchema) ]),
 }).strict();
 
-export const LocationUpsertWithoutAdvertisementInputSchema: z.ZodType<Prisma.LocationUpsertWithoutAdvertisementInput> = z.object({
-  update: z.union([ z.lazy(() => LocationUpdateWithoutAdvertisementInputSchema),z.lazy(() => LocationUncheckedUpdateWithoutAdvertisementInputSchema) ]),
-  create: z.union([ z.lazy(() => LocationCreateWithoutAdvertisementInputSchema),z.lazy(() => LocationUncheckedCreateWithoutAdvertisementInputSchema) ]),
+export const LocationUpsertWithoutAdvertisementsInputSchema: z.ZodType<Prisma.LocationUpsertWithoutAdvertisementsInput> = z.object({
+  update: z.union([ z.lazy(() => LocationUpdateWithoutAdvertisementsInputSchema),z.lazy(() => LocationUncheckedUpdateWithoutAdvertisementsInputSchema) ]),
+  create: z.union([ z.lazy(() => LocationCreateWithoutAdvertisementsInputSchema),z.lazy(() => LocationUncheckedCreateWithoutAdvertisementsInputSchema) ]),
   where: z.lazy(() => LocationWhereInputSchema).optional()
 }).strict();
 
-export const LocationUpdateToOneWithWhereWithoutAdvertisementInputSchema: z.ZodType<Prisma.LocationUpdateToOneWithWhereWithoutAdvertisementInput> = z.object({
+export const LocationUpdateToOneWithWhereWithoutAdvertisementsInputSchema: z.ZodType<Prisma.LocationUpdateToOneWithWhereWithoutAdvertisementsInput> = z.object({
   where: z.lazy(() => LocationWhereInputSchema).optional(),
-  data: z.union([ z.lazy(() => LocationUpdateWithoutAdvertisementInputSchema),z.lazy(() => LocationUncheckedUpdateWithoutAdvertisementInputSchema) ]),
+  data: z.union([ z.lazy(() => LocationUpdateWithoutAdvertisementsInputSchema),z.lazy(() => LocationUncheckedUpdateWithoutAdvertisementsInputSchema) ]),
 }).strict();
 
-export const LocationUpdateWithoutAdvertisementInputSchema: z.ZodType<Prisma.LocationUpdateWithoutAdvertisementInput> = z.object({
+export const LocationUpdateWithoutAdvertisementsInputSchema: z.ZodType<Prisma.LocationUpdateWithoutAdvertisementsInput> = z.object({
   category: z.union([ z.lazy(() => CategorySchema),z.lazy(() => EnumCategoryFieldUpdateOperationsInputSchema) ]).optional(),
   name: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   address: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
@@ -3205,7 +3205,7 @@ export const LocationUpdateWithoutAdvertisementInputSchema: z.ZodType<Prisma.Loc
   user: z.lazy(() => UserUpdateOneRequiredWithoutLocationsNestedInputSchema).optional()
 }).strict();
 
-export const LocationUncheckedUpdateWithoutAdvertisementInputSchema: z.ZodType<Prisma.LocationUncheckedUpdateWithoutAdvertisementInput> = z.object({
+export const LocationUncheckedUpdateWithoutAdvertisementsInputSchema: z.ZodType<Prisma.LocationUncheckedUpdateWithoutAdvertisementsInput> = z.object({
   id: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   userId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   category: z.union([ z.lazy(() => CategorySchema),z.lazy(() => EnumCategoryFieldUpdateOperationsInputSchema) ]).optional(),
@@ -3329,7 +3329,7 @@ export const LocationUpdateWithoutUserInputSchema: z.ZodType<Prisma.LocationUpda
   thumbnail: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
-  Advertisement: z.lazy(() => AdvertisementUpdateManyWithoutLocationNestedInputSchema).optional()
+  advertisements: z.lazy(() => AdvertisementUpdateManyWithoutLocationNestedInputSchema).optional()
 }).strict();
 
 export const LocationUncheckedUpdateWithoutUserInputSchema: z.ZodType<Prisma.LocationUncheckedUpdateWithoutUserInput> = z.object({
@@ -3346,7 +3346,7 @@ export const LocationUncheckedUpdateWithoutUserInputSchema: z.ZodType<Prisma.Loc
   thumbnail: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
-  Advertisement: z.lazy(() => AdvertisementUncheckedUpdateManyWithoutLocationNestedInputSchema).optional()
+  advertisements: z.lazy(() => AdvertisementUncheckedUpdateManyWithoutLocationNestedInputSchema).optional()
 }).strict();
 
 export const LocationUncheckedUpdateManyWithoutUserInputSchema: z.ZodType<Prisma.LocationUncheckedUpdateManyWithoutUserInput> = z.object({

@@ -34,6 +34,7 @@ const Layout: React.FC<Props> = ({ children }) => {
   const navItems: NavItemProps[] = useMemo(() => {
     if (sessionData?.user?.role === Role.Administrator) {
       return [
+        { text: "Konto", href: "/account" },
         { text: "Anmodninger", href: "/requests" },
         { text: "Annoncører", href: "/advertisers" },
         { text: "Seværdigheder", href: "/attractions" },
