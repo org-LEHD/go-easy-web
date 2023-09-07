@@ -4,7 +4,7 @@ import { login } from "./login";
 const adminFile = "playwright/.auth/admin.json";
 
 setup("authenticate as admin", async ({ page }) => {
-  await login(page, "delorang28@gmail.com", "abekat123456");
+  await login(page, "delorang28@gmail.com", "abekat1234567");
   const headerElement = page.locator(
     'header div div div:has-text("goeasytestadmin")'
   );
@@ -16,7 +16,7 @@ setup("authenticate as admin", async ({ page }) => {
 const userFile = "playwright/.auth/user.json";
 
 setup("authenticate as user", async ({ page }) => {
-  await login(page, "galvit28@gmail.com", "abekat123456");
+  await login(page, "galvit28@gmail.com", "kage1234567");
   const headerElement = page.locator(
     'header div div div:has-text("Go Easy Test")'
   );

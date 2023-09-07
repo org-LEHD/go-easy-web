@@ -172,7 +172,7 @@ export const AttractionForm: React.FC<AttractionFormProps> = ({ data }) => {
       <TextInput
         withAsterisk
         label="Navn"
-        placeholder="John Doe"
+        placeholder="Amalienborg slot"
         {...form.getInputProps("name")}
       />
       <Popover>
@@ -299,11 +299,11 @@ export const AttractionForm: React.FC<AttractionFormProps> = ({ data }) => {
       <Group position={isUpdate ? "apart" : "right"} mt="xl">
         {isUpdate && (
           <Button variant="outline" color="red" onClick={onSubmitDelete}>
-            Delete
+            Slet
           </Button>
         )}
         <Button type="submit" variant="outline">
-          Submit
+          {isUpdate ? "Opdatér" : "Opret"}
         </Button>
       </Group>
     </form>
