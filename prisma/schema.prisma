@@ -132,6 +132,7 @@ enum Category {
     Attraction
     Gallery
     Castle
+    Hotel
 }
 
 enum Access {
