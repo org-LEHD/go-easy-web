@@ -34,7 +34,7 @@ export const RoleSchema = z.enum(['Administrator','Advertiser']);
 
 export type RoleType = `${z.infer<typeof RoleSchema>}`
 
-export const CategorySchema = z.enum(['Undefined','Restaurant','Bar','Theater','Park','Church','Cinema','Museum','Cafe','Attraction','Gallery','Castle']);
+export const CategorySchema = z.enum(['Undefined','Restaurant','Bar','Theater','Park','Church','Cinema','Museum','Cafe','Attraction','Gallery','Castle','Hotel']);
 
 export type CategoryType = `${z.infer<typeof CategorySchema>}`
 

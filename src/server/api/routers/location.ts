@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
-import { Category } from "@prisma/client";
+import { Access, Category } from "@prisma/client";
 
 export const locationRouter = createTRPCRouter({
   /**
@@ -53,7 +53,9 @@ export const locationRouter = createTRPCRouter({
    * GET ALL
    */
   getAll: publicProcedure.query(({ ctx }) => {
-    return ctx.prisma.location.findMany({});
+    return ctx.prisma.location.findMany({
+      where: { user: { access: Access.Granted } },
+    });
   }),
 
   /**

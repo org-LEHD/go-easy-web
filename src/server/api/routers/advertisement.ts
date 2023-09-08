@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 import { z } from "zod";
 import { createTRPCRouter, publicProcedure, protectedProcedure } from "../trpc";
+import { Access } from "@prisma/client";
 
 export const advertisementRouter = createTRPCRouter({
   // GET BY ID
@@ -18,14 +19,14 @@ export const advertisementRouter = createTRPCRouter({
     .input(z.number())
     .query(async ({ input, ctx }) => {
       return await ctx.prisma.advertisement.findMany({
-        where: { location: {userId: input} },
-        include: { location: true, },
+        where: { location: { userId: input } },
+        include: { location: true },
       });
     }),
   /**
    * GET ALL BY LOCATION ID
    */
-    getAllByLocationId: publicProcedure
+  getAllByLocationId: publicProcedure
     .input(z.number())
     .query(async ({ input, ctx }) => {
       return await ctx.prisma.advertisement.findMany({
@@ -35,7 +36,9 @@ export const advertisementRouter = createTRPCRouter({
     }),
   // GET ALL
   getAll: publicProcedure.query(({ ctx }) => {
-    return ctx.prisma.advertisement.findMany({});
+    return ctx.prisma.advertisement.findMany({
+      where: { location: { user: { access: Access.Granted } } },
+    });
   }),
 
   // CREATE

@@ -6,6 +6,12 @@ generator client {
     provider = "prisma-client-js"
 }
 
+generator erd {
+  provider = "prisma-erd-generator"
+  output = "./generated/erd/ERD.pdf"
+  theme = "neutral"
+}
+
 datasource db {
     provider     = "mysql"
     url          = env("DATABASE_URL")
@@ -132,6 +138,7 @@ enum Category {
     Attraction
     Gallery
     Castle
+    Hotel
 }
 
 enum Access {
