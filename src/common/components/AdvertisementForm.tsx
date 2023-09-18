@@ -44,12 +44,14 @@ export const AdvertisementForm: React.FC<AdvertisementFormProps> = ({
   const { id } = router.query;
   const routerParam = id?.[0] !== undefined ? Number(id[0]) : 0;
   const isUpdate = routerParam > 0;
+
+  const { data: sessionData } = useSession();
   const { refetch } = api.advertisement.delete.useQuery(routerParam, {
     enabled: false,
     refetchOnWindowFocus: false,
     onSuccess: () => void router.back(),
   });
-  const { data: sessionData } = useSession();
+  
   const { data: locations } = api.location.getAllById.useQuery(
     sessionData?.user.id ?? 0,
     {
@@ -57,6 +59,7 @@ export const AdvertisementForm: React.FC<AdvertisementFormProps> = ({
         sessionData?.user.id !== undefined && sessionData?.user.id !== null,
     }
   );
+
   useEffect(() => {
     const shouldRedirect = async () => {
       if (sessionData && sessionData.user.access !== "Granted") {
@@ -65,10 +68,12 @@ export const AdvertisementForm: React.FC<AdvertisementFormProps> = ({
     };
     void shouldRedirect();
   }, [router, sessionData, sessionData?.user]);
+
   const { mutate: updateMutation, isLoading: isUpdating } =
     api.advertisement.update.useMutation({
       onSuccess: () => router.push("/advertisements"),
     });
+
   const { mutate: createMutation, isLoading: isCreating } =
     api.advertisement.create.useMutation({
       onSuccess: () => router.push("/advertisements"),
@@ -88,6 +93,7 @@ export const AdvertisementForm: React.FC<AdvertisementFormProps> = ({
       createMutation(payload);
     }
   };
+
   const onSubmitDelete = () => {
     void refetch();
   };

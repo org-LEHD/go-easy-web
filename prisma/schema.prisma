@@ -1,3 +1,4 @@
+//REDUNDANT - Dobbelt-konfekt
 generator zod {
     provider = "zod-prisma-types"
 }
